@@ -861,7 +861,7 @@ function updateBarChart() {
 }
 
 // ══════════════════════════════════════════
-// AI ASSISTANT
+// AI ASSISTANT (GEMINI INTEGRATION)
 // ══════════════════════════════════════════
 const SYSTEM_PROMPT = `Eres el asistente de viaje personal del grupo "Madrid · Barcelona 2026". 
 Tienes TODA la información del itinerario completo:
@@ -886,79 +886,7 @@ Día 10 (7 Oct): Girona todo el día ($15 entradas + $40 bodega)
 Día 11 (8 Oct): Collioure y Cerbère Francia ($40)
 Día 12 (9 Oct): Vuelo BCN 7AM, conexión MAD, regreso SJU 12:45PM
 
-PRESUPUESTO TOTAL p/p: $4,173
-- Transportación: $926 | Estadías: $1,181 | Tours: $701 | Comida: $1,035 | Misceláneos: $230
-
-DOCUMENTOS: ETIAS ~$10 (obligatorio 2026) | Seguro viaje $100 (min 30,000€) | Global Entry $120
-
-RESERVAS PENDIENTES: Cepa 21 Pisado Uvas, Sagrada Família (con tiempo), Parque Güell, Casa Batlló, Tablao Flamenco, Montserrat+Codorníu, Escorial, Bernabéu, Prado, Parking TelPark, ETIAS, Seguro, Saldo AirBnB Barcelona (Sep 20)
-
-Responde siempre en español, de forma concisa y útil. Usa emojis apropiados. Si te preguntan sobre costos, sé específico con los números del itinerario. Eres amigable y conoces cada detalle del viaje.`;
-
-async function sendAI() {
-  const input = document.getElementById('ai-input');
-  const msg = input.value.trim();
-  if (!msg) return;
-  input.value='';
-  addMessage(msg, 'user');
-  chatHistory.push({role:'user', content:msg});
-  document.getElementById('ai-send').disabled=true;
-  document.getElementById('ai-typing').style.display='flex';
-  scrollChat();
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        system: SYSTEM_PROMPT,
-        messages: chatHistory.slice(-10)
-      })
-    });
-    const data = await res.json();
-    const reply = data.content?.[0]?.text || 'Lo siento, hubo un error. Intenta de nuevo.';
-    chatHistory.push({role:'assistant', content:reply});
-    if (chatHistory.length>20) chatHistory=chatHistory.slice(-20);
-    await save('chat-history', chatHistory);
-    document.getElementById('ai-typing').style.display='none';
-    addMessage(reply, 'ai');
-  } catch(e) {
-    document.getElementById('ai-typing').style.display='none';
-    addMessage('❌ Error de conexión. Verifica tu conexión e intenta de nuevo.', 'ai');
-  }
-  document.getElementById('ai-send').disabled=false;
-  scrollChat();
-}
-
-function addMessage(text, role) {
-  const msgs = document.getElementById('ai-msgs');
-  const div = document.createElement('div');
-  div.className = `msg msg-${role}`;
-  div.innerHTML = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
-  msgs.appendChild(div);
-  scrollChat();
-}
-
-function scrollChat() {
-  const msgs = document.getElementById('ai-msgs');
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function quickQ(q) {
-  document.getElementById('ai-input').value = q;
-  sendAI();
-}
-
-function aiKey(e) {
-  if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendAI(); }
-}
-
-function restoreChat() {
-  if (!chatHistory.length) return;
-  chatHistory.forEach(m => addMessage(m.content, m.role==='user'?'user':'ai'));
-}
-
+PRESUPUESTO TOTAL p/p: $4,17
 // ══════════════════════════════════════════
 // TOAST
 // ══════════════════════════════════════════
