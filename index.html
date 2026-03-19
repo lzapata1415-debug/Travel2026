@@ -897,3 +897,28 @@ initState();
 </script>
 </body>
 </html>
+<script>
+  // Esta función guarda todo lo que escribes automáticamente
+  function guardarDatos() {
+    const inputs = document.querySelectorAll('input, textarea, [contenteditable]');
+    inputs.forEach((input, index) => {
+      // Al abrir la página, recupera lo que guardaste
+      const guardado = localStorage.getItem('viaje-dato-' + index);
+      if (guardado) {
+        if (input.tagName === 'INPUT' || input.tagName === 'TEXTAREA') {
+          input.value = guardado;
+        } else {
+          input.innerText = guardado;
+        }
+      }
+
+      // Escucha cuando escribes para guardar al instante
+      input.addEventListener('input', () => {
+        localStorage.setItem('viaje-dato-' + index, input.value || input.innerText);
+      });
+    });
+  }
+
+  // Activa la memoria cuando carga la página
+  window.onload = guardarDatos;
+</script>
