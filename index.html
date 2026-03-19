@@ -888,58 +888,277 @@ function toast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'), 2500);
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Madrid · Barcelona 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --red:#C60B1E; --red-soft:rgba(198,11,30,0.12);
+  --gold:#F1BF00; --gold-dark:#C49A00; --gold-soft:rgba(241,191,0,0.15);
+  --cream:#FDF8F0; --card:#FFFDF7;
+  --dark:#1A1208; --dark2:#2D2010; --dark3:#3D2E18;
+  --muted:#8C7355; --border:rgba(196,154,0,0.18);
+  --shadow:0 4px 20px rgba(26,18,8,0.09);
+  --radius:16px; --tab-h:52px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
+
+/* ── HERO ── */
+.hero{background:var(--dark);padding:24px 16px 20px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--red) 50%,var(--gold) 50%)}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,38px);font-weight:900;color:#fff;letter-spacing:-0.5px}
+.hero h1 span{color:var(--gold)}
+.hero-meta{color:var(--muted);font-size:12px;margin-top:6px;letter-spacing:.5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px}
+.chip{background:rgba(241,191,0,0.1);border:1px solid rgba(241,191,0,0.25);border-radius:30px;padding:5px 12px;font-size:11px;color:var(--gold);font-family:'DM Mono',monospace}
+
+/* ── TABS ── */
+.tabs{display:flex;overflow-x:auto;background:var(--dark2);border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:200;scrollbar-width:none}
+.tb{flex:0 0 auto;padding:0 16px;height:var(--tab-h);font-size:12px;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s}
+.tb.on{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* ── SECTIONS ── */
+.sec{display:none;padding:18px 14px 90px;max-width:820px;margin:0 auto}
+.sec.on{display:block}
+.stitle{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.stitle::after{content:'';flex:1;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+
+/* ── DAY CARDS ── */
+.day{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow)}
+.dh{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;background:linear-gradient(135deg,var(--dark),var(--dark2))}
+.dnum{background:var(--gold);color:var(--dark);font-family:'Playfair Display',serif;font-weight:700;font-size:16px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.ddate{color:var(--gold);font-size:10px;font-weight:600;text-transform:uppercase}
+.dtitle{color:#fff;font-size:14px;font-weight:600}
+.dbody{display:none;padding:14px}
+.day.open .dbody{display:block}
+
+/* ── EXPENSES ── */
+.fcard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.fg{margin-bottom:12px}
+.fg label{font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:4px}
+.fg input,.fg select{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:10px;outline:none}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.pb{padding:7px;border:2px solid var(--border);border-radius:10px;background:#fff;cursor:pointer}
+.pb.sel{border-color:var(--gold);background:var(--gold-soft)}
+.btn-p{width:100%;padding:11px;background:var(--red);color:#fff;border:none;border-radius:12px;font-weight:700;cursor:pointer}
+.exp-item{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--card);border:1px solid var(--border);border-radius:11px;margin-bottom:7px}
+.exp-amt{font-family:'DM Mono',monospace;font-size:15px;font-weight:700;color:var(--red)}
+
+/* ── FOTOS ── */
+.galeria{display:grid;grid-template-columns:repeat(auto-fill, minmax(100px, 1fr));gap:10px;margin-top:15px}
+.foto-recibo{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:#fff;padding:10px 20px;border-radius:30px;transition:transform .3s;z-index:999}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Madrid · <span>Barcelona</span></h1>
+  <div class="hero-meta">28 Sep – 9 Oct · 4 Viajeros · Iberia IB0380</div>
+  <div class="chips">
+    <div class="chip">LB8T8</div>
+    <div class="chip" style="color:#059669">● Memoria Activa</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tb on" onclick="tab('agenda',this)">🗓 Agenda</button>
+  <button class="tb" onclick="tab('gastos',this)">💶 Gastos</button>
+  <button class="tb" onclick="tab('reservas',this)">📋 Reservas</button>
+  <button class="tb" onclick="tab('viajeros',this)">👥 Grupo</button>
+</div>
+
+<div id="sec-agenda" class="sec on">
+  <div class="stitle">🗓 Itinerario</div>
+  <div id="agenda-root">
+      <p style="text-align:center; color:var(--muted)">Cargando itinerario...</p>
+  </div>
+</div>
+
+<div id="sec-gastos" class="sec">
+  <div class="stitle">💶 Gastos y Recibos</div>
+  
+  <div class="fcard">
+    <div class="fg"><label>Descripción</label><input type="text" id="exp-desc" placeholder="Ej: Cena Tapas"></div>
+    <div class="pgrid">
+        <div class="fg"><label>Monto</label><input type="number" id="exp-amt" placeholder="0.00"></div>
+        <div class="fg"><label>Pagó</label>
+            <select id="exp-payer">
+                <option value="Victor">Víctor</option>
+                <option value="Layra">Layra</option>
+                <option value="Andrea">Andrea</option>
+                <option value="Francisco">Francisco</option>
+            </select>
+        </div>
+    </div>
+    <button class="btn-p" onclick="addExp()">+ Guardar Gasto</button>
+    <button onclick="descargarCSV()" style="width:100%; margin-top:10px; background:var(--dark2); color:white; border:none; padding:10px; border-radius:12px; cursor:pointer; font-weight:600">📥 Bajar Gastos (CSV)</button>
+  </div>
+
+  <div id="exp-list"></div>
+
+  <div class="fcard" style="margin-top:20px">
+    <h3>📸 Fotos de Recibos</h3>
+    <input type="file" id="input-foto" accept="image/*" style="display:none">
+    <button onclick="document.getElementById('input-foto').click()" style="background:var(--gold); border:none; padding:10px; border-radius:8px; cursor:pointer; margin-top:10px; font-weight:700">＋ Subir Foto</button>
+    <div id="galeria-recibos" class="galeria"></div>
+  </div>
+</div>
+
+<div id="sec-reservas" class="sec">
+    <div class="stitle">📋 Tareas</div>
+    <div id="task-list"></div>
+</div>
+
+<div id="sec-viajeros" class="sec">
+    <div class="stitle">👥 Viajeros</div>
+    <div class="fcard">Víctor, Layra, Andrea y Francisco.</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// --- CONFIGURACIÓN DE DATOS ---
+const DEFAULT_DAYS = [
+  { id:1, date:'28 Sep', title:'Vuelo SJU → MAD', transport:'air', activities:[{time:'20:25', title:'Salida IB0380', note:'Terminal C'}]},
+  { id:2, date:'29 Sep', title:'Llegada Madrid', transport:'pub', activities:[{time:'10:25', title:'Llegada T4S', note:'Check-in AirBnB'}]}
+];
+
+let expenses = JSON.parse(localStorage.getItem('viaje-gastos') || '[]');
+let photos = JSON.parse(localStorage.getItem('viaje-fotos') || '[]');
+
+// --- NAVEGACIÓN ---
+function tab(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+  document.getElementById('sec-'+id).classList.add('on');
+  btn.classList.add('on');
 }
 
-// ══════════════════════════════════════════
-// BOOT
-// ══════════════════════════════════════════
-initState();
+// --- GESTIÓN DE GASTOS ---
+function addExp() {
+  const desc = document.getElementById('exp-desc').value;
+  const amt = document.getElementById('exp-amt').value;
+  const payer = document.getElementById('exp-payer').value;
+
+  if(!desc || !amt) return alert("Llena los campos");
+
+  expenses.push({ id: Date.now(), desc, amt, payer, date: new Date().toLocaleDateString() });
+  localStorage.setItem('viaje-gastos', JSON.stringify(expenses));
+  
+  document.getElementById('exp-desc').value = '';
+  document.getElementById('exp-amt').value = '';
+  renderExpenses();
+  showToast("Gasto guardado ✅");
+}
+
+function renderExpenses() {
+  const list = document.getElementById('exp-list');
+  list.innerHTML = expenses.map(e => `
+    <div class="exp-item">
+      <div><strong>${e.desc}</strong><br><small>Pagó: ${e.payer}</small></div>
+      <div class="exp-amt">€${e.amt}</div>
+      <button onclick="delExp(${e.id})" style="border:none; background:none; cursor:pointer">🗑️</button>
+    </div>
+  `).join('');
+}
+
+function delExp(id) {
+  expenses = expenses.filter(e => e.id !== id);
+  localStorage.setItem('viaje-gastos', JSON.stringify(expenses));
+  renderExpenses();
+}
+
+// --- EXPORTAR A CSV ---
+function descargarCSV() {
+    if(expenses.length === 0) return alert("No hay gastos para descargar");
+    let csv = "Fecha,Descripcion,Monto,Pago\n";
+    expenses.forEach(e => {
+        csv += `${e.date},${e.desc},${e.amt},${e.payer}\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'gastos_viaje_2026.csv');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+// --- GESTIÓN DE FOTOS ---
+const inputFoto = document.getElementById('input-foto');
+inputFoto.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64 = e.target.result;
+            photos.push(base64);
+            localStorage.setItem('viaje-fotos', JSON.stringify(photos));
+            renderPhotos();
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+function renderPhotos() {
+    const gal = document.getElementById('galeria-recibos');
+    gal.innerHTML = photos.map((p, i) => `
+        <div style="position:relative">
+            <img src="${p}" class="foto-recibo">
+            <button onclick="delFoto(${i})" style="position:absolute; top:0; right:0; background:red; color:white; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer">×</button>
+        </div>
+    `).join('');
+}
+
+function delFoto(i) {
+    photos.splice(i, 1);
+    localStorage.setItem('viaje-fotos', JSON.stringify(photos));
+    renderPhotos();
+}
+
+// --- AGENDA SIMPLE ---
+function renderAgenda() {
+    const root = document.getElementById('agenda-root');
+    root.innerHTML = DEFAULT_DAYS.map(d => `
+        <div class="day open">
+            <div class="dh">
+                <div class="dnum">${d.id}</div>
+                <div class="di">
+                    <div class="ddate">${d.date}</div>
+                    <div class="dtitle">${d.title}</div>
+                </div>
+            </div>
+            <div class="dbody" style="display:block">
+                ${d.activities.map(a => `<div style="font-size:12px; padding:5px 0"><strong>${a.time}</strong> - ${a.title}</div>`).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.innerText = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// --- INICIO ---
+window.onload = () => {
+    renderAgenda();
+    renderExpenses();
+    renderPhotos();
+};
 </script>
 </body>
 </html>
-<script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Buscamos todas las áreas que deberían ser editables
-    const celdas = document.querySelectorAll('.editable, [contenteditable="true"], input, textarea');
-
-    celdas.forEach((elemento, index) => {
-        const idUnico = 'travel2026-campo-' + index;
-        
-        // 2. Cargamos lo que estaba guardado
-        const valorGuardado = localStorage.getItem(idUnico);
-        if (valorGuardado) {
-            if (elemento.tagName === 'INPUT' || elemento.tagName === 'TEXTAREA') {
-                elemento.value = valorGuardado;
-            } else {
-                elemento.innerHTML = valorGuardado;
-            }
-        }
-
-        // 3. Guardamos cada vez que escribas algo
-        const guardar = () => {
-            const contenido = (elemento.tagName === 'INPUT' || elemento.tagName === 'TEXTAREA') 
-                ? elemento.value 
-                : elemento.innerHTML;
-            localStorage.setItem(idUnico, contenido);
-        };
-
-        elemento.addEventListener('input', guardar);
-        elemento.addEventListener('blur', guardar); // Guarda al salir del campo también
-    });
-});
-</script>
-<!-- Sección de Recibos -->
-<div class="card" style="margin-top: 20px;">
-    <h3>📸 Recibos y Comprobantes</h3>
-    <p style="font-size: 0.8rem; color: var(--muted);">Sube las fotos de tus tickets para no perderlos.</p>
-    
-    <input type="file" id="subir-recibo" accept="image/*" style="display: none;">
-    <button onclick="document.getElementById('subir-recibo').click()" class="btn-subir" style="background: var(--red); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 15px;">
-        + Añadir Foto de Recibo
-    </button>
-
-    <div id="galeria-recibos" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px;">
-        <!-- Aquí aparecerán las fotos -->
-    </div>
-</div>
