@@ -929,3 +929,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+<!-- Sección de Recibos -->
+<div class="card" style="margin-top: 20px;">
+    <h3>📸 Recibos y Comprobantes</h3>
+    <p style="font-size: 0.8rem; color: var(--muted);">Sube las fotos de tus tickets para no perderlos.</p>
+    
+    <input type="file" id="subir-recibo" accept="image/*" style="display: none;">
+    <button onclick="document.getElementById('subir-recibo').click()" class="btn-subir" style="background: var(--red); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 15px;">
+        + Añadir Foto de Recibo
+    </button>
+
+    <div id="galeria-recibos" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px;">
+        <!-- Aquí aparecerán las fotos -->
+    </div>
+</div>
