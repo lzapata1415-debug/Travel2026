@@ -886,9 +886,114 @@ Día 10 (7 Oct): Girona todo el día ($15 entradas + $40 bodega)
 Día 11 (8 Oct): Collioure y Cerbère Francia ($40)
 Día 12 (9 Oct): Vuelo BCN 7AM, conexión MAD, regreso SJU 12:45PM
 
-PRESUPUESTO TOTAL p/p: $4,17
+PRESUPUESTO TOTAL p/p: $4,173
+- Transportación: $926 | Estadías: $1,181 | Tours: $701 | Comida: $1,035 | Misceláneos: $230
+
+DOCUMENTOS: ETIAS ~$10 (obligatorio 2026) | Seguro viaje $100 (min 30,000€) | Global Entry $120
+
+RESERVAS PENDIENTES: Cepa 21 Pisado Uvas, Sagrada Família (con tiempo), Parque Güell, Casa Batlló, Tablao Flamenco, Montserrat+Codorníu, Escorial, Bernabéu, Prado, Parking TelPark, ETIAS, Seguro, Saldo AirBnB Barcelona (Sep 20)
+
+Responde siempre en español, de forma concisa y útil. Usa emojis apropiados. Si te preguntan sobre costos, sé específico con los números del itinerario. Eres amigable y conoces cada detalle del viaje.`;
+
+async function sendAI() {
+  const input = document.getElementById('ai-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value='';
+  addMessage(msg, 'user');
+  
+  // Formato requerido por la IA de Gemini
+  chatHistory.push({role:'user', parts:[{text: msg}]});
+  
+  document.getElementById('ai-send').disabled=true;
+  document.getElementById('ai-typing').style.display='flex';
+  scrollChat();
+
+  // Memoria segura para tu API Key
+  let apiKey = localStorage.getItem('v2026_gemini_key');
+  if (!apiKey) {
+    apiKey = prompt("🤖 Por seguridad, pega aquí tu API Key gratuita de Google AI Studio para activar el asistente:");
+    if (apiKey) {
+      localStorage.setItem('v2026_gemini_key', apiKey);
+    } else {
+      document.getElementById('ai-typing').style.display='none';
+      document.getElementById('ai-send').disabled=false;
+      addMessage('❌ Necesitas pegar la clave API para usar el asistente.', 'ai');
+      chatHistory.pop();
+      return;
+    }
+  }
+
+  try {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+        contents: chatHistory
+      })
+    });
+    
+    const data = await res.json();
+    
+    if(data.error) {
+        if(data.error.code === 400 || data.error.code === 403) {
+            localStorage.removeItem('v2026_gemini_key'); // Borra la llave si está mal puesta
+        }
+        throw new Error("Clave inválida");
+    }
+
+    const reply = data.candidates[0].content.parts[0].text;
+    
+    chatHistory.push({role:'model', parts:[{text: reply}]});
+    if (chatHistory.length>20) chatHistory=chatHistory.slice(-20);
+    await save('chat-history', chatHistory);
+    
+    document.getElementById('ai-typing').style.display='none';
+    addMessage(reply, 'ai');
+  } catch(e) {
+    document.getElementById('ai-typing').style.display='none';
+    addMessage('❌ Error. Probablemente la clave API es incorrecta. Se ha borrado para que intentes de nuevo al enviar un mensaje.', 'ai');
+    chatHistory.pop();
+  }
+  document.getElementById('ai-send').disabled=false;
+  scrollChat();
+}
+
+function addMessage(text, role) {
+  const msgs = document.getElementById('ai-msgs');
+  const div = document.createElement('div');
+  div.className = `msg msg-${role}`;
+  div.innerHTML = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  scrollChat();
+}
+
+function scrollChat() {
+  const msgs = document.getElementById('ai-msgs');
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function quickQ(q) {
+  document.getElementById('ai-input').value = q;
+  sendAI();
+}
+
+function aiKey(e) {
+  if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendAI(); }
+}
+
+function restoreChat() {
+  if (!chatHistory.length) return;
+  chatHistory.forEach(m => {
+    const text = m.parts ? m.parts[0].text : m.content;
+    const role = m.role === 'user' ? 'user' : 'ai';
+    addMessage(text, role);
+  });
+}
+
 // ══════════════════════════════════════════
-// TOAST
+// TOAST (ALERTAS)
 // ══════════════════════════════════════════
 function toast(msg) {
   const t = document.getElementById('toast');
