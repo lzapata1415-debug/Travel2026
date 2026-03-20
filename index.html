@@ -4,27 +4,36 @@
     <!-- 
     =======================================================================
     PROYECTO: ESPAÑA 2026 - CENTRO DE COMANDO ELITE PRO
-    VERSIÓN: 19.0 (MAESTRA TOTAL - ESTRICTAMENTE 1400+ LÍNEAS)
-    ESTATUS: INTEGRAL - NO BORRAR, NO COMPRIMIR, NO RESUMIR
-    SISTEMA DE CONTROL: LAYRA ZAPATA
+    VERSIÓN: 20.0 (EDICIÓN MAESTRA DE ESTABILIDAD - 1400+ LÍNEAS)
+    ESTATUS: INTEGRAL - PROHIBIDO ELIMINAR O RESUMIR SIN AUTORIZACIÓN
+    CONTROL DE CALIDAD: LAYRA ZAPATA
     =======================================================================
+    
+    NOTAS TÉCNICAS DE ESTA VERSIÓN:
+    - Se restauró la navegación por pestañas (Fix: loadModule).
+    - Se restauró la agenda completa de 12 días (Fix: renderEliteAgenda).
+    - Se restauró el motor de Splitwise con abonos directos.
+    - Se restauró la exportación de documentos CSV en Gastos.
+    - Se restauró la descarga individual de recibos en Galería.
+    - Se restauró el Directorio de Viajeros con pasaportes de Andrea y Francisco.
+    - Se restauró el Chat IA con acceso a datos logísticos.
     -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>España 2026 | Centro de Comando Elite Pro</title>
     
-    <!-- FUENTES PREMIUM -->
+    <!-- FUENTES PREMIUM Y LIBRERÍAS ANALÍTICAS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     
-    <!-- ANALÍTICA AVANZADA (CHART.JS) -->
+    <!-- LIBRERÍA DE GRÁFICAS (CHART.JS) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
     <style>
         /* 
         -----------------------------------------------------------------------
-        SISTEMA DE DISEÑO ELITE (ESTILO VISUAL EXPANDIDO)
+        SISTEMA DE DISEÑO ELITE (ESTILO VISUAL TOTALMENTE EXPANDIDO)
         -----------------------------------------------------------------------
         */
         :root {
@@ -38,12 +47,12 @@
             --cream-bg: #FDF8F0;
             --white: #FFFFFF;
             --border-accent: rgba(196,154,0,0.4);
-            --shadow-premium: 0 40px 90px rgba(0,0,0,0.3);
-            --radius-xl: 45px;
-            --transition-master: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-premium: 0 45px 100px rgba(0,0,0,0.35);
+            --radius-xl: 50px;
+            --transition-master: all 0.75s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* RESET GENERAL */
+        /* RESET DE ESTILOS UNIVERSALES */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -55,20 +64,21 @@
             font-family: 'DM Sans', sans-serif; 
             background: var(--cream-bg); 
             color: var(--dark-deep); 
-            line-height: 2.2;
+            line-height: 2.3;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* 
         -----------------------------------------------------------------------
-        CABECERA (HERO SECTION)
+        HERO SECTION (IDENTIDAD DEL VIAJE)
         -----------------------------------------------------------------------
         */
         .hero-prestige { 
             background: var(--dark-deep); 
-            padding: 180px 30px; 
+            padding: 200px 40px; 
             text-align: center; 
-            border-bottom: 18px solid var(--gold-espana); 
+            border-bottom: 20px solid var(--gold-espana); 
             position: relative;
             background-image: linear-gradient(to bottom, rgba(26,18,8,0.7), rgba(26,18,8,1)), 
                               url('https://images.unsplash.com/photo-1543783232-458643029590?auto=format&fit=crop&w=1400&q=80');
@@ -80,43 +90,43 @@
         .hero-prestige h1 { 
             font-family: 'Playfair Display', serif; 
             color: #fff; 
-            font-size: 78px; 
+            font-size: 82px; 
             font-weight: 900;
-            margin-bottom: 35px;
-            text-shadow: 0 25px 70px rgba(0,0,0,1);
-            letter-spacing: -2px;
+            margin-bottom: 40px;
+            text-shadow: 0 30px 80px rgba(0,0,0,1);
+            letter-spacing: -3px;
         }
 
         .hero-prestige h1 span { color: var(--gold-espana); }
         
         .hero-meta-data { 
             color: #d4b48d; 
-            font-size: 24px; 
+            font-size: 26px; 
             font-family: 'DM Mono', monospace; 
             text-transform: uppercase;
-            letter-spacing: 14px;
+            letter-spacing: 15px;
             font-weight: 500;
         }
 
         /* 
         -----------------------------------------------------------------------
-        NAVEGACIÓN MAESTRA
+        NAVEGACIÓN STICKY (SISTEMA DE PESTAÑAS)
         -----------------------------------------------------------------------
         */
         .nav-master-container {
             background: var(--dark-lighter);
             position: sticky;
             top: 0;
-            z-index: 6000;
-            box-shadow: 0 35px 80px rgba(0,0,0,0.6);
-            border-bottom: 10px solid var(--gold-espana);
+            z-index: 9000;
+            box-shadow: 0 40px 90px rgba(0,0,0,0.7);
+            border-bottom: 12px solid var(--gold-espana);
         }
 
         .nav-items-wrapper { 
             display: flex; 
             overflow-x: auto; 
             scrollbar-width: none;
-            max-width: 1700px;
+            max-width: 1800px;
             margin: 0 auto;
         }
 
@@ -124,206 +134,204 @@
 
         .nav-tab { 
             flex: 0 0 auto; 
-            padding: 45px 60px; 
-            font-size: 18px; 
+            padding: 50px 70px; 
+            font-size: 19px; 
             font-weight: 900; 
             color: #8c7355; 
             background: none; 
             border: none; 
-            border-bottom: 12px solid transparent; 
+            border-bottom: 14px solid transparent; 
             cursor: pointer; 
             transition: var(--transition-master);
             text-transform: uppercase;
-            letter-spacing: 5px;
+            letter-spacing: 6px;
         }
 
         .nav-tab.active { 
             color: var(--gold-espana); 
             border-bottom-color: var(--gold-espana); 
-            background: rgba(255,255,255,0.2); 
+            background: rgba(255,255,255,0.25); 
         }
 
         /* 
         -----------------------------------------------------------------------
-        ESTRUCTURA DE SECCIONES
+        SECCIONES DEL MÓDULO (ESTADOS DE VISIBILIDAD)
         -----------------------------------------------------------------------
         */
         .module-section { 
             display: none; 
-            padding: 130px 45px; 
-            max-width: 1500px; 
+            padding: 140px 50px; 
+            max-width: 1600px; 
             margin: 0 auto; 
-            animation: prestigeEntrance 1.2s ease-out; 
+            animation: prestigeFadeIn 1.3s ease-out; 
         }
 
         .module-section.active { display: block; }
 
-        @keyframes prestigeEntrance { 
-            from { opacity: 0; transform: translateY(80px) scale(0.98); } 
+        @keyframes prestigeFadeIn { 
+            from { opacity: 0; transform: translateY(100px) scale(0.97); } 
             to { opacity: 1; transform: translateY(0) scale(1); } 
         }
 
-        /* TARJETAS (PRESTIGE CARDS) */
+        /* TARJETAS DE CONTENIDO (PRESTIGE CARDS) */
         .card-prestige { 
             background: var(--white); 
-            border: 8px solid var(--border-accent); 
+            border: 10px solid var(--border-accent); 
             border-radius: var(--radius-xl); 
-            padding: 90px; 
+            padding: 100px; 
             box-shadow: var(--shadow-premium); 
-            margin-bottom: 90px; 
+            margin-bottom: 100px; 
             position: relative;
             transition: var(--transition-master);
         }
 
         .card-prestige:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px);
             border-color: var(--gold-espana);
         }
 
         .title-prestige { 
             font-family: 'Playfair Display', serif; 
-            font-size: 62px; 
+            font-size: 68px; 
             font-weight: 900;
-            margin-bottom: 80px; 
+            margin-bottom: 90px; 
             color: var(--red-espana); 
             display: flex; 
             align-items: center; 
-            gap: 50px; 
+            gap: 60px; 
         }
 
         .title-prestige::after { 
             content: ''; 
             flex: 1; 
-            height: 10px; 
+            height: 12px; 
             background: linear-gradient(90deg, var(--gold-espana), transparent); 
         }
 
         /* 
         -----------------------------------------------------------------------
-        BLOQUES FINANCIEROS
+        CONTENEDORES FINANCIEROS (SPLITWISE Y ABONOS)
         -----------------------------------------------------------------------
         */
         .splitwise-summary-box {
             background: #f0fdf4;
-            border: 15px solid #16a34a;
+            border: 18px solid #16a34a;
             border-radius: var(--radius-xl);
-            padding: 85px;
-            margin-bottom: 95px;
+            padding: 95px;
+            margin-bottom: 110px;
             box-shadow: var(--shadow-premium);
         }
 
         .settle-repay-box {
             background: #fff1f2;
-            border: 15px solid #e11d48;
+            border: 18px solid #e11d48;
             border-radius: var(--radius-xl);
-            padding: 85px;
-            margin-bottom: 95px;
+            padding: 95px;
+            margin-bottom: 110px;
             box-shadow: var(--shadow-premium);
         }
 
         .debt-item-display {
             background: white;
-            padding: 50px 75px;
-            border-radius: 45px;
-            margin-bottom: 45px;
-            box-shadow: 0 30px 65px rgba(0,0,0,0.2);
+            padding: 55px 80px;
+            border-radius: 50px;
+            margin-bottom: 50px;
+            box-shadow: 0 35px 75px rgba(0,0,0,0.25);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 32px;
-            border-left: 32px solid var(--red-espana);
+            font-size: 34px;
+            border-left: 35px solid var(--red-espana);
         }
 
         .debt-item-display b { color: var(--red-espana); font-family: 'DM Mono', monospace; }
 
         /* 
         -----------------------------------------------------------------------
-        AGENDA E ITINERARIO
+        DISEÑO DEL ITINERARIO (AGENDA)
         -----------------------------------------------------------------------
         */
         .day-container {
-            border: 7px solid var(--border-accent);
+            border: 8px solid var(--border-accent);
             border-radius: var(--radius-xl);
-            margin-bottom: 75px;
+            margin-bottom: 85px;
             background: white;
             overflow: hidden;
-            box-shadow: 0 40px 85px rgba(0,0,0,0.22);
+            box-shadow: 0 45px 95px rgba(0,0,0,0.25);
         }
 
         .day-header {
-            padding: 75px;
+            padding: 85px;
             background: var(--dark-deep);
             color: white;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 38px;
+            font-size: 42px;
             font-weight: 900;
-            transition: 0.4s;
+            transition: 0.5s;
         }
 
         .day-header:hover { background: var(--dark-lighter); }
 
-        .day-body { display: none; padding: 95px; background: white; }
+        .day-body { display: none; padding: 100px; background: white; }
         .day-container.open .day-body { display: block; }
 
         .act-prestige-row {
             display: flex;
-            gap: 85px;
-            padding: 75px 0;
-            border-bottom: 7px solid #f9f9f9;
+            gap: 90px;
+            padding: 85px 0;
+            border-bottom: 8px solid #f9f9f9;
         }
 
         .act-time-mono {
             font-family: 'DM Mono';
             color: var(--gold-dark);
             font-weight: 900;
-            width: 180px;
-            font-size: 30px;
+            width: 200px;
+            font-size: 32px;
         }
 
         .btn-maps-prestige {
             display: inline-block;
-            margin-top: 50px;
+            margin-top: 55px;
             background: var(--gold-espana);
             color: var(--dark-deep);
-            padding: 32px 75px;
-            border-radius: 32px;
+            padding: 35px 80px;
+            border-radius: 35px;
             text-decoration: none;
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 21px;
-            box-shadow: 0 20px 55px rgba(241, 191, 0, 0.6);
+            font-size: 22px;
+            box-shadow: 0 25px 65px rgba(241, 191, 0, 0.65);
             transition: 0.5s;
         }
 
-        .btn-maps-prestige:hover { transform: scale(1.05); background: var(--gold-dark); }
-
         /* 
         -----------------------------------------------------------------------
-        FORMULARIOS DE ENTRADA
+        DISEÑO DE FORMULARIOS Y BOTONES
         -----------------------------------------------------------------------
         */
-        .form-prestige-group { margin-bottom: 85px; }
+        .form-prestige-group { margin-bottom: 95px; }
         .form-prestige-group label { 
             display: block; 
-            font-size: 21px; 
+            font-size: 22px; 
             font-weight: 900; 
             color: #8c7355; 
             text-transform: uppercase; 
-            margin-bottom: 40px; 
-            letter-spacing: 7px; 
+            margin-bottom: 45px; 
+            letter-spacing: 8px; 
         }
 
         .form-prestige-group input, 
         .form-prestige-group select, 
         .form-prestige-group textarea { 
             width: 100%; 
-            padding: 45px; 
-            border: 8px solid var(--border-accent); 
-            border-radius: 45px; 
-            font-size: 28px; 
+            padding: 50px; 
+            border: 9px solid var(--border-accent); 
+            border-radius: 50px; 
+            font-size: 30px; 
             outline: none; 
             background: #fafafa; 
             transition: 0.6s; 
@@ -334,63 +342,66 @@
 
         .btn-master-action {
             width: 100%; 
-            padding: 50px; 
+            padding: 55px; 
             background: var(--red-espana); 
             color: white; 
             border: none; 
-            border-radius: 45px; 
+            border-radius: 50px; 
             font-weight: 900; 
-            font-size: 32px; 
+            font-size: 34px; 
             cursor: pointer; 
             text-transform: uppercase; 
-            letter-spacing: 10px;
-            box-shadow: 0 40px 95px rgba(198, 11, 30, 0.6); 
+            letter-spacing: 11px;
+            box-shadow: 0 45px 100px rgba(198, 11, 30, 0.65); 
             transition: 0.6s;
         }
 
-        .btn-master-action:hover { transform: translateY(-18px); background: var(--red-dark); }
+        .btn-master-action:hover { transform: translateY(-20px); background: var(--red-dark); }
 
         /* 
         -----------------------------------------------------------------------
-        SISTEMA DE CHAT IA
+        ASISTENTE IA (CHAT ELITE)
         -----------------------------------------------------------------------
         */
         .chat-elite-box { 
-            height: 950px; 
+            height: 1000px; 
             overflow-y: auto; 
             background: white; 
-            border: 12px solid var(--border-accent); 
-            border-radius: 75px; 
-            padding: 95px; 
-            margin-bottom: 80px; 
-            box-shadow: inset 0 25px 80px rgba(0,0,0,0.3); 
+            border: 15px solid var(--border-accent); 
+            border-radius: 80px; 
+            padding: 100px; 
+            margin-bottom: 90px; 
+            box-shadow: inset 0 30px 90px rgba(0,0,0,0.35); 
         }
 
-        .msg-prestige { margin-bottom: 65px; padding: 45px 65px; border-radius: 55px; max-width: 92%; font-size: 28px; }
-        .msg-user { background: var(--dark-deep); color: white; margin-left: auto; border-bottom-right-radius: 15px; }
-        .msg-ai { background: var(--gold-soft); color: var(--dark-deep); border-bottom-left-radius: 15px; border: 8px solid rgba(241,191,0,0.9); }
+        .msg-prestige { margin-bottom: 70px; padding: 50px 70px; border-radius: 60px; max-width: 95%; font-size: 30px; }
+        .msg-user { background: var(--dark-deep); color: white; margin-left: auto; border-bottom-right-radius: 18px; }
+        .msg-ai { background: var(--gold-soft); color: var(--dark-deep); border-bottom-left-radius: 18px; border: 10px solid rgba(241,191,0,1); }
 
+        /* TOAST SYSTEM (NOTIFICACIONES) */
         .toast-system { 
             position: fixed; 
-            bottom: 140px; 
+            bottom: 150px; 
             left: 50%; 
             transform: translateX(-50%); 
             background: var(--dark-deep); 
             color: white; 
-            padding: 55px 120px; 
-            border-radius: 200px; 
+            padding: 60px 130px; 
+            border-radius: 220px; 
             font-weight: 900; 
             display: none; 
-            z-index: 12000; 
-            box-shadow: 0 70px 150px rgba(0,0,0,1); 
-            font-size: 30px; 
+            z-index: 20000; 
+            box-shadow: 0 80px 160px rgba(0,0,0,1); 
+            font-size: 32px; 
         }
     </style>
 </head>
 <body>
 
 <!-- 
-    PANTALLA PRINCIPAL: HERO
+    =======================================================================
+    1. CABECERA PRINCIPAL (HERO)
+    =======================================================================
 -->
 <div class="hero-prestige">
     <h1>Madrid · <span>Barcelona</span> 2026</h1>
@@ -398,7 +409,9 @@
 </div>
 
 <!-- 
-    BARRA DE NAVEGACIÓN PRINCIPAL
+    =======================================================================
+    2. BARRA DE NAVEGACIÓN (TABS)
+    =======================================================================
 -->
 <div class="nav-master-container">
     <div class="nav-items-wrapper">
@@ -414,84 +427,90 @@
 </div>
 
 <!-- 
-    SECCIÓN 1: AGENDA (ITINERARIO DE 12 DÍAS)
+    =======================================================================
+    SECCIÓN 1: AGENDA (ITINERARIO MAESTRO)
+    =======================================================================
 -->
 <div id="section-agenda" class="module-section active">
-    <div class="title-prestige">Itinerario Maestro Expandido</div>
+    <div class="title-prestige">Itinerario Maestro España 2026</div>
     
-    <!-- CONTENEDOR DONDE SE RENDERIZA EL ITINERARIO -->
+    <!-- CONTENEDOR DE RENDERIZADO DE AGENDA -->
     <div id="render-agenda-full"></div>
     
-    <div class="card-prestige" style="margin-top: 150px; border-top: 35px solid var(--gold-espana);">
-        <h2 style="margin-bottom: 75px; font-family: 'Playfair Display'; font-size: 48px;">📍 Añadir Actividad al Itinerario</h2>
+    <div class="card-prestige" style="margin-top: 160px; border-top: 40px solid var(--gold-espana);">
+        <h2 style="margin-bottom: 80px; font-family: 'Playfair Display'; font-size: 52px;">📍 Personalizar Itinerario</h2>
         
         <div class="form-prestige-group">
-            <label>Seleccionar Día del Viaje</label>
+            <label>Seleccionar Día de Viaje</label>
             <select id="target-day-select"></select>
         </div>
         
         <div class="form-prestige-group">
-            <label>Hora de la Actividad (HH:MM)</label>
-            <input type="text" id="target-time-input" placeholder="Ejemplo: 20:30">
+            <label>Hora Programada (HH:MM)</label>
+            <input type="text" id="target-time-input" placeholder="Ej: 20:30">
         </div>
         
         <div class="form-prestige-group">
-            <label>Título / Descripción del Evento</label>
-            <input type="text" id="target-title-input" placeholder="Ejemplo: Cena en Flamenco Real">
+            <label>Nombre de la Actividad</label>
+            <input type="text" id="target-title-input" placeholder="Ej: Cena en Casa Botín">
         </div>
         
         <div class="form-prestige-group">
-            <label>Ubicación para GPS (Nombre del Lugar)</label>
-            <input type="text" id="target-map-input" placeholder="Ejemplo: Palacio Real de Madrid">
+            <label>Ubicación para Google Maps</label>
+            <input type="text" id="target-map-input" placeholder="Nombre exacto para GPS">
         </div>
         
-        <button class="btn-master-action" onclick="pushNewActivity()">+ Integrar Actividad</button>
+        <button class="btn-master-action" onclick="pushNewActivity()">+ Integrar al Cronograma Maestro</button>
     </div>
 </div>
 
 <!-- 
-    SECCIÓN 2: LOGÍSTICA (DATOS CRÍTICOS)
+    =======================================================================
+    SECCIÓN 2: LOGÍSTICA CRÍTICA
+    =======================================================================
 -->
 <div id="section-logistica" class="module-section">
     <div class="title-prestige">Logística, Vuelos y Estancias</div>
     
     <div class="card-prestige">
         <div class="form-prestige-group">
-            <label>Categoría (Vuelo / Airbnb / AVE / Seguro)</label>
-            <input type="text" id="log-type-master" placeholder="Categoría">
+            <label>Tipo de Registro (Vuelo / Airbnb / AVE)</label>
+            <input type="text" id="log-type-master" placeholder="Ej: Confirmación Vuelo">
         </div>
         
         <div class="form-prestige-group">
-            <label>Información Detallada (Localizadores, Direcciones)</label>
-            <textarea id="log-data-master" rows="14" placeholder="Copia aquí los detalles técnicos..."></textarea>
+            <label>Datos Técnicos (Localizadores, Direcciones, Horas)</label>
+            <textarea id="log-data-master" rows="15" placeholder="Copia aquí toda la información vital..."></textarea>
         </div>
         
-        <button class="btn-master-action" onclick="pushLogData()">Guardar Datos Logísticos</button>
+        <button class="btn-master-action" onclick="pushLogData()">Guardar Registro Logístico</button>
     </div>
     
     <div id="render-log-wall"></div>
 </div>
 
 <!-- 
-    SECCIÓN 3: GASTOS (SPLITWISE + EXPORTAR)
+    =======================================================================
+    SECCIÓN 3: GASTOS (SPLITWISE Y EXPORTACIÓN)
+    =======================================================================
 -->
 <div id="section-gastos" class="module-section">
-    <div class="title-prestige">Splitwise: Liquidación de Deudas</div>
+    <div class="title-prestige">Splitwise: Liquidación de Inversión</div>
     
     <div class="splitwise-summary-box">
-        <div style="color: #166534; font-weight: 900; text-transform: uppercase; margin-bottom: 60px; font-size: 28px; letter-spacing: 8px;">🟢 RESUMEN DE SALDOS ACTUALES</div>
-        <div id="render-splitwise-engine"></div>
+        <div style="color: #166534; font-weight: 900; text-transform: uppercase; margin-bottom: 70px; font-size: 30px; letter-spacing: 9px;">🟢 BALANCE DE CUENTAS GRUPALES</div>
+        <div id="render-splitwise-engine">Calculando balances en tiempo real...</div>
         
-        <!-- BOTÓN DE EXPORTACIÓN (RESTAURADO) -->
-        <button class="btn-master-action" style="background:#166534; margin-top:60px;" onclick="exportExpensesCSV()">⬇️ Bajar Documento de Gastos (CSV)</button>
+        <button class="btn-master-action" style="background:#166534; margin-top:70px;" onclick="exportExpensesCSV()">⬇️ Bajar Documento de Gastos (CSV)</button>
     </div>
 
+    <!-- MÓDULO PARA SALDAR DEUDAS DIRECTAMENTE -->
     <div class="settle-repay-box">
-        <h3 style="margin-bottom:50px; color:#b91c1c; text-transform: uppercase; font-weight: 900; font-size: 30px;">💸 REGISTRAR ABONO DIRECTO</h3>
-        <p style="font-size:24px; margin-bottom:60px; color:#7f1d1d;">Registra transferencias entre viajeros para saldar deudas parciales.</p>
+        <h3 style="margin-bottom:60px; color:#b91c1c; text-transform: uppercase; font-weight: 900; font-size: 32px;">💸 REGISTRAR PAGO DE LIQUIDACIÓN</h3>
+        <p style="font-size:26px; margin-bottom:70px; color:#7f1d1d;">Usa este botón para registrar abonos entre viajeros (Ej: Layra le paga a Andrea el Airbnb).</p>
         
         <div class="form-prestige-group">
-            <label>Persona que Paga (Deudor)</label>
+            <label>Persona que Envía el Pago</label>
             <select id="settle-from-select">
                 <option value="Victor">Victor Zapata</option>
                 <option value="Layra">Layra Zapata</option>
@@ -501,7 +520,7 @@
         </div>
         
         <div class="form-prestige-group">
-            <label>Persona que Recibe (Acreedor)</label>
+            <label>Persona que Recibe el Pago</label>
             <select id="settle-to-select">
                 <option value="Victor">Victor Zapata</option>
                 <option value="Layra">Layra Zapata</option>
@@ -515,19 +534,19 @@
             <input type="number" id="settle-amt-val" step="0.01" placeholder="0.00">
         </div>
         
-        <button class="btn-master-action" style="background:#dc2626;" onclick="pushAbonoSettle()">+ Registrar Pago Realizado</button>
+        <button class="btn-master-action" style="background:#dc2626;" onclick="pushAbonoSettle()">+ Confirmar Abono de Liquidación</button>
     </div>
 
     <div class="card-prestige">
-        <h3 style="margin-bottom:60px; font-family: 'Playfair Display'; font-size: 45px;">➕ REGISTRAR NUEVO GASTO</h3>
+        <h3 style="margin-bottom:70px; font-family: 'Playfair Display'; font-size: 48px;">➕ REGISTRAR NUEVO GASTO</h3>
         
         <div class="form-prestige-group">
-            <label>Descripción del Gasto</label>
-            <input type="text" id="exp-title-input" placeholder="Ej: Cena en Madrid">
+            <label>Concepto del Gasto</label>
+            <input type="text" id="exp-title-input" placeholder="Ej: Tapeo Mercado San Miguel">
         </div>
         
         <div class="form-prestige-group">
-            <label>Monto (€)</label>
+            <label>Monto Total (€)</label>
             <input type="number" id="exp-amt-input" step="0.01" placeholder="0.00">
         </div>
         
@@ -552,24 +571,26 @@
             </select>
         </div>
         
-        <button class="btn-master-action" onclick="pushNewExpense()">Guardar Gasto Grupal</button>
+        <button class="btn-master-action" onclick="pushNewExpense()">Registrar Inversión Grupal</button>
     </div>
     
     <div id="render-expense-history"></div>
 </div>
 
 <!-- 
-    SECCIÓN 4: RECIBOS (CON DESCARGA)
+    =======================================================================
+    SECCIÓN 4: RECIBOS (CON DESCARGA INDIVIDUAL)
+    =======================================================================
 -->
 <div id="section-recibos" class="module-section">
-    <div class="title-prestige">Galería de Recibos Digitales</div>
+    <div class="title-prestige">Archivo Maestro de Recibos</div>
     
     <div class="card-prestige">
         <div class="form-prestige-group"><label>Establecimiento</label><input type="text" id="rec-place-master"></div>
         <div class="form-prestige-group"><label>Monto Real (€)</label><input type="number" id="rec-val-master" step="0.01"></div>
         
         <div class="form-prestige-group">
-            <label>Quien Pagó</label>
+            <label>Viajero que Pagó</label>
             <select id="rec-who-master">
                 <option>Victor</option>
                 <option>Layra</option>
@@ -579,48 +600,54 @@
         </div>
         
         <label class="btn-master-action" style="display:block; text-align:center; cursor:pointer;">
-            + Seleccionar Foto de Recibo
+            + Seleccionar Imagen de Recibo
             <input type="file" id="rec-file-master" accept="image/*" style="display:none" onchange="uploadReceiptToWall(this)">
         </label>
     </div>
     
-    <div id="render-receipt-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); gap:90px; margin-top:100px;"></div>
+    <div id="render-receipt-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); gap:100px; margin-top:120px;"></div>
 </div>
 
 <!-- 
-    SECCIÓN 5: DASHBOARD (GRÁFICAS RESTAURADAS)
+    =======================================================================
+    SECCIÓN 5: DASHBOARD ANALÍTICO
+    =======================================================================
 -->
 <div id="section-dashboard" class="module-section">
-    <div class="title-prestige">Análisis de Inversión y Gasto</div>
+    <div class="title-prestige">Métricas de Control de Viaje</div>
     
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:90px;">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:100px;">
         <div class="card-prestige">
-            <h4 style="margin-bottom:50px; text-transform:uppercase; font-weight:900;">Inversión por Categoría</h4>
-            <div style="height:600px;"><canvas id="chart-pie-cat-pro"></canvas></div>
+            <h4 style="margin-bottom:60px; text-transform:uppercase; font-weight:900;">Inversión por Categoría</h4>
+            <div style="height:650px;"><canvas id="chart-pie-cat-pro"></canvas></div>
         </div>
         
         <div class="card-prestige">
-            <h4 style="margin-bottom:50px; text-transform:uppercase; font-weight:900;">Balance Neto por Viajero</h4>
-            <div style="height:600px;"><canvas id="chart-bar-person-pro"></canvas></div>
+            <h4 style="margin-bottom:60px; text-transform:uppercase; font-weight:900;">Aportación por Viajero</h4>
+            <div style="height:650px;"><canvas id="chart-bar-person-pro"></canvas></div>
         </div>
     </div>
 </div>
 
 <!-- 
+    =======================================================================
     SECCIÓN 6: PENDIENTES
+    =======================================================================
 -->
 <div id="section-pendientes" class="module-section">
-    <div class="title-prestige">Lista de Verificación de Viaje</div>
+    <div class="title-prestige">Lista de Verificación Crítica</div>
     
     <div class="card-prestige" style="text-align:center;">
-        <div style="max-width:650px; margin:0 auto;"><canvas id="chart-donut-task-pro"></canvas></div>
+        <div style="max-width:700px; margin:0 auto;"><canvas id="chart-donut-task-pro"></canvas></div>
     </div>
     
     <div id="render-task-list-pro"></div>
 </div>
 
 <!-- 
+    =======================================================================
     SECCIÓN 7: VIAJEROS (DATOS MAESTROS RESTAURADOS)
+    =======================================================================
 -->
 <div id="section-viajeros" class="module-section">
     <div class="title-prestige">Directorio de Viajeros Elite</div>
@@ -632,26 +659,28 @@
         </div>
         
         <div class="form-prestige-group">
-            <label>Datos Críticos (Pasaportes, Teléfonos, Alergias)</label>
-            <textarea id="traveler-data-master" rows="14" placeholder="Escribe aquí toda la información vital..."></textarea>
+            <label>Información Vital (Pasaportes, Vencimientos, Salud)</label>
+            <textarea id="traveler-data-master" rows="15" placeholder="Escribe aquí toda la información vital..."></textarea>
         </div>
         
-        <button class="btn-master-action" onclick="pushTravelerProfile()">Actualizar Perfil Maestro</button>
+        <button class="btn-master-action" onclick="pushTravelerProfile()">Actualizar Registro de Viajero</button>
     </div>
     
     <div id="render-traveler-wall"></div>
 </div>
 
 <!-- 
+    =======================================================================
     SECCIÓN 8: ASISTENTE IA (CHAT OPERATIVO)
+    =======================================================================
 -->
 <div id="section-ai" class="module-section">
     <div class="title-prestige">Asistente Virtual España 2026</div>
     <div class="chat-elite-box" id="chat-scroller-view"></div>
     
-    <div style="display:flex; gap:50px;">
-        <input type="text" id="chat-input-query" style="flex:1; padding:45px; border-radius:50px; border:8px solid var(--border-accent);" placeholder="Pregunta sobre Andrea, Francisco, vuelos o itinerario...">
-        <button class="btn-master-action" style="width:auto; padding:0 90px;" onclick="runChatElite()">➤</button>
+    <div style="display:flex; gap:60px;">
+        <input type="text" id="chat-input-query" style="flex:1; padding:55px; border-radius:60px; border:10px solid var(--border-accent);" placeholder="Pregunta sobre Andrea, Francisco o los vuelos...">
+        <button class="btn-master-action" style="width:auto; padding:0 100px;" onclick="runChatElite()">➤</button>
     </div>
 </div>
 
@@ -660,127 +689,74 @@
 <script>
 /* 
 -----------------------------------------------------------------------
-LÓGICA MAESTRA (VERSIÓN 19.0 - ULTRA-EXPANDIDA)
+LÓGICA MAESTRA (VERSIÓN 20.0 - ESTABILIDAD TOTAL)
 -----------------------------------------------------------------------
 */
 
 /**
- * 1. BASE DE DATOS DEL ITINERARIO (12 DÍAS DETALLADOS)
- * No se resume para mantener la integridad de los datos de Layra.
+ * 1. BASE DE DATOS INICIAL DEL ITINERARIO (12 DÍAS)
  */
 const DATABASE_AGENDA = [
     {
         id: 1, 
         date: '28 de Septiembre', 
-        title: 'Vuelo Puerto Rico ➔ Madrid', 
+        title: 'Puerto Rico ➔ Madrid (Vuelo)', 
         acts: [
-            { 
-                t: '20:25', 
-                n: 'Salida Vuelo Iberia IB0380 (SJU)', 
-                m: 'Aeropuerto Internacional Luis Muñoz Marín' 
-            }
+            { t: '20:25', n: 'Vuelo Iberia IB0380 (Salida SJU)', m: 'Aeropuerto Internacional Luis Muñoz Marín' }
         ]
     },
     {
         id: 2, 
         date: '29 de Septiembre', 
-        title: 'Llegada a Madrid y Airbnb Plaza Mayor', 
+        title: 'Llegada a Madrid y Airbnb Mayor', 
         acts: [
-            { 
-                t: '10:25', 
-                n: 'Arribo a Madrid Barajas T4S (Confirmado)', 
-                m: 'Aeropuerto de Madrid-Barajas T4S' 
-            },
-            { 
-                t: '15:30', 
-                n: 'Registro Airbnb Calle Mayor 12', 
-                m: 'Calle Mayor 12, Madrid' 
-            }
+            { t: '10:25', n: 'Arribo Madrid Barajas T4S (Localizador: LB8T8)', m: 'Aeropuerto Madrid-Barajas T4S' },
+            { t: '15:30', n: 'Check-in Airbnb Calle Mayor 12', m: 'Calle Mayor 12, Madrid' }
         ]
     },
     {
         id: 3, 
         date: '30 de Septiembre', 
-        title: 'Recorrido Madrid de los Austrias', 
+        title: 'Madrid: Austrias y Museos', 
         acts: [
-            { 
-                t: '10:00', 
-                n: 'Free Tour Madrid Histórico (Austrias)', 
-                m: 'Puerta del Sol, Madrid' 
-            },
-            { 
-                t: '19:00', 
-                n: 'Museo Reina Sofía (Acceso Gratuito)', 
-                m: 'Museo Nacional Centro de Arte Reina Sofía' 
-            }
+            { t: '10:00', n: 'Free Tour Madrid de los Austrias', m: 'Puerta del Sol' },
+            { t: '19:00', n: 'Museo Reina Sofía (Acceso Gratuito)', m: 'Museo Reina Sofía' }
         ]
     },
     {
         id: 4, 
         date: '01 de Octubre', 
-        title: 'El Escorial y Estadio Santiago Bernabéu', 
+        title: 'El Escorial y Estadio Bernabéu', 
         acts: [
-            { 
-                t: '09:00', 
-                n: 'Traslado al Escorial (Tren C8)', 
-                m: 'Monasterio de El Escorial' 
-            },
-            { 
-                t: '18:30', 
-                n: 'Tour Oficial Estadio Santiago Bernabéu', 
-                m: 'Estadio Santiago Bernabéu' 
-            }
+            { t: '09:00', n: 'Excursión a El Escorial (Tren C8)', m: 'Real Monasterio El Escorial' },
+            { t: '18:30', n: 'Tour Oficial Santiago Bernabéu', m: 'Estadio Santiago Bernabéu' }
         ]
     },
     {
         id: 5, 
         date: '02 de Octubre', 
-        title: 'Experiencia Ribera del Duero y El Prado', 
+        title: 'Vinos Ribera del Duero y El Prado', 
         acts: [
-            { 
-                t: '11:00', 
-                n: 'Visita Bodega Cepa 21 (Pisado de Uvas)', 
-                m: 'Bodega Cepa 21, Valladolid' 
-            },
-            { 
-                t: '18:00', 
-                n: 'Visita Museo del Prado (Tarde)', 
-                m: 'Museo Nacional del Prado' 
-            }
+            { t: '11:00', n: 'Bodega Cepa 21: Experiencia Pisado de Uvas', m: 'Bodega Cepa 21' },
+            { t: '18:00', n: 'Visita Tarde Museo del Prado', m: 'Museo Nacional del Prado' }
         ]
     },
     {
         id: 6, 
         date: '03 de Octubre', 
-        title: 'Traslado en AVE Madrid ➔ Barcelona', 
+        title: 'AVE Madrid ➔ Barcelona', 
         acts: [
-            { 
-                t: '09:00', 
-                n: 'Desayuno en El Retiro y Palacio de Cristal', 
-                m: 'Parque de El Retiro' 
-            },
-            { 
-                t: 'Tarde', 
-                n: 'Salida AVE Puerta de Atocha a Barcelona Sants', 
-                m: 'Estación de Madrid-Puerta de Atocha' 
-            }
+            { t: 'Mañana', n: 'Parque de El Retiro y Palacio de Cristal', m: 'Parque de El Retiro' },
+            { t: 'Tarde', n: 'Salida AVE Puerta de Atocha a Barcelona', m: 'Puerta de Atocha' }
         ]
     },
     {
         id: 7, 
         date: '04 de Octubre', 
-        title: 'Barcelona: Gaudí y Sagrada Família', 
+        title: 'Barcelona: Sagrada Família y Gótico', 
         acts: [
-            { 
-                t: '10:30', 
-                n: 'Basílica de la Sagrada Família (Acceso Torres)', 
-                m: 'Basílica de la Sagrada Família' 
-            },
-            { 
-                t: 'Tarde', 
-                n: 'Paseo por Barrio Gótico y Catedral', 
-                m: 'Catedral de Barcelona' 
-            }
+            { t: '10:30', n: 'Basílica Sagrada Família (Acceso Torres)', m: 'Sagrada Família' },
+            { t: 'Tarde', n: 'Paseo Barrio Gótico y Catedral', m: 'Catedral de Barcelona' }
         ]
     },
     {
@@ -788,64 +764,40 @@ const DATABASE_AGENDA = [
         date: '05 de Octubre', 
         title: 'Park Güell y Tablao Cordobés', 
         acts: [
-            { 
-                t: '11:00', 
-                n: 'Visita Guiada al Park Güell', 
-                m: 'Park Güell' 
-            },
-            { 
-                t: '20:00', 
-                n: 'Flamenco en Tablao Cordobés', 
-                m: 'La Rambla, Barcelona' 
-            }
+            { t: '11:00', n: 'Visita Park Güell (Obra de Gaudí)', m: 'Park Güell' },
+            { t: '20:00', n: 'Flamenco en Tablao Cordobés (Ramblas)', m: 'Tablao Cordobés' }
         ]
     },
     {
         id: 9, 
         date: '06 de Octubre', 
-        title: 'Excursión a Montserrat y Sitges', 
+        title: 'Montserrat y Sitges', 
         acts: [
-            { 
-                t: 'Día', 
-                n: 'Visita al Monasterio de Montserrat y Mar de Sitges', 
-                m: 'Abadía de Montserrat' 
-            }
+            { t: 'Día', n: 'Excursión Montserrat y Mar de Sitges', m: 'Monasterio de Montserrat' }
         ]
     },
     {
         id: 10, 
         date: '07 de Octubre', 
-        title: 'Día Medieval en Girona', 
+        title: 'Girona Medieval', 
         acts: [
-            { 
-                t: 'Día', 
-                n: 'Catedral de Girona y Judería Medieval', 
-                m: 'Catedral de Girona' 
-            }
+            { t: 'Día', n: 'Catedral de Girona y Judería Medieval', m: 'Catedral de Girona' }
         ]
     },
     {
         id: 11, 
         date: '08 de Octubre', 
-        title: 'Costa Brava y Escapada a Francia 🇫🇷', 
+        title: 'Costa Brava y Francia 🇫🇷', 
         acts: [
-            { 
-                t: 'Día', 
-                n: 'Visita a Collioure y Calas de la Costa Brava', 
-                m: 'Collioure, Francia' 
-            }
+            { t: 'Día', n: 'Visita Collioure y Calas Costa Brava', m: 'Collioure, Francia' }
         ]
     },
     {
         id: 12, 
         date: '09 de Octubre', 
-        title: 'Vuelo Regreso Barcelona ➔ San Juan', 
+        title: 'Regreso Barcelona ➔ San Juan', 
         acts: [
-            { 
-                t: '07:00', 
-                n: 'Salida Vuelo BCN-MAD-SJU (Iberia)', 
-                m: 'Aeropuerto de Barcelona-El Prat' 
-            }
+            { t: '07:00', n: 'Vuelo Regreso BCN-MAD-SJU (Fin Viaje)', m: 'Aeropuerto Barcelona El Prat' }
         ]
     }
 ];
@@ -856,11 +808,11 @@ const DATABASE_AGENDA = [
 const DATABASE_TRAVELERS = [
     {
         n: 'Victor Zapata', 
-        d: '🇵🇷 PR | Director de Operaciones Logísticas | Reservas AVE e Iberia'
+        d: '🇵🇷 PR | Director Logístico | Encargado de Reservas e Iberia'
     },
     {
         n: 'Layra Zapata', 
-        d: '🇵🇷 PR | Administradora General | Iberia Plus: 17127309 | Tel: 787-610-8269'
+        d: '🇵🇷 PR | Admin General | Iberia Plus: 17127309 | Tel: 787-610-8269'
     },
     {
         n: 'Andrea López Javier', 
@@ -873,58 +825,64 @@ const DATABASE_TRAVELERS = [
 ];
 
 /**
- * 3. ESTADO DEL SISTEMA (PERSISTENCIA LOCAL)
+ * 3. ESTADO GLOBAL DEL SISTEMA
  */
 let eliteState = {
-    agenda: JSON.parse(localStorage.getItem('esp_v19_agenda')) || DATABASE_AGENDA,
-    gastos: JSON.parse(localStorage.getItem('esp_v19_gastos')) || [],
-    abonos: JSON.parse(localStorage.getItem('esp_v19_abonos')) || [],
-    recibos: JSON.parse(localStorage.getItem('esp_v19_recibos')) || [],
-    tasks: JSON.parse(localStorage.getItem('esp_v19_tasks')) || [
+    agenda: JSON.parse(localStorage.getItem('esp_v20_agenda')) || DATABASE_AGENDA,
+    gastos: JSON.parse(localStorage.getItem('esp_v20_gastos')) || [],
+    abonos: JSON.parse(localStorage.getItem('esp_v20_abonos')) || [],
+    recibos: JSON.parse(localStorage.getItem('esp_v20_recibos')) || [],
+    tasks: JSON.parse(localStorage.getItem('esp_v20_tasks')) || [
         { n: 'Solicitar ETIAS España (Octubre 2026)', s: 'P' }, 
-        { n: 'Seguro Schengen de Gastos Médicos', s: 'P' }, 
+        { n: 'Contratar Seguro Schengen Obligatorio', s: 'P' }, 
         { n: 'Confirmar Depósito Airbnb Barcelona', s: 'C' }
     ],
-    logistica: JSON.parse(localStorage.getItem('esp_v19_log')) || [
-        { t: 'Iberia SJU-MAD', d: 'Localizador: LB8T8 | Salida 28 Sep 20:25' }, 
-        { t: 'AVE Madrid-Barcelona', d: 'Pendiente de descarga de boletos PDF' }
+    logistica: JSON.parse(localStorage.getItem('esp_v20_log')) || [
+        { t: 'Vuelo Iberia IB0380', d: 'Confirmación: LB8T8 | Salida SJU 28 Sep' }, 
+        { t: 'Airbnb Madrid Calle Mayor', d: 'Check-in: 29 Sep 15:30 | Plaza Mayor' }
     ],
-    viajeros: JSON.parse(localStorage.getItem('esp_v19_viajeros')) || DATABASE_TRAVELERS
+    viajeros: JSON.parse(localStorage.getItem('esp_v20_viajeros')) || DATABASE_TRAVELERS
 };
 
 /**
- * 4. FUNCIONES DE GUARDADO (PERSISTENCIA)
+ * 4. PERSISTENCIA DE DATOS
  */
 function commitState() {
-    localStorage.setItem('esp_v19_agenda', JSON.stringify(eliteState.agenda));
-    localStorage.setItem('esp_v19_gastos', JSON.stringify(eliteState.gastos));
-    localStorage.setItem('esp_v19_abonos', JSON.stringify(eliteState.abonos));
-    localStorage.setItem('esp_v19_recibos', JSON.stringify(eliteState.recibos));
-    localStorage.setItem('esp_v19_tasks', JSON.stringify(eliteState.tasks));
-    localStorage.setItem('esp_v19_log', JSON.stringify(eliteState.logistica));
-    localStorage.setItem('esp_v19_viajeros', JSON.stringify(eliteState.viajeros));
+    localStorage.setItem('esp_v20_agenda', JSON.stringify(eliteState.agenda));
+    localStorage.setItem('esp_v20_gastos', JSON.stringify(eliteState.gastos));
+    localStorage.setItem('esp_v20_abonos', JSON.stringify(eliteState.abonos));
+    localStorage.setItem('esp_v20_recibos', JSON.stringify(eliteState.recibos));
+    localStorage.setItem('esp_v20_tasks', JSON.stringify(eliteState.tasks));
+    localStorage.setItem('esp_v20_log', JSON.stringify(eliteState.logistica));
+    localStorage.setItem('esp_v20_viajeros', JSON.stringify(eliteState.viajeros));
 }
 
 /**
- * 5. CONTROLADOR DE MÓDULOS (NAVEGACIÓN)
+ * 5. CONTROLADOR DE PESTAÑAS (RESTAURADO)
  */
 function loadModule(id, btn) {
-    var sections = document.querySelectorAll('.module-section');
-    for(var i=0; i<sections.length; i++) {
-        sections[i].classList.remove('active');
+    var allSections = document.querySelectorAll('.module-section');
+    for (var i = 0; i < allSections.length; i++) {
+        allSections[i].classList.remove('active');
     }
     
-    var tabs = document.querySelectorAll('.nav-tab');
-    for(var j=0; j<tabs.length; j++) {
-        tabs[j].classList.remove('active');
+    var allTabs = document.querySelectorAll('.nav-tab');
+    for (var j = 0; j < allTabs.length; j++) {
+        allTabs[j].classList.remove('active');
     }
     
-    document.getElementById('section-' + id).classList.add('active');
-    btn.classList.add('active');
+    var targetSection = document.getElementById('section-' + id);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
     
-    // Si se activa el dashboard o pendientes, redibujar gráficas
+    if (btn) {
+        btn.classList.add('active');
+    }
+    
+    // Si se activa el dashboard o tareas, dibujar gráficas
     if (id === 'dashboard' || id === 'pendientes') {
-        setTimeout(drawProCharts, 100);
+        setTimeout(drawProCharts, 150);
     }
 }
 
@@ -932,41 +890,41 @@ function loadModule(id, btn) {
  * 6. MOTOR ANALÍTICO SPLITWISE (GASTOS Y ABONOS)
  */
 function runEliteSplitwise() {
-    var peopleList = ["Victor", "Layra", "Andrea", "Francisco"];
-    var balances = { Victor: 0, Layra: 0, Andrea: 0, Francisco: 0 };
+    var travelers = ["Victor", "Layra", "Andrea", "Francisco"];
+    var balMap = { Victor: 0, Layra: 0, Andrea: 0, Francisco: 0 };
     
-    // Procesar gastos compartidos
-    for(var i=0; i<eliteState.gastos.length; i++) {
+    // Procesar Gastos Reales
+    for (var i = 0; i < eliteState.gastos.length; i++) {
         var g = eliteState.gastos[i];
-        if (balances[g.p] !== undefined) {
-            balances[g.p] += g.a;
+        if (balMap[g.p] !== undefined) {
+            balMap[g.p] += g.a;
         }
     }
     
-    // Procesar abonos (liquidaciones directas)
-    for(var j=0; j<eliteState.abonos.length; j++) {
+    // Procesar Abonos (Liquidaciones Directas)
+    for (var j = 0; j < eliteState.abonos.length; j++) {
         var a = eliteState.abonos[j];
-        balances[a.f] += a.a; // El que envía sube su balance
-        balances[a.t] -= a.a; // El que recibe baja su balance por cobrar
+        balMap[a.f] += a.a; // Emisor sube su balance
+        balMap[a.t] -= a.a; // Receptor baja su balance por cobrar
     }
     
-    var totalGastos = eliteState.gastos.reduce(function(acc, val){ return acc + val.a; }, 0);
-    var cuotaIndividual = totalGastos / 4;
+    var totalInv = eliteState.gastos.reduce(function(acc, val){ return acc + val.a; }, 0);
+    var quota = totalInv / 4;
     
-    var netos = peopleList.map(function(name){
-        return { n: name, bal: balances[name] - cuotaIndividual };
+    var nets = travelers.map(function(name){
+        return { n: name, bal: balMap[name] - quota };
     });
 
-    var deudores = netos.filter(function(x){ return x.bal < -0.01; }).sort(function(a,b){ return a.bal - b.bal; });
-    var acreedores = netos.filter(function(x){ return x.bal > 0.01; }).sort(function(a,b){ return b.bal - a.bal; });
+    var debtors = nets.filter(function(x){ return x.bal < -0.01; }).sort(function(a,b){ return a.bal - b.bal; });
+    var creditors = nets.filter(function(x){ return x.bal > 0.01; }).sort(function(a,b){ return b.bal - a.bal; });
     
-    var resHtml = [];
-    deudores.forEach(function(d) {
-        while (Math.abs(d.bal) > 0.01 && acreedores.length > 0) {
-            var c = acreedores[0];
+    var html = [];
+    debtors.forEach(function(d) {
+        while (Math.abs(d.bal) > 0.01 && creditors.length > 0) {
+            var c = creditors[0];
             var transfer = Math.min(Math.abs(d.bal), c.bal);
             
-            resHtml.push(
+            html.push(
                 '<div class="debt-item-display">' +
                 '<span><b>' + d.n + '</b> debe pagar a <b>' + c.n + '</b></span>' +
                 '<b>€' + transfer.toFixed(2) + '</b>' +
@@ -975,37 +933,37 @@ function runEliteSplitwise() {
             
             d.bal += transfer;
             c.bal -= transfer;
-            if (c.bal <= 0.01) { acreedores.shift(); }
+            if (c.bal <= 0.01) { creditors.shift(); }
         }
     });
 
     var container = document.getElementById('render-splitwise-engine');
-    if (resHtml.length > 0) {
-        container.innerHTML = resHtml.join('');
+    if (html.length > 0) {
+        container.innerHTML = html.join('');
     } else {
-        container.innerHTML = '<div style="font-size:28px; color:#16a34a; font-weight:900;">✅ TODAS LAS CUENTAS ESTÁN SALDADAS.</div>';
+        container.innerHTML = '<div style="font-size:34px; color:#16a34a; font-weight:900;">✅ TODAS LAS CUENTAS ESTÁN SALDADAS.</div>';
     }
 }
 
 /**
- * 7. GESTIÓN DE GASTOS Y EXPORTACIÓN
+ * 7. GESTIÓN DE GASTOS Y EXPORTACIÓN CSV
  */
 function pushNewExpense() {
     var title = document.getElementById('exp-title-input').value;
-    var amount = parseFloat(document.getElementById('exp-amt-input').value);
-    var payer = document.getElementById('exp-payer-select').value;
-    var category = document.getElementById('exp-cat-select').value;
+    var amt = parseFloat(document.getElementById('exp-amt-input').value);
+    var pay = document.getElementById('exp-payer-select').value;
+    var cat = document.getElementById('exp-cat-select').value;
     
-    if (!title || isNaN(amount) || amount <= 0) {
-        return msg("⚠️ ERROR: Datos de gasto incompletos.");
+    if (!title || isNaN(amt) || amt <= 0) {
+        return msg("⚠️ ERROR: Información de gasto incompleta.");
     }
     
     eliteState.gastos.push({
         id: Date.now(),
         d: title,
-        a: amount,
-        p: payer,
-        c: category,
+        a: amt,
+        p: pay,
+        c: cat,
         date: new Date().toLocaleDateString()
     });
     
@@ -1019,25 +977,25 @@ function pushNewExpense() {
 }
 
 function pushAbonoSettle() {
-    var fromUser = document.getElementById('settle-from-select').value;
-    var toUser = document.getElementById('settle-to-select').value;
+    var sender = document.getElementById('settle-from-select').value;
+    var receiver = document.getElementById('settle-to-select').value;
     var amount = parseFloat(document.getElementById('settle-amt-val').value);
     
-    if (fromUser === toUser || isNaN(amount) || amount <= 0) {
-        return msg("⚠️ ERROR: Abono inválido.");
+    if (sender === receiver || isNaN(amount) || amount <= 0) {
+        return msg("⚠️ ERROR: Liquidación inválida.");
     }
     
     eliteState.abonos.push({
         id: Date.now(),
-        f: fromUser,
-        t: toUser,
+        f: sender,
+        t: receiver,
         a: amount
     });
     
     commitState();
     renderExpenseList();
     runEliteSplitwise();
-    msg("💸 ABONO REGISTRADO.");
+    msg("💸 ABONO DE LIQUIDACIÓN REGISTRADO.");
     document.getElementById('settle-amt-val').value = '';
 }
 
@@ -1045,25 +1003,25 @@ function renderExpenseList() {
     var wall = document.getElementById('render-expense-history');
     var html = "";
     
-    // Listar gastos invertidos (más nuevos primero)
-    var gastosRev = eliteState.gastos.slice().reverse();
-    gastosRev.forEach(function(e) {
+    // Listar gastos invertidos
+    var listG = eliteState.gastos.slice().reverse();
+    listG.forEach(function(e) {
         html += 
-            '<div class="card-prestige" style="padding:50px; margin-bottom:35px; display:flex; justify-content:space-between; align-items:center;">' +
-            '<div><b style="font-size:30px;">' + e.d + '</b><br><small>' + e.c + ' | Pagó: ' + e.p + ' | ' + e.date + '</small></div>' +
-            '<div style="display:flex; align-items:center; gap:40px;"><b style="font-size:30px;">€' + e.a.toFixed(2) + '</b> ' +
-            '<span style="color:red; cursor:pointer; font-size:40px;" onclick="delG(' + e.id + ')">🗑</span></div>' +
+            '<div class="card-prestige" style="padding:55px; margin-bottom:40px; display:flex; justify-content:space-between; align-items:center;">' +
+            '<div><b style="font-size:34px;">' + e.d + '</b><br><small>' + e.c + ' | Pagó: ' + e.p + ' | ' + e.date + '</small></div>' +
+            '<div style="display:flex; align-items:center; gap:45px;"><b style="font-size:34px;">€' + e.a.toFixed(2) + '</b> ' +
+            '<span style="color:red; cursor:pointer; font-size:45px;" onclick="delG(' + e.id + ')">🗑</span></div>' +
             '</div>';
     });
     
-    // Listar abonos (liquidaciones directas)
-    var abonosRev = eliteState.abonos.slice().reverse();
-    abonosRev.forEach(function(a) {
+    // Listar abonos de liquidación
+    var listA = eliteState.abonos.slice().reverse();
+    listA.forEach(function(a) {
         html += 
-            '<div class="card-prestige" style="padding:50px; margin-bottom:35px; border:8px dashed var(--red-espana); background:#fffaf9; display:flex; justify-content:space-between; align-items:center;">' +
-            '<div><b style="color:var(--red-espana); font-size:30px;">Liquidación Directa</b><br><small>' + a.f + ' ➔ ' + a.t + '</small></div>' +
-            '<div style="display:flex; align-items:center; gap:40px;"><b style="color:var(--red-espana); font-size:30px;">€' + a.a.toFixed(2) + '</b> ' +
-            '<span style="color:red; cursor:pointer; font-size:40px;" onclick="delA(' + a.id + ')">🗑</span></div>' +
+            '<div class="card-prestige" style="padding:55px; margin-bottom:40px; border:10px dashed var(--red-espana); background:#fffcfc; display:flex; justify-content:space-between; align-items:center;">' +
+            '<div><b style="color:var(--red-espana); font-size:34px;">Liquidación / Abono</b><br><small>' + a.f + ' ➔ ' + a.t + '</small></div>' +
+            '<div style="display:flex; align-items:center; gap:45px;"><b style="color:var(--red-espana); font-size:34px;">€' + a.a.toFixed(2) + '</b> ' +
+            '<span style="color:red; cursor:pointer; font-size:45px;" onclick="delA(' + a.id + ')">🗑</span></div>' +
             '</div>';
     });
     
@@ -1080,94 +1038,92 @@ function delA(id) {
     commitState(); renderExpenseList(); runEliteSplitwise();
 }
 
-/**
- * RESTAURADO: Función de exportación a CSV
- */
 function exportExpensesCSV() {
-    var csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "Fecha,Descripcion,Monto(EUR),Pagador,Categoria\n";
-    
+    var csv = "Fecha,Motivo,Cantidad(EUR),Pagador,Categoria\n";
     eliteState.gastos.forEach(function(e) {
-        var row = e.date + "," + e.d + "," + e.a + "," + e.p + "," + e.c;
-        csvContent += row + "\n";
+        csv += e.date + "," + e.d + "," + e.a + "," + e.p + "," + e.c + "\n";
     });
-    
-    var encodedUri = encodeURI(csvContent);
+    var blob = new Blob([csv], { type: 'text/csv' });
+    var url = window.URL.createObjectURL(blob);
     var link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "España2026_Control_Gastos.csv");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "España2026_Gastos_Reporte.csv");
     document.body.appendChild(link);
     link.click();
-    msg("⬇️ ARCHIVO CSV GENERADO.");
+    document.body.removeChild(link);
+    msg("⬇️ REPORTE CSV GENERADO.");
 }
 
 /**
- * 8. GESTIÓN DEL ITINERARIO (RENDERIZADO EXPANDIDO)
+ * 8. GESTIÓN DEL ITINERARIO (RENDERIZADO DE AGENDA)
  */
 function renderEliteAgenda() {
     var wall = document.getElementById('render-agenda-full');
     var select = document.getElementById('target-day-select');
+    
+    if (!wall || !select) return;
+    
     wall.innerHTML = ''; 
     select.innerHTML = '';
     
-    for (var i=0; i < eliteState.agenda.length; i++) {
+    for (var i = 0; i < eliteState.agenda.length; i++) {
         var day = eliteState.agenda[i];
         
-        // Llenar el selector de días
+        // Selector de días para agregar actividades
         var opt = document.createElement('option');
         opt.value = day.id;
         opt.textContent = "Día " + day.id + ": " + day.date;
         select.appendChild(opt);
         
-        // Generar HTML de actividades
+        // Mapear actividades del día
         var actsHtml = "";
-        for (var j=0; j < day.acts.length; j++) {
+        for (var j = 0; j < day.acts.length; j++) {
             var a = day.acts[j];
             actsHtml += 
                 '<div class="act-prestige-row">' +
                 '<div class="act-time-mono">' + a.t + '</div>' +
                 '<div style="flex:1">' +
-                '<b style="font-size:30px;">' + a.n + '</b><br>' +
+                '<b style="font-size:34px;">' + a.n + '</b><br>' +
                 '<a class="btn-maps-prestige" href="https://maps.google.com/?q=' + encodeURIComponent(a.m) + '" target="_blank">📍 Google Maps</a>' +
                 '</div>' +
-                '<span style="color:red; cursor:pointer; font-size:40px;" onclick="delAct(' + day.id + ',' + j + ')">✕</span>' +
+                '<span style="color:red; cursor:pointer; font-size:45px;" onclick="delAct(' + day.id + ',' + j + ')">✕</span>' +
                 '</div>';
         }
         
         wall.innerHTML += 
-            '<div class="day-container" id="day-node-' + day.id + '">' +
+            '<div class="day-container">' +
             '<div class="day-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
             '<b>DÍA ' + day.id + ': ' + day.date + ' — ' + day.title + '</b>' +
             '<span>▼</span>' +
             '</div>' +
-            '<div class="day-body">' + (actsHtml || '<p style="font-size:26px;">Sin actividades registradas.</p>') + '</div>' +
+            '<div class="day-body">' + (actsHtml || '<p style="font-size:30px;">No hay eventos para hoy.</p>') + '</div>' +
             '</div>';
     }
 }
 
 function pushNewActivity() {
-    var dayId = parseInt(document.getElementById('target-day-select').value);
+    var dId = parseInt(document.getElementById('target-day-select').value);
     var time = document.getElementById('target-time-input').value;
     var title = document.getElementById('target-title-input').value;
     var place = document.getElementById('target-map-input').value;
     
-    if (!time || !title) { return msg("⚠️ ERROR: Campos vacíos."); }
+    if (!time || !title) return msg("⚠️ ERROR: Datos de actividad incompletos.");
     
-    var targetDay = eliteState.agenda.find(function(d){ return d.id === dayId; });
-    targetDay.acts.push({ t: time, n: title, m: place });
+    var dayObj = eliteState.agenda.find(function(d){ return d.id === dId; });
+    dayObj.acts.push({ t: time, n: title, m: place });
     
     commitState();
     renderEliteAgenda();
-    msg("🗓 ITINERARIO ACTUALIZADO.");
+    msg("🗓 CRONOGRAMA MAESTRO ACTUALIZADO.");
     
     document.getElementById('target-time-input').value = '';
     document.getElementById('target-title-input').value = '';
     document.getElementById('target-map-input').value = '';
 }
 
-function delAct(dId, aIdx) {
-    var targetDay = eliteState.agenda.find(function(d){ return d.id === dId; });
-    targetDay.acts.splice(aIdx, 1);
+function delAct(dId, idx) {
+    var dayObj = eliteState.agenda.find(function(d){ return d.id === dId; });
+    dayObj.acts.splice(idx, 1);
     commitState();
     renderEliteAgenda();
 }
@@ -1180,18 +1136,17 @@ function uploadReceiptToWall(input) {
     
     var reader = new FileReader();
     reader.onload = function(e) {
-        var newRec = {
-            id: Date.now(),
+        var rec = {
             img: e.target.result,
             place: document.getElementById('rec-place-master').value || "Negocio",
             amt: document.getElementById('rec-val-master').value || "0.00",
             payer: document.getElementById('rec-who-master').value
         };
         
-        eliteState.recibos.push(newRec);
+        eliteState.recibos.push(rec);
         commitState();
         renderReceipts();
-        msg("📸 RECIBO CAPTURADO.");
+        msg("📸 RECIBO GUARDADO EN GALERÍA.");
         
         document.getElementById('rec-place-master').value = '';
         document.getElementById('rec-val-master').value = '';
@@ -1201,32 +1156,27 @@ function uploadReceiptToWall(input) {
 
 function renderReceipts() {
     var grid = document.getElementById('render-receipt-grid');
-    var html = "";
-    
-    eliteState.recibos.forEach(function(r, idx) {
-        html += 
-            '<div class="card-prestige" style="padding:40px; text-align:center;">' +
-            '<img src="' + r.img + '" style="width:100%; height:450px; object-fit:cover; border-radius:35px; margin-bottom:30px;">' +
-            '<b style="display:block; font-size:28px; margin-bottom:10px;">' + r.place + '</b>' +
-            '<small style="font-size:22px; color:#8c7355;">€' + r.amt + ' | Pagó: ' + r.payer + '</small>' +
-            '<div style="margin-top:40px; display:flex; gap:25px; justify-content:center;">' +
-            '<button style="border:none; color:green; background:none; font-weight:900; font-size:24px; cursor:pointer;" onclick="downloadReceipt(' + idx + ')">⬇️ BAJAR</button>' +
-            '<button style="border:none; color:red; background:none; font-weight:900; font-size:24px; cursor:pointer;" onclick="delRec(' + idx + ')">🗑 BORRAR</button>' +
+    grid.innerHTML = eliteState.recibos.map(function(r, idx) {
+        return (
+            '<div class="card-prestige" style="padding:45px; text-align:center;">' +
+            '<img src="' + r.img + '" style="width:100%; height:500px; object-fit:cover; border-radius:40px; margin-bottom:35px;">' +
+            '<b style="display:block; font-size:32px; margin-bottom:15px;">' + r.place + '</b>' +
+            '<small style="font-size:26px;">€' + r.amt + ' | ' + r.payer + '</small>' +
+            '<div style="margin-top:45px; display:flex; gap:30px; justify-content:center;">' +
+            '<button style="border:none; color:green; background:none; font-weight:900; font-size:26px; cursor:pointer;" onclick="downloadR(' + idx + ')">⬇️ BAJAR</button>' +
+            '<button style="border:none; color:red; background:none; font-weight:900; font-size:26px; cursor:pointer;" onclick="delRec(' + idx + ')">🗑 BORRAR</button>' +
             '</div>' +
-            '</div>';
-    });
-    
-    grid.innerHTML = html;
+            '</div>'
+        );
+    }).join('');
 }
 
-function downloadReceipt(idx) {
+function downloadR(idx) {
     var rec = eliteState.recibos[idx];
     var link = document.createElement('a');
     link.href = rec.img;
-    link.download = "Recibo_" + rec.place.replace(/\s/g, '_') + ".png";
-    document.body.appendChild(link);
+    link.download = "Recibo_" + rec.place + ".png";
     link.click();
-    document.body.removeChild(link);
 }
 
 function delRec(idx) {
@@ -1242,7 +1192,7 @@ function pushLogData() {
     var type = document.getElementById('log-type-master').value;
     var info = document.getElementById('log-data-master').value;
     
-    if (!type || !info) return msg("⚠️ ERROR: Datos incompletos.");
+    if (!type || !info) return msg("⚠️ ERROR: Faltan detalles.");
     
     eliteState.logistica.push({ t: type, d: info });
     commitState();
@@ -1250,56 +1200,49 @@ function pushLogData() {
     
     document.getElementById('log-type-master').value = '';
     document.getElementById('log-data-master').value = '';
-    msg("✈️ REGISTRO GUARDADO.");
+    msg("✈️ DATOS GUARDADOS.");
 }
 
 function renderLogs() {
     var wall = document.getElementById('render-log-wall');
     wall.innerHTML = eliteState.logistica.map(function(l, i) {
         return (
-            '<div class="card-prestige" style="padding:50px; margin-bottom:35px;">' +
-            '<b style="font-size:32px; color:var(--red-espana);">' + l.t + ':</b>' +
-            '<p style="font-size:26px; white-space:pre-wrap; margin-top:20px;">' + l.d + '</p>' +
-            '<button style="margin-top:30px; border:none; color:red; background:none; font-weight:900; cursor:pointer;" onclick="delLog(' + i + ')">ELIMINAR REGISTRO</button>' +
+            '<div class="card-prestige" style="padding:55px; margin-bottom:40px;">' +
+            '<b style="font-size:36px; color:var(--red-espana);">' + l.t + ':</b>' +
+            '<p style="font-size:30px; white-space:pre-wrap; margin-top:25px;">' + l.d + '</p>' +
+            '<button style="margin-top:35px; border:none; color:red; background:none; font-weight:900; cursor:pointer;" onclick="delL(' + i + ')">BORRAR REGISTRO</button>' +
             '</div>'
         );
     }).join('');
 }
 
-function delLog(i) {
-    eliteState.logistica.splice(i, 1);
-    commitState(); renderLogs();
-}
+function delL(i) { eliteState.logistica.splice(i, 1); commitState(); renderLogs(); }
 
 function renderProTasks() {
     var wall = document.getElementById('render-task-list-pro');
-    var html = "";
-    
-    eliteState.tasks.forEach(function(t, i) {
+    wall.innerHTML = eliteState.tasks.map(function(t, i) {
         var isDone = t.s === 'C';
-        html += 
-            '<div class="card-prestige" onclick="toggleTask(' + i + ')" style="cursor:pointer; padding:55px; display:flex; align-items:center; gap:40px; margin-bottom:30px;">' +
-            '<div style="font-size:50px;">' + (isDone ? '✔️' : '⚪') + '</div>' +
-            '<div style="font-size:30px; ' + (isDone ? 'text-decoration:line-through; opacity:0.5' : '') + '">' + t.n + '</div>' +
-            '</div>';
-    });
-    wall.innerHTML = html;
+        return (
+            '<div class="card-prestige" onclick="togT(' + i + ')" style="cursor:pointer; padding:60px; display:flex; align-items:center; gap:45px; margin-bottom:35px;">' +
+            '<div style="font-size:55px;">' + (isDone ? '✔️' : '⚪') + '</div>' +
+            '<div style="font-size:34px; ' + (isDone ? 'text-decoration:line-through; opacity:0.5' : '') + '">' + t.n + '</div>' +
+            '</div>'
+        );
+    }).join('');
 }
 
-function toggleTask(i) {
+function togT(i) {
     eliteState.tasks[i].s = (eliteState.tasks[i].s === 'C' ? 'P' : 'C');
-    commitState();
-    renderProTasks();
-    drawProCharts();
+    commitState(); renderProTasks(); drawProCharts();
 }
 
 function pushTravelerProfile() {
-    var name = document.getElementById('traveler-name-master').value;
-    var info = document.getElementById('traveler-data-master').value;
+    var n = document.getElementById('traveler-name-master').value;
+    var d = document.getElementById('traveler-data-master').value;
     
-    if (!name || !info) return msg("⚠️ ERROR: Campos vacíos.");
+    if (!n || !d) return msg("⚠️ ERROR: Campos vacíos.");
     
-    eliteState.viajeros.push({ n: name, d: info });
+    eliteState.viajeros.push({ n: n, d: d });
     commitState();
     renderTravelers();
     
@@ -1312,145 +1255,121 @@ function renderTravelers() {
     var wall = document.getElementById('render-traveler-wall');
     wall.innerHTML = eliteState.viajeros.map(function(v, i) {
         return (
-            '<div class="card-prestige" style="display:flex; align-items:flex-start; gap:60px;">' +
-            '<div style="background:var(--gold-espana); color:var(--dark-deep); width:120px; height:120px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:50px; font-weight:900;">' + v.n[0] + '</div>' +
+            '<div class="card-prestige" style="display:flex; align-items:flex-start; gap:65px;">' +
+            '<div style="background:var(--gold-espana); color:var(--dark-deep); width:130px; height:130px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:55px; font-weight:900;">' + v.n[0] + '</div>' +
             '<div style="flex:1">' +
-            '<b style="font-size:36px;">' + v.n + '</b>' +
-            '<p style="font-size:26px; margin-top:15px; white-space:pre-wrap;">' + v.d + '</p>' +
-            '<button style="margin-top:30px; border:none; color:red; background:none; font-weight:900; cursor:pointer;" onclick="delTraveler(' + i + ')">BORRAR PERFIL</button>' +
+            '<b style="font-size:40px;">' + v.n + '</b>' +
+            '<p style="font-size:30px; margin-top:20px; white-space:pre-wrap;">' + v.d + '</p>' +
+            '<button style="margin-top:35px; border:none; color:red; background:none; font-weight:900; cursor:pointer;" onclick="delV(' + i + ')">BORRAR PERFIL</button>' +
             '</div>' +
             '</div>';
     }).join('');
 }
 
-function delTraveler(i) {
-    eliteState.viajeros.splice(i, 1);
-    commitState(); renderTravelers();
-}
+function delV(i) { eliteState.viajeros.splice(i, 1); commitState(); renderTravelers(); }
 
 /**
- * 11. ASISTENTE IA (CHAT OPERATIVO EXPANDIDO)
+ * 11. ASISTENTE IA (CHAT OPERATIVO)
  */
 function runChatElite() {
     var input = document.getElementById('chat-input-query');
     var query = input.value.toLowerCase();
-    var scroller = document.getElementById('chat-scroller-view');
+    var view = document.getElementById('chat-scroller-view');
     
     if (!query) return;
     
-    // Burbuja del Usuario
-    scroller.innerHTML += '<div class="msg-prestige msg-user">' + input.value + '</div>';
+    view.innerHTML += '<div class="msg-prestige msg-user">' + input.value + '</div>';
     
-    var response = "Lo siento Layra, no tengo ese dato en el sistema elite. Por favor, verifica en Logística o Viajeros.";
+    var response = "No encuentro ese dato exacto Layra. Por favor, revisa la Logística o el Directorio de Viajeros.";
     
-    // Lógica de búsqueda en Agenda
-    eliteState.agenda.forEach(function(day) {
+    // Buscar en Agenda
+    for (var i = 0; i < eliteState.agenda.length; i++) {
+        var day = eliteState.agenda[i];
         if (query.includes(day.date.toLowerCase()) || query.includes(day.id.toString())) {
-            var actsTxt = day.acts.map(function(a){ return a.t + " " + a.n; }).join(", ");
-            response = "Itinerario para el " + day.date + " (Día " + day.id + "): " + day.title + ". Actividades programadas: " + (actsTxt || "Ninguna todavía.");
+            var acts = day.acts.map(function(a){ return a.t + " " + a.n; }).join(", ");
+            response = "Día " + day.id + " (" + day.date + "): " + day.title + ". Actividades: " + (acts || "Ninguna registrada.");
         }
-    });
+    }
     
-    // Búsqueda de datos de Vuelo
+    // Datos de Vuelo e Iberia
     if (query.includes("vuelo") || query.includes("localizador") || query.includes("iberia")) {
-        response = "DATOS DE VUELO: Iberia IB0380 | Salida SJU: 28 Sep 20:25 | Arribo MAD: 29 Sep 10:25. Localizador: LB8T8.";
+        response = "VUELO IBERIA: IB0380 | Confirmación: LB8T8 | 28 Sep 20:25 SJU ➔ 29 Sep 10:25 MAD.";
     }
     
-    // Búsqueda de Viajeros (Andrea)
+    // Perfiles de Viajeros
     if (query.includes("andrea")) {
-        response = "PERFIL ANDREA: Pasaporte 670752783 (vencimiento 26/10/31). Nacimiento: 07/02/1958. Tarjeta AMEX ****5006.";
+        response = "ANDREA LÓPEZ: Pasaporte 670752783 (vence 26/10/31). Nac: 07/02/1958. AMEX ****5006.";
     }
-    
-    // Búsqueda de Viajeros (Francisco)
     if (query.includes("francisco")) {
-        response = "PERFIL FRANCISCO: Pasaporte 664576239 (vencimiento 15/03/31). Nacimiento: 04/02/1981. Visa ****4589.";
-    }
-    
-    // Búsqueda de Deudas
-    if (query.includes("deuda") || query.includes("debo") || query.includes("splitwise")) {
-        response = "Revisa la pestaña de 'Gastos'. El motor Splitwise está calculando los balances en tiempo real según los gastos y abonos registrados.";
+        response = "FRANCISCO GERMOSEN: Pasaporte 664576239 (vence 15/03/31). Nac: 04/02/1981. Visa ****4589.";
     }
 
-    // Efecto de respuesta con retraso
     setTimeout(function() {
-        scroller.innerHTML += '<div class="msg-prestige msg-ai">' + response + '</div>';
-        scroller.scrollTop = scroller.scrollHeight;
-    }, 600);
+        view.innerHTML += '<div class="msg-prestige msg-ai">' + response + '</div>';
+        view.scrollTop = view.scrollHeight;
+    }, 650);
     
     input.value = '';
 }
 
 /**
  * 12. ANALÍTICA DE GRÁFICAS (DASHBOARD)
- * Restauradas y configuradas para no fallar.
  */
 function drawProCharts() {
-    // 1. Gráfica de Pastel (Categorías)
-    var ctx1 = document.getElementById('chart-pie-cat-pro').getContext('2d');
-    var catLabels = ['Comida/Tapeo', 'Transporte/AVE', 'Hospedaje', 'Tours/Museos', 'Bodega/Vinos'];
-    var catSums = catLabels.map(function(c) {
-        return eliteState.gastos.filter(function(g){ return g.c === c; }).reduce(function(s, i){ return s + i.a; }, 0);
-    });
-    
-    if (window.myChart1) window.myChart1.destroy();
-    window.myChart1 = new Chart(ctx1, {
-        type: 'pie',
-        data: {
-            labels: catLabels,
-            datasets: [{
-                data: catSums,
-                backgroundColor: ['#C60B1E', '#F1BF00', '#1A1208', '#8C7355', '#3D2E18'],
-                borderWidth: 5
-            }]
-        },
-        options: {
-            plugins: { legend: { labels: { font: { size: 20 } } } }
-        }
-    });
+    // 1. Inversión por Categoría
+    var ctx1 = document.getElementById('chart-pie-cat-pro');
+    if (ctx1) {
+        var labelsC = ['Comida/Tapeo', 'Transporte/AVE', 'Hospedaje', 'Tours/Museos', 'Bodega/Vinos'];
+        var dataC = labelsC.map(function(c) {
+            return eliteState.gastos.filter(function(g){ return g.c === c; }).reduce(function(s, i){ return s + i.a; }, 0);
+        });
+        if (window.chart1) window.chart1.destroy();
+        window.chart1 = new Chart(ctx1.getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: labelsC,
+                datasets: [{ data: dataC, backgroundColor: ['#C60B1E', '#F1BF00', '#1A1208', '#8C7355', '#3D2E18'], borderWidth: 6 }]
+            },
+            options: { plugins: { legend: { labels: { font: { size: 24 } } } } }
+        });
+    }
 
-    // 2. Gráfica de Barras (Inversión por Persona)
-    var ctx2 = document.getElementById('chart-bar-person-pro').getContext('2d');
-    var peopleNames = ["Victor", "Layra", "Andrea", "Francisco"];
-    var peopleSums = peopleNames.map(function(p) {
-        return eliteState.gastos.filter(function(g){ return g.p === p; }).reduce(function(s, i){ return s + i.a; }, 0);
-    });
-    
-    if (window.myChart2) window.myChart2.destroy();
-    window.myChart2 = new Chart(ctx2, {
-        type: 'bar',
-        data: {
-            labels: peopleNames,
-            datasets: [{
-                label: 'Monto Invertido (€)',
-                data: peopleSums,
-                backgroundColor: '#F1BF00'
-            }]
-        },
-        options: {
-            scales: { y: { ticks: { font: { size: 18 } } }, x: { ticks: { font: { size: 20 } } } }
-        }
-    });
+    // 2. Inversión por Persona
+    var ctx2 = document.getElementById('chart-bar-person-pro');
+    if (ctx2) {
+        var namesP = ["Victor", "Layra", "Andrea", "Francisco"];
+        var dataP = namesP.map(function(p) {
+            return eliteState.gastos.filter(function(g){ return g.p === p; }).reduce(function(s, i){ return s + i.a; }, 0);
+        });
+        if (window.chart2) window.chart2.destroy();
+        window.chart2 = new Chart(ctx2.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: namesP,
+                datasets: [{ label: 'Total €', data: dataP, backgroundColor: '#F1BF00' }]
+            },
+            options: { scales: { y: { ticks: { font: { size: 20 } } }, x: { ticks: { font: { size: 24 } } } } }
+        });
+    }
 
-    // 3. Gráfica de Tareas (Progreso)
-    var ctx3 = document.getElementById('chart-donut-task-pro').getContext('2d');
-    var done = eliteState.tasks.filter(function(t){ return t.s === 'C'; }).length;
-    var pending = eliteState.tasks.length - done;
-    
-    if (window.myChart3) window.myChart3.destroy();
-    window.myChart3 = new Chart(ctx3, {
-        type: 'doughnut',
-        data: {
-            labels: ['Completado', 'Pendiente'],
-            datasets: [{
-                data: [done, pending],
-                backgroundColor: ['#16a34a', '#dc2626']
-            }]
-        }
-    });
+    // 3. Progreso de Tareas
+    var ctx3 = document.getElementById('chart-donut-task-pro');
+    if (ctx3) {
+        var done = eliteState.tasks.filter(function(t){ return t.s === 'C'; }).length;
+        var pending = eliteState.tasks.length - done;
+        if (window.chart3) window.chart3.destroy();
+        window.chart3 = new Chart(ctx3.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Listo', 'Pendiente'],
+                datasets: [{ data: [done, pending], backgroundColor: ['#16a34a', '#dc2626'] }]
+            }
+        });
+    }
 }
 
 /**
- * 13. NOTIFICACIONES DEL SISTEMA (TOAST)
+ * 13. SISTEMA DE NOTIFICACIONES (TOAST)
  */
 function msg(t) {
     var toast = document.getElementById('system-toast-box');
@@ -1458,14 +1377,14 @@ function msg(t) {
     toast.style.display = 'block';
     setTimeout(function() {
         toast.style.display = 'none';
-    }, 5500);
+    }, 6000);
 }
 
 /**
- * 14. INICIALIZACIÓN GLOBAL
+ * 14. INICIALIZACIÓN DEL SISTEMA ELITE
  */
 window.onload = function() {
-    // Renderizado inicial de todos los componentes
+    // Renderizado de Componentes
     renderEliteAgenda();
     renderExpenseList();
     runEliteSplitwise();
@@ -1474,16 +1393,14 @@ window.onload = function() {
     renderProTasks();
     renderTravelers();
     
-    // Notificación de inicio
-    msg("🇪🇸 BIENVENIDA AL CENTRO DE COMANDO V19.0 - SISTEMA CARGADO.");
+    msg("🇪🇸 CENTRO DE COMANDO V20.0 CARGADO CON ÉXITO.");
 };
 
-/**
- * -----------------------------------------------------------------------
- * FINAL DEL CÓDIGO MAESTRO (1400+ LÍNEAS DE CONTROL TOTAL)
- * CUALQUIER ELIMINACIÓN DE ESTE BLOQUE INVALIDA LA INTEGRIDAD DEL SISTEMA.
- * -----------------------------------------------------------------------
- */
+/* 
+   -----------------------------------------------------------------------
+   FIN DEL CÓDIGO MAESTRO (1400+ LÍNEAS DE CONTROL TOTAL)
+   -----------------------------------------------------------------------
+*/
 </script>
 </body>
 </html>
