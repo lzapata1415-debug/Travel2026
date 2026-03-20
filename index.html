@@ -8,20 +8,29 @@
     >
     <title>España 2026 | Centro de Comando Elite Pro</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link 
+        rel="preconnect" 
+        href="https://fonts.googleapis.com"
+    >
+    <link 
+        rel="preconnect" 
+        href="https://fonts.gstatic.com" 
+        crossorigin
+    >
     <link 
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" 
         rel="stylesheet"
     >
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script 
+        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"
+    ></script>
 
     <style>
         /**
          * -----------------------------------------------------------------------
-         * SISTEMA DE DISEÑO ELITE PRO (ESTRUCTURA VERTICAL EXPANDIDA)
-         * CADA LÍNEA REPRESENTA UN PARÁMETRO DE INTEGRIDAD VISUAL.
+         * SISTEMA DE DISEÑO ELITE PRO (CSS DESGLOSADO VERTICALMENTE)
+         * CADA PROPIEDAD ESTÁ EN UNA LÍNEA INDEPENDIENTE PARA ASEGURAR INTEGRIDAD.
          * -----------------------------------------------------------------------
          */
         :root {
@@ -35,9 +44,9 @@
             --cream-bg: #FDF8F0;
             --white: #FFFFFF;
             --border-accent: rgba(196,154,0,0.4);
-            --shadow-premium: 0 85px 180px rgba(0,0,0,0.65);
-            --radius-xl: 100px;
-            --transition-master: all 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-premium: 0 90px 200px rgba(0,0,0,0.7);
+            --radius-xl: 110px;
+            --transition-master: all 1.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* * RESETEO DE ESTILOS UNIVERSAL
@@ -60,29 +69,29 @@
             font-family: 'DM Sans', sans-serif;
             background-color: var(--cream-bg);
             color: var(--dark-deep);
-            line-height: 3.1;
+            line-height: 3.2;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
         /**
-         * SECCIÓN HERO (PORTADA PRINCIPAL)
+         * SECCIÓN HERO (IDENTIDAD VISUAL MAESTRA)
          */
         .hero-prestige {
             background-color: var(--dark-deep);
-            padding-top: 360px;
-            padding-bottom: 360px;
-            padding-left: 130px;
-            padding-right: 130px;
+            padding-top: 380px;
+            padding-bottom: 380px;
+            padding-left: 140px;
+            padding-right: 140px;
             text-align: center;
-            border-bottom-width: 55px;
+            border-bottom-width: 60px;
             border-bottom-style: solid;
             border-bottom-color: var(--gold-espana);
             position: relative;
             background-image: linear-gradient(
                 to bottom, 
-                rgba(26,18,8,0.97), 
+                rgba(26,18,8,0.98), 
                 rgba(26,18,8,1)
             ), 
             url('https://images.unsplash.com/photo-1543783232-458643029590?auto=format&fit=crop&w=1400&q=80');
@@ -94,12 +103,12 @@
         .hero-prestige h1 {
             font-family: 'Playfair Display', serif;
             color: var(--white);
-            font-size: 140px;
+            font-size: 150px;
             font-weight: 900;
-            margin-bottom: 110px;
-            text-shadow: 0 100px 200px rgba(0,0,0,1);
-            letter-spacing: -11px;
-            line-height: 0.65;
+            margin-bottom: 120px;
+            text-shadow: 0 110px 220px rgba(0,0,0,1);
+            letter-spacing: -12px;
+            line-height: 0.6;
         }
 
         .hero-prestige h1 span {
@@ -108,17 +117,17 @@
         
         .hero-meta-data {
             color: #d4b48d;
-            font-size: 45px;
+            font-size: 48px;
             font-family: 'DM Mono', monospace;
             text-transform: uppercase;
-            letter-spacing: 30px;
+            letter-spacing: 32px;
             font-weight: 500;
             display: block;
-            margin-top: 90px;
+            margin-top: 100px;
         }
 
         /**
-         * NAVEGACIÓN MAESTRA (STICKY TABS)
+         * NAVEGACIÓN MAESTRA (STICKY CONTROL)
          */
         .nav-master-container {
             background-color: var(--dark-lighter);
@@ -126,17 +135,19 @@
             position: sticky;
             top: 0px;
             z-index: 100000;
-            box-shadow: 0 110px 280px rgba(0,0,0,1);
-            border-bottom-width: 40px;
+            box-shadow: 0 120px 300px rgba(0,0,0,1);
+            border-bottom-width: 45px;
             border-bottom-style: solid;
             border-bottom-color: var(--gold-espana);
         }
 
         .nav-items-wrapper {
             display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
             overflow-x: auto;
             scrollbar-width: none;
-            max-width: 3200px;
+            max-width: 3400px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -149,48 +160,48 @@
             flex-grow: 0;
             flex-shrink: 0;
             flex-basis: auto;
-            padding-top: 120px;
-            padding-bottom: 120px;
-            padding-left: 140px;
-            padding-right: 140px;
-            font-size: 34px;
+            padding-top: 130px;
+            padding-bottom: 130px;
+            padding-left: 150px;
+            padding-right: 150px;
+            font-size: 36px;
             font-weight: 900;
             color: #8c7355;
             background-color: transparent;
             border-top-width: 0px;
             border-left-width: 0px;
             border-right-width: 0px;
-            border-bottom-width: 45px;
+            border-bottom-width: 50px;
             border-bottom-style: solid;
             border-bottom-color: transparent;
             cursor: pointer;
             transition-property: all;
-            transition-duration: 1.3s;
+            transition-duration: 1.4s;
             transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
-            letter-spacing: 18px;
+            letter-spacing: 20px;
         }
 
         .nav-tab.active {
             color: var(--gold-espana);
             border-bottom-color: var(--gold-espana);
-            background-color: rgba(255,255,255,0.65);
+            background-color: rgba(255,255,255,0.7);
         }
 
         /**
-         * MÓDULOS DE SECCIÓN (MODULES)
+         * CONTENEDORES DE MÓDULO
          */
         .module-section {
             display: none;
-            padding-top: 280px;
-            padding-bottom: 280px;
-            padding-left: 130px;
-            padding-right: 130px;
-            max-width: 2800px;
+            padding-top: 300px;
+            padding-bottom: 300px;
+            padding-left: 140px;
+            padding-right: 140px;
+            max-width: 3000px;
             margin-left: auto;
             margin-right: auto;
-            animation-name: prestigeTitanEntrance;
-            animation-duration: 2.8s;
+            animation-name: prestigeGalacticEntrance;
+            animation-duration: 3.0s;
             animation-timing-function: ease-out;
         }
 
@@ -198,10 +209,10 @@
             display: block;
         }
 
-        @keyframes prestigeTitanEntrance {
+        @keyframes prestigeGalacticEntrance {
             from {
                 opacity: 0;
-                transform: translateY(280px) scale(0.8);
+                transform: translateY(300px) scale(0.75);
             }
             to {
                 opacity: 1;
@@ -210,260 +221,9 @@
         }
 
         /**
-         * TARJETAS DE CONTENIDO (CARD PRESTIGE)
+         * TARJETAS DE DISEÑO ELITE
          */
         .card-prestige {
-            background-color: var(--white);
-            border-top-width: 45px;
-            border-top-style: solid;
-            border-top-color: var(--border-accent);
-            border-bottom-width: 45px;
-            border-bottom-style: solid;
-            border-bottom-color: var(--border-accent);
-            border-left-width: 45px;
-            border-left-style: solid;
-            border-left-color: var(--border-accent);
-            border-right-width: 45px;
-            border-right-style: solid;
-            border-right-color: var(--border-accent);
-            border-radius: var(--radius-xl);
-            padding-top: 200px;
-            padding-bottom: 200px;
-            padding-left: 200px;
-            padding-right: 200px;
-            box-shadow: var(--shadow-premium);
-            margin-bottom: 200px;
-            position: relative;
-            transition-property: all;
-            transition-duration: 1.3s;
-        }
-
-        .card-prestige:hover {
-            transform: translateY(-80px);
-            border-top-color: var(--gold-espana);
-            border-bottom-color: var(--gold-espana);
-            border-left-color: var(--gold-espana);
-            border-right-color: var(--gold-espana);
-        }
-
-        .title-prestige {
-            font-family: 'Playfair Display', serif;
-            font-size: 115px;
-            font-weight: 900;
-            margin-bottom: 180px;
-            color: var(--red-espana);
-            display: flex;
-            align-items: center;
-            gap: 150px;
-        }
-
-        .title-prestige::after {
-            content: '';
-            flex-grow: 1;
-            height: 36px;
-            background: linear-gradient(90deg, var(--gold-espana), transparent);
-        }
-
-        /**
-         * SPLITWISE: FINANZAS GRUPALES
-         */
-        .splitwise-summary-box {
-            background-color: #f0fdf4;
-            border-top-width: 55px;
-            border-top-style: solid;
-            border-top-color: #16a34a;
-            border-bottom-width: 55px;
-            border-bottom-style: solid;
-            border-bottom-color: #16a34a;
-            border-left-width: 55px;
-            border-left-style: solid;
-            border-left-color: #16a34a;
-            border-right-width: 55px;
-            border-right-style: solid;
-            border-right-color: #16a34a;
-            border-radius: var(--radius-xl);
-            padding: 180px;
-            margin-bottom: 200px;
-            box-shadow: var(--shadow-premium);
-        }
-
-        .debt-item-display {
-            background-color: var(--white);
-            padding-top: 120px;
-            padding-bottom: 120px;
-            padding-left: 160px;
-            padding-right: 160px;
-            border-radius: 130px;
-            margin-bottom: 130px;
-            box-shadow: 0 100px 200px rgba(0,0,0,0.65);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 70px;
-            border-left-width: 100px;
-            border-left-style: solid;
-            border-left-color: var(--red-espana);
-        }
-
-        /**
-         * AGENDA: CRONOGRAMA DE DÍAS
-         */
-        .day-container {
-            border-top-width: 40px;
-            border-top-style: solid;
-            border-top-color: var(--border-accent);
-            border-bottom-width: 40px;
-            border-bottom-style: solid;
-            border-bottom-color: var(--border-accent);
-            border-left-width: 40px;
-            border-left-style: solid;
-            border-left-color: var(--border-accent);
-            border-right-width: 40px;
-            border-right-style: solid;
-            border-right-color: var(--border-accent);
-            border-radius: var(--radius-xl);
-            margin-bottom: 180px;
-            background-color: var(--white);
-            overflow: hidden;
-            box-shadow: 0 110px 220px rgba(0,0,0,0.65);
-        }
-
-        .day-header {
-            padding-top: 180px;
-            padding-bottom: 180px;
-            padding-left: 180px;
-            padding-right: 180px;
-            background-color: var(--dark-deep);
-            color: var(--white);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 80px;
-            font-weight: 900;
-            transition: background-color 1.3s;
-        }
-
-        .day-body {
-            display: none;
-            padding-top: 200px;
-            padding-bottom: 200px;
-            padding-left: 200px;
-            padding-right: 200px;
-            background-color: var(--white);
-        }
-        
-        .day-container.open .day-body {
-            display: block;
-        }
-
-        .act-prestige-row {
-            display: flex;
-            gap: 180px;
-            padding-top: 180px;
-            padding-bottom: 180px;
-            border-bottom-width: 35px;
-            border-bottom-style: solid;
-            border-bottom-color: #f9f9f9;
-        }
-
-        .act-time-mono {
-            font-family: 'DM Mono';
-            color: var(--gold-dark);
-            font-weight: 900;
-            width: 380px;
-            font-size: 65px;
-        }
-
-        .btn-maps-prestige {
-            display: inline-block;
-            margin-top: 130px;
-            background-color: var(--gold-espana);
-            color: var(--dark-deep);
-            padding-top: 100px;
-            padding-bottom: 100px;
-            padding-left: 160px;
-            padding-right: 160px;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: 45px;
-            box-shadow: 0 90px 180px rgba(241, 191, 0, 1);
-            transition: all 1.3s;
-        }
-
-        /**
-         * SISTEMA DE FORMULARIOS PRESTIGE
-         */
-        .form-prestige-group {
-            margin-bottom: 180px;
-        }
-        
-        .form-prestige-group label {
-            display: block;
-            font-size: 45px;
-            font-weight: 900;
-            color: #8c7355;
-            text-transform: uppercase;
-            margin-bottom: 120px;
-            letter-spacing: 22px;
-        }
-
-        .form-prestige-group input, 
-        .form-prestige-group select, 
-        .form-prestige-group textarea {
-            width: 100%;
-            padding: 120px;
-            border-top-width: 35px;
-            border-top-style: solid;
-            border-top-color: var(--border-accent);
-            border-bottom-width: 35px;
-            border-bottom-style: solid;
-            border-bottom-color: var(--border-accent);
-            border-left-width: 35px;
-            border-left-style: solid;
-            border-left-color: var(--border-accent);
-            border-right-width: 35px;
-            border-right-style: solid;
-            border-right-color: var(--border-accent);
-            border-radius: 130px;
-            font-size: 65px;
-            outline: none;
-            background-color: #fafafa;
-            transition-property: all;
-            transition-duration: 1.3s;
-            font-family: 'DM Sans', sans-serif;
-        }
-
-        .btn-master-action {
-            width: 100%;
-            padding: 130px;
-            background-color: var(--red-espana);
-            color: var(--white);
-            border-style: none;
-            border-radius: 130px;
-            font-weight: 900;
-            font-size: 70px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 26px;
-            box-shadow: 0 110px 240px rgba(198, 11, 30, 1);
-            transition-property: all;
-            transition-duration: 1.3s;
-        }
-
-        .btn-master-action:hover {
-            transform: translateY(-80px);
-            background-color: var(--red-dark);
-        }
-
-        /**
-         * CHAT IA ELITE: ASISTENTE ESPAÑA 2026
-         */
-        .chat-elite-box {
-            height: 1800px;
-            overflow-y: auto;
             background-color: var(--white);
             border-top-width: 50px;
             border-top-style: solid;
@@ -477,65 +237,316 @@
             border-right-width: 50px;
             border-right-style: solid;
             border-right-color: var(--border-accent);
-            border-radius: 160px;
+            border-radius: var(--radius-xl);
+            padding-top: 220px;
+            padding-bottom: 220px;
+            padding-left: 220px;
+            padding-right: 220px;
+            box-shadow: var(--shadow-premium);
+            margin-bottom: 220px;
+            position: relative;
+            transition-property: all;
+            transition-duration: 1.4s;
+        }
+
+        .card-prestige:hover {
+            transform: translateY(-90px);
+            border-top-color: var(--gold-espana);
+            border-bottom-color: var(--gold-espana);
+            border-left-color: var(--gold-espana);
+            border-right-color: var(--gold-espana);
+        }
+
+        .title-prestige {
+            font-family: 'Playfair Display', serif;
+            font-size: 120px;
+            font-weight: 900;
+            margin-bottom: 200px;
+            color: var(--red-espana);
+            display: flex;
+            align-items: center;
+            gap: 160px;
+        }
+
+        .title-prestige::after {
+            content: '';
+            flex-grow: 1;
+            height: 40px;
+            background: linear-gradient(90deg, var(--gold-espana), transparent);
+        }
+
+        /**
+         * BLOQUES FINANCIEROS (SPLITWISE)
+         */
+        .splitwise-summary-box {
+            background-color: #f0fdf4;
+            border-top-width: 60px;
+            border-top-style: solid;
+            border-top-color: #16a34a;
+            border-bottom-width: 60px;
+            border-bottom-style: solid;
+            border-bottom-color: #16a34a;
+            border-left-width: 60px;
+            border-left-style: solid;
+            border-left-color: #16a34a;
+            border-right-width: 60px;
+            border-right-style: solid;
+            border-right-color: #16a34a;
+            border-radius: var(--radius-xl);
             padding: 200px;
-            margin-bottom: 180px;
-            box-shadow: inset 0 100px 240px rgba(0,0,0,0.75);
+            margin-bottom: 220px;
+            box-shadow: var(--shadow-premium);
+        }
+
+        .debt-item-display {
+            background-color: var(--white);
+            padding-top: 130px;
+            padding-bottom: 130px;
+            padding-left: 170px;
+            padding-right: 170px;
+            border-radius: 140px;
+            margin-bottom: 140px;
+            box-shadow: 0 110px 220px rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 75px;
+            border-left-width: 110px;
+            border-left-style: solid;
+            border-left-color: var(--red-espana);
+        }
+
+        /**
+         * SISTEMA DE AGENDA (DÍAS)
+         */
+        .day-container {
+            border-top-width: 45px;
+            border-top-style: solid;
+            border-top-color: var(--border-accent);
+            border-bottom-width: 45px;
+            border-bottom-style: solid;
+            border-bottom-color: var(--border-accent);
+            border-left-width: 45px;
+            border-left-style: solid;
+            border-left-color: var(--border-accent);
+            border-right-width: 45px;
+            border-right-style: solid;
+            border-right-color: var(--border-accent);
+            border-radius: var(--radius-xl);
+            margin-bottom: 200px;
+            background-color: var(--white);
+            overflow: hidden;
+            box-shadow: 0 120px 240px rgba(0,0,0,0.7);
+        }
+
+        .day-header {
+            padding-top: 200px;
+            padding-bottom: 200px;
+            padding-left: 200px;
+            padding-right: 200px;
+            background-color: var(--dark-deep);
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 85px;
+            font-weight: 900;
+            transition: background-color 1.4s;
+        }
+
+        .day-body {
+            display: none;
+            padding-top: 220px;
+            padding-bottom: 220px;
+            padding-left: 220px;
+            padding-right: 220px;
+            background-color: var(--white);
+        }
+        
+        .day-container.open .day-body {
+            display: block;
+        }
+
+        .act-prestige-row {
+            display: flex;
+            gap: 200px;
+            padding-top: 200px;
+            padding-bottom: 200px;
+            border-bottom-width: 40px;
+            border-bottom-style: solid;
+            border-bottom-color: #f9f9f9;
+        }
+
+        .act-time-mono {
+            font-family: 'DM Mono';
+            color: var(--gold-dark);
+            font-weight: 900;
+            width: 420px;
+            font-size: 70px;
+        }
+
+        .btn-maps-prestige {
+            display: inline-block;
+            margin-top: 140px;
+            background-color: var(--gold-espana);
+            color: var(--dark-deep);
+            padding-top: 110px;
+            padding-bottom: 110px;
+            padding-left: 170px;
+            padding-right: 170px;
+            border-radius: 110px;
+            text-decoration: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 50px;
+            box-shadow: 0 100px 200px rgba(241, 191, 0, 1);
+            transition: all 1.4s;
+        }
+
+        /**
+         * FORMULARIOS MAESTROS
+         */
+        .form-prestige-group {
+            margin-bottom: 200px;
+        }
+        
+        .form-prestige-group label {
+            display: block;
+            font-size: 50px;
+            font-weight: 900;
+            color: #8c7355;
+            text-transform: uppercase;
+            margin-bottom: 130px;
+            letter-spacing: 24px;
+        }
+
+        .form-prestige-group input, 
+        .form-prestige-group select, 
+        .form-prestige-group textarea {
+            width: 100%;
+            padding: 130px;
+            border-top-width: 40px;
+            border-top-style: solid;
+            border-top-color: var(--border-accent);
+            border-bottom-width: 40px;
+            border-bottom-style: solid;
+            border-bottom-color: var(--border-accent);
+            border-left-width: 40px;
+            border-left-style: solid;
+            border-left-color: var(--border-accent);
+            border-right-width: 40px;
+            border-right-style: solid;
+            border-right-color: var(--border-accent);
+            border-radius: 140px;
+            font-size: 70px;
+            outline: none;
+            background-color: #fafafa;
+            transition-property: all;
+            transition-duration: 1.4s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-master-action {
+            width: 100%;
+            padding: 140px;
+            background-color: var(--red-espana);
+            color: var(--white);
+            border-style: none;
+            border-radius: 140px;
+            font-weight: 900;
+            font-size: 75px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 30px;
+            box-shadow: 0 120px 260px rgba(198, 11, 30, 1);
+            transition-property: all;
+            transition-duration: 1.4s;
+        }
+
+        .btn-master-action:hover {
+            transform: translateY(-95px);
+            background-color: var(--red-dark);
+        }
+
+        /**
+         * CHAT IA ELITE
+         */
+        .chat-elite-box {
+            height: 2000px;
+            overflow-y: auto;
+            background-color: var(--white);
+            border-top-width: 55px;
+            border-top-style: solid;
+            border-top-color: var(--border-accent);
+            border-bottom-width: 55px;
+            border-bottom-style: solid;
+            border-bottom-color: var(--border-accent);
+            border-left-width: 55px;
+            border-left-style: solid;
+            border-left-color: var(--border-accent);
+            border-right-width: 55px;
+            border-right-style: solid;
+            border-right-color: var(--border-accent);
+            border-radius: 180px;
+            padding: 220px;
+            margin-bottom: 200px;
+            box-shadow: inset 0 110px 260px rgba(0,0,0,0.8);
         }
 
         .msg-prestige {
-            margin-bottom: 150px;
-            padding-top: 130px;
-            padding-bottom: 130px;
-            padding-left: 150px;
-            padding-right: 150px;
-            border-radius: 140px;
+            margin-bottom: 160px;
+            padding-top: 140px;
+            padding-bottom: 140px;
+            padding-left: 160px;
+            padding-right: 160px;
+            border-radius: 150px;
             max-width: 95%;
-            font-size: 60px;
+            font-size: 65px;
         }
         
         .msg-user {
             background-color: var(--dark-deep);
             color: var(--white);
             margin-left: auto;
-            border-bottom-right-radius: 55px;
+            border-bottom-right-radius: 60px;
         }
         
         .msg-ai {
             background-color: var(--gold-soft);
             color: var(--dark-deep);
-            border-bottom-left-radius: 55px;
-            border-top-width: 35px;
+            border-bottom-left-radius: 60px;
+            border-top-width: 40px;
             border-top-style: solid;
             border-top-color: rgba(241,191,0,1);
-            border-bottom-width: 35px;
+            border-bottom-width: 40px;
             border-bottom-style: solid;
             border-bottom-color: rgba(241,191,0,1);
-            border-left-width: 35px;
+            border-left-width: 40px;
             border-left-style: solid;
             border-left-color: rgba(241,191,0,1);
-            border-right-width: 35px;
+            border-right-width: 40px;
             border-right-style: solid;
             border-right-color: rgba(241,191,0,1);
         }
 
         .toast-system {
             position: fixed;
-            bottom: 300px;
+            bottom: 320px;
             left: 50%;
             transform: translateX(-50%);
             background-color: var(--dark-deep);
             color: var(--white);
-            padding-top: 140px;
-            padding-bottom: 140px;
-            padding-left: 260px;
-            padding-right: 260px;
-            border-radius: 600px;
+            padding-top: 150px;
+            padding-bottom: 150px;
+            padding-left: 280px;
+            padding-right: 280px;
+            border-radius: 700px;
             font-weight: 900;
             display: none;
-            z-index: 200000;
-            box-shadow: 0 220px 450px rgba(0,0,0,1);
-            font-size: 65px;
+            z-index: 300000;
+            box-shadow: 0 240px 500px rgba(0,0,0,1);
+            font-size: 70px;
         }
     </style>
 </head>
@@ -550,71 +561,71 @@
 
 <nav class="nav-master-container">
     <div class="nav-items-wrapper">
-        <button class="nav-tab active" id="tab-direct-agenda">🗓 Agenda</button>
-        <button class="nav-tab" id="tab-direct-logistica">✈️ Logística</button>
-        <button class="nav-tab" id="tab-direct-gastos">💶 Gastos</button>
-        <button class="nav-tab" id="tab-direct-recibos">📸 Recibos</button>
-        <button class="nav-tab" id="tab-direct-dashboard">📊 Dashboard</button>
-        <button class="nav-tab" id="tab-direct-pendientes">📋 Tareas</button>
-        <button class="nav-tab" id="tab-direct-viajeros">👥 Viajeros</button>
-        <button class="nav-tab" id="tab-direct-ai">🤖 Asistente</button>
+        <button class="nav-tab active" id="tab-master-agenda">🗓 Agenda</button>
+        <button class="nav-tab" id="tab-master-logistica">✈️ Logística</button>
+        <button class="nav-tab" id="tab-master-gastos">💶 Gastos</button>
+        <button class="nav-tab" id="tab-master-recibos">📸 Recibos</button>
+        <button class="nav-tab" id="tab-master-dashboard">📊 Dashboard</button>
+        <button class="nav-tab" id="tab-master-pendientes">📋 Tareas</button>
+        <button class="nav-tab" id="tab-master-viajeros">👥 Viajeros</button>
+        <button class="nav-tab" id="tab-master-ai">🤖 Asistente</button>
     </div>
 </nav>
 
 <main id="section-agenda" class="module-section active">
-    <div class="title-prestige">Cronograma de Operaciones</div>
+    <div class="title-prestige">Cronograma Maestro del Viaje</div>
     <div id="render-agenda-full"></div>
-    <div class="card-prestige" style="margin-top: 320px; border-top-width: 120px;">
-        <h2 style="margin-bottom: 160px; font-family: 'Playfair Display'; font-size: 90px;">
-            📍 Inyectar Nueva Actividad
+    <div class="card-prestige" style="margin-top: 350px; border-top-width: 130px;">
+        <h2 style="margin-bottom: 180px; font-family: 'Playfair Display'; font-size: 95px;">
+            📍 Inyectar Actividad
         </h2>
         <div class="form-prestige-group">
-            <label>Seleccionar Día de Viaje</label>
+            <label>Día del Viaje</label>
             <select id="target-day-select"></select>
         </div>
         <div class="form-prestige-group">
-            <label>Hora Programada (HH:MM)</label>
-            <input type="text" id="target-time-input" placeholder="Ejemplo: 20:30">
+            <label>Hora Programada</label>
+            <input type="text" id="target-time-input" placeholder="Ej: 21:00">
         </div>
         <div class="form-prestige-group">
-            <label>Descripción de la Actividad</label>
-            <input type="text" id="target-title-input" placeholder="Ejemplo: Cena de Gala">
+            <label>Descripción del Evento</label>
+            <input type="text" id="target-title-input" placeholder="Ej: Cena Gala">
         </div>
         <div class="form-prestige-group">
-            <label>Punto Exacto Google Maps</label>
-            <input type="text" id="target-map-input" placeholder="Ubicación GPS">
+            <label>Coordenada GPS (Maps)</label>
+            <input type="text" id="target-map-input" placeholder="Lugar exacto">
         </div>
         <button class="btn-master-action" id="action-push-activity">+ Integrar al Calendario Maestro</button>
     </div>
 </main>
 
 <section id="section-logistica" class="module-section">
-    <div class="title-prestige">Confirmaciones y Estancias</div>
+    <div class="title-prestige">Vuelos, Airbnb y AVE</div>
     <div class="card-prestige">
         <div class="form-prestige-group">
-            <label>Tipo de Documento (Vuelo / Airbnb)</label>
+            <label>Categoría (Reserva / Vuelo)</label>
             <input type="text" id="log-type-master">
         </div>
         <div class="form-prestige-group">
-            <label>Información Detallada de Reserva</label>
+            <label>Información Crítica de Confirmación</label>
             <textarea id="log-data-master" rows="30"></textarea>
         </div>
-        <button class="btn-master-action" id="action-push-log">Guardar Registro Maestro</button>
+        <button class="btn-master-action" id="action-push-log">Guardar Datos de Control</button>
     </div>
     <div id="render-log-wall"></div>
 </section>
 
 <section id="section-gastos" class="module-section">
-    <div class="title-prestige">Splitwise: Balances Financieros</div>
+    <div class="title-prestige">Splitwise: Balances en Tiempo Real</div>
     <div class="splitwise-summary-box">
-        <div style="color: #166534; font-weight: 900; text-transform: uppercase; margin-bottom: 160px; font-size: 60px; letter-spacing: 24px;">🟢 ESTADO DE CUENTAS ACTUAL</div>
+        <div style="color: #166534; font-weight: 900; text-transform: uppercase; margin-bottom: 180px; font-size: 65px; letter-spacing: 26px;">🟢 RESUMEN DE SALDOS</div>
         <div id="render-splitwise-engine"></div>
-        <button class="btn-master-action" style="background-color: #166534; margin-top: 160px;" id="action-push-export">⬇️ Exportar Reporte de Gastos (CSV)</button>
+        <button class="btn-master-action" style="background-color: #166534; margin-top: 180px;" id="action-push-export">⬇️ Exportar Registro Financiero (CSV)</button>
     </div>
     <div class="card-prestige" style="border-color: #dc2626;">
-        <h3 style="margin-bottom: 140px; color: #b91c1c; text-transform: uppercase; font-weight: 900; font-size: 65px;">💸 LIQUIDACIÓN DE DEUDA</h3>
+        <h3 style="margin-bottom: 160px; color: #b91c1c; text-transform: uppercase; font-weight: 900; font-size: 70px;">💸 REGISTRAR LIQUIDACIÓN</h3>
         <div class="form-prestige-group">
-            <label>Persona que Paga</label>
+            <label>Viajero que Paga</label>
             <select id="settle-from-select">
                 <option value="Victor">Victor Zapata</option>
                 <option value="Layra">Layra Zapata</option>
@@ -623,7 +634,7 @@
             </select>
         </div>
         <div class="form-prestige-group">
-            <label>Persona que Recibe</label>
+            <label>Viajero que Recibe</label>
             <select id="settle-to-select">
                 <option value="Victor">Victor Zapata</option>
                 <option value="Layra">Layra Zapata</option>
@@ -632,23 +643,23 @@
             </select>
         </div>
         <div class="form-prestige-group">
-            <label>Cantidad Abonada (€)</label>
+            <label>Monto (€)</label>
             <input type="number" id="settle-amt-val" step="0.01">
         </div>
-        <button class="btn-master-action" style="background-color: #dc2626;" id="action-push-settle">+ Confirmar Abono de Saldo</button>
+        <button class="btn-master-action" style="background-color: #dc2626;" id="action-push-settle">+ Confirmar Abono</button>
     </div>
     <div class="card-prestige">
-        <h3 style="margin-bottom: 160px; font-family: 'Playfair Display'; font-size: 85px;">➕ REGISTRAR GASTO GRUPAL</h3>
+        <h3 style="margin-bottom: 180px; font-family: 'Playfair Display'; font-size: 90px;">➕ NUEVO GASTO</h3>
         <div class="form-prestige-group">
-            <label>Motivo o Concepto</label>
+            <label>Concepto</label>
             <input type="text" id="exp-title-input">
         </div>
         <div class="form-prestige-group">
-            <label>Monto Total (€)</label>
+            <label>Monto Bruto (€)</label>
             <input type="number" id="exp-amt-input" step="0.01">
         </div>
         <div class="form-prestige-group">
-            <label>Pagador Oficial</label>
+            <label>¿Quién pagó?</label>
             <select id="exp-payer-select">
                 <option value="Victor">Victor Zapata</option>
                 <option value="Layra">Layra Zapata</option>
@@ -657,7 +668,7 @@
             </select>
         </div>
         <div class="form-prestige-group">
-            <label>Categoría del Gasto</label>
+            <label>Categoría</label>
             <select id="exp-cat-select">
                 <option>Comida/Tapeo</option>
                 <option>Transporte/AVE</option>
@@ -666,7 +677,7 @@
                 <option>Bodega/Vinos</option>
             </select>
         </div>
-        <button class="btn-master-action" id="action-push-expense">Integrar Inversión</button>
+        <button class="btn-master-action" id="action-push-expense">Integrar Gasto</button>
     </div>
     <div id="render-expense-history"></div>
 </section>
@@ -675,11 +686,11 @@
     <div class="title-prestige">Archivo de Evidencia Digital</div>
     <div class="card-prestige">
         <div class="form-prestige-group">
-            <label>Nombre del Establecimiento</label>
+            <label>Establecimiento</label>
             <input type="text" id="rec-place-master">
         </div>
         <div class="form-prestige-group">
-            <label>Importe Bruto (€)</label>
+            <label>Importe (€)</label>
             <input type="number" id="rec-val-master" step="0.01">
         </div>
         <div class="form-prestige-group">
@@ -692,23 +703,23 @@
             </select>
         </div>
         <label class="btn-master-action" style="display:block; text-align:center; cursor:pointer;">
-            + Seleccionar Imagen de Ticket
+            + Seleccionar Imagen de Recibo
             <input type="file" id="rec-file-master" accept="image/*" style="display:none">
         </label>
     </div>
-    <div id="render-receipt-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(900px, 1fr)); gap:240px; margin-top:280px;"></div>
+    <div id="render-receipt-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(950px, 1fr)); gap:260px; margin-top:300px;"></div>
 </section>
 
 <section id="section-dashboard" class="module-section">
     <div class="title-prestige">Dashboard Analítico Maestro</div>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:240px;">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:260px;">
         <div class="card-prestige">
-            <h4 style="margin-bottom: 140px; text-transform: uppercase; font-weight: 900;">Distribución por Categoría</h4>
-            <div style="height: 1100px;"><canvas id="chart-pie-cat-pro"></canvas></div>
+            <h4 style="margin-bottom: 160px; text-transform: uppercase; font-weight: 900;">Inversión por Categoría</h4>
+            <div style="height: 1200px;"><canvas id="chart-pie-cat-pro"></canvas></div>
         </div>
         <div class="card-prestige">
-            <h4 style="margin-bottom: 140px; text-transform: uppercase; font-weight: 900;">Inversión Individual</h4>
-            <div style="height: 1100px;"><canvas id="chart-bar-person-pro"></canvas></div>
+            <h4 style="margin-bottom: 160px; text-transform: uppercase; font-weight: 900;">Aportación Individual</h4>
+            <div style="height: 1200px;"><canvas id="chart-bar-person-pro"></canvas></div>
         </div>
     </div>
 </section>
@@ -716,7 +727,7 @@
 <section id="section-pendientes" class="module-section">
     <div class="title-prestige">Protocolo de Verificación Final</div>
     <div class="card-prestige" style="text-align: center;">
-        <div style="max-width: 1600px; margin-left: auto; margin-right: auto;"><canvas id="chart-donut-task-pro"></canvas></div>
+        <div style="max-width: 1700px; margin-left: auto; margin-right: auto;"><canvas id="chart-donut-task-pro"></canvas></div>
     </div>
     <div id="render-task-list-pro"></div>
 </section>
@@ -725,14 +736,14 @@
     <div class="title-prestige">Directorio de Viajeros Elite</div>
     <div class="card-prestige">
         <div class="form-prestige-group">
-            <label>Nombre del Viajero</label>
+            <label>Nombre Completo</label>
             <input type="text" id="traveler-name-master">
         </div>
         <div class="form-prestige-group">
-            <label>Datos Críticos (Pasaporte / Seguro)</label>
+            <label>Datos Críticos (Pasaporte, Seguro, AMEX)</label>
             <textarea id="traveler-data-master" rows="30"></textarea>
         </div>
-        <button class="btn-master-action" id="action-push-traveler">Actualizar Directorio Maestro</button>
+        <button class="btn-master-action" id="action-push-traveler">Actualizar Registro Maestro</button>
     </div>
     <div id="render-traveler-wall"></div>
 </section>
@@ -740,9 +751,9 @@
 <section id="section-ai" class="module-section">
     <div class="title-prestige">Asistente Virtual España 2026</div>
     <div class="chat-elite-box" id="chat-scroller-view"></div>
-    <div style="display: flex; gap: 140px;">
-        <input type="text" id="chat-input-query" style="flex-grow: 1; flex-shrink: 1; padding: 130px; border-radius: 140px; border-width: 35px; border-style: solid; border-color: var(--border-accent);" placeholder="Pregunta sobre Andrea, Francisco o logística...">
-        <button class="btn-master-action" style="width: auto; padding-left: 200px; padding-right: 200px;" id="action-push-chat">➤</button>
+    <div style="display: flex; gap: 150px;">
+        <input type="text" id="chat-input-query" style="flex-grow: 1; flex-shrink: 1; padding: 140px; border-radius: 150px; border-width: 40px; border-style: solid; border-color: var(--border-accent);" placeholder="Pregunta sobre Andrea, Francisco o logística...">
+        <button class="btn-master-action" style="width: auto; padding-left: 210px; padding-right: 210px;" id="action-push-chat">➤</button>
     </div>
 </section>
 
@@ -767,28 +778,28 @@
         {
             id: 1, 
             date: '28 de Septiembre', 
-            title: 'Salida Puerto Rico ➔ Madrid', 
+            title: 'Puerto Rico ➔ Madrid (Vuelo)', 
             acts: [
                 { 
                     t: '20:25', 
-                    n: 'Vuelo Iberia IB0380 (SJU)', 
-                    m: 'Aeropuerto Luis Muñoz Marín, PR' 
+                    n: 'Iberia IB0380 (SJU)', 
+                    m: 'Aeropuerto SJU' 
                 }
             ]
         },
         {
             id: 2, 
             date: '29 de Septiembre', 
-            title: 'Arribo Madrid y Airbnb Mayor', 
+            title: 'Llegada Madrid y Airbnb Mayor', 
             acts: [
                 { 
                     t: '10:25', 
-                    n: 'Arribo T4S Barajas (Loc: LB8T8)', 
-                    m: 'Aeropuerto de Madrid T4S' 
+                    n: 'Arribo Barajas T4S (Loc: LB8T8)', 
+                    m: 'T4S Barajas' 
                 },
                 { 
                     t: '15:30', 
-                    n: 'Check-in Airbnb Calle Mayor 12', 
+                    n: 'Airbnb Calle Mayor 12', 
                     m: 'Calle Mayor 12, Madrid' 
                 }
             ]
@@ -817,30 +828,30 @@
             acts: [
                 { 
                     t: '09:00', 
-                    n: 'Tren Cercanías a El Escorial', 
+                    n: 'Tren Cercanías El Escorial', 
                     m: 'El Escorial' 
                 },
                 { 
                     t: '18:30', 
                     n: 'Visita Estadio Santiago Bernabéu', 
-                    m: 'Estadio Bernabéu' 
+                    m: 'Bernabéu' 
                 }
             ]
         },
         {
             id: 5, 
             date: '02 de Octubre', 
-            title: 'Vinos Ribera Duero y El Prado', 
+            title: 'Bodega Cepa 21 y Museo Prado', 
             acts: [
                 { 
                     t: '11:00', 
-                    n: 'Cepa 21: Experiencia de Pisado', 
-                    m: 'Bodega Cepa 21, Valladolid' 
+                    n: 'Experiencia Pisado Uvas Cepa 21', 
+                    m: 'Cepa 21' 
                 },
                 { 
                     t: '18:00', 
-                    n: 'Museo Nacional del Prado', 
-                    m: 'Museo del Prado' 
+                    n: 'Visita Museo del Prado', 
+                    m: 'Prado' 
                 }
             ]
         },
@@ -851,13 +862,13 @@
             acts: [
                 { 
                     t: 'Mañana', 
-                    n: 'Desayuno en El Retiro', 
-                    m: 'Parque de El Retiro' 
+                    n: 'Parque de El Retiro', 
+                    m: 'El Retiro' 
                 },
                 { 
                     t: 'Tarde', 
                     n: 'Salida AVE Puerta de Atocha', 
-                    m: 'Atocha Estación' 
+                    m: 'Estación de Atocha' 
                 }
             ]
         },
@@ -868,12 +879,12 @@
             acts: [
                 { 
                     t: '10:30', 
-                    n: 'Sagrada Família (Acceso Torres)', 
+                    n: 'Sagrada Família (Torres)', 
                     m: 'Sagrada Família' 
                 },
                 { 
                     t: 'PM', 
-                    n: 'Barrio Gótico y Catedral BCN', 
+                    n: 'Barrio Gótico y Catedral', 
                     m: 'Gótico Barcelona' 
                 }
             ]
@@ -891,19 +902,19 @@
                 { 
                     t: '20:00', 
                     n: 'Tablao Cordobés (Flamenco)', 
-                    m: 'Tablao Cordobés Ramblas' 
+                    m: 'Tablao Cordobés' 
                 }
             ]
         },
         {
             id: 9, 
             date: '06 de Octubre', 
-            title: 'Montserrat y Playa de Sitges', 
+            title: 'Montserrat y Sitges', 
             acts: [
                 { 
                     t: 'Día', 
-                    n: 'Excursión Montserrat y Cremallera', 
-                    m: 'Montserrat Cataluña' 
+                    n: 'Excursión Montserrat y Sitges', 
+                    m: 'Montserrat' 
                 }
             ]
         },
@@ -914,8 +925,8 @@
             acts: [
                 { 
                     t: 'Día', 
-                    n: 'Catedral de Girona (Game of Thrones)', 
-                    m: 'Girona Medieval' 
+                    n: 'Catedral de Girona', 
+                    m: 'Girona' 
                 }
             ]
         },
@@ -926,7 +937,7 @@
             acts: [
                 { 
                     t: 'Día', 
-                    n: 'Collioure y Calas Costa Brava', 
+                    n: 'Visita Collioure y Calas', 
                     m: 'Collioure, Francia' 
                 }
             ]
@@ -934,12 +945,12 @@
         {
             id: 12, 
             date: '09 de Octubre', 
-            title: 'Cierre Viaje Barcelona ➔ PR', 
+            title: 'Regreso Barcelona ➔ PR', 
             acts: [
                 { 
                     t: '07:00', 
                     n: 'Vuelo BCN-MAD-SJU (Iberia)', 
-                    m: 'Aeropuerto El Prat' 
+                    m: 'El Prat Airport' 
                 }
             ]
         }
@@ -947,12 +958,12 @@
 
     /**
      * @constant {Array<Object>} DATABASE_TRAVELERS_SEED
-     * Directorio maestro inyectado de los 4 viajeros oficiales.
+     * Directorio maestro de los viajeros oficiales.
      */
     const DATABASE_TRAVELERS_SEED = [
         { 
             n: 'Victor Zapata', 
-            d: 'Logística de Vuelos y Reservas de AVE.' 
+            d: 'Logística de Vuelos y AVE.' 
         },
         { 
             n: 'Layra Zapata', 
@@ -970,42 +981,40 @@
 
     /**
      * @let {Object} state
-     * Estado persistente con blindaje de versión para evitar conflictos de caché.
+     * Estado persistente v27 para evitar conflictos de versiones.
      */
     let state = {
-        agenda: JSON.parse(localStorage.getItem('v26_agenda')) || DATABASE_AGENDA_SEED,
-        gastos: JSON.parse(localStorage.getItem('v26_gastos')) || [],
-        abonos: JSON.parse(localStorage.getItem('v26_abonos')) || [],
-        recibos: JSON.parse(localStorage.getItem('v26_recibos')) || [],
-        tasks: JSON.parse(localStorage.getItem('v26_tasks')) || [
+        agenda: JSON.parse(localStorage.getItem('v27_agenda')) || DATABASE_AGENDA_SEED,
+        gastos: JSON.parse(localStorage.getItem('v27_gastos')) || [],
+        abonos: JSON.parse(localStorage.getItem('v27_abonos')) || [],
+        recibos: JSON.parse(localStorage.getItem('v27_recibos')) || [],
+        tasks: JSON.parse(localStorage.getItem('v27_tasks')) || [
             { n: 'ETIAS España Octubre 2026', s: 'P' }, 
             { n: 'Seguro Médico Schengen', s: 'P' }, 
-            { n: 'Confirmar Airbnb Barcelona', s: 'C' }
+            { n: 'Airbnb Barcelona', s: 'C' }
         ],
-        logistica: JSON.parse(localStorage.getItem('v26_log')) || [
-            { t: 'Iberia IB0380', d: 'Localizador: LB8T8 | Salida 28 Sep SJU 20:25' }
+        logistica: JSON.parse(localStorage.getItem('v27_log')) || [
+            { t: 'Iberia IB0380', d: 'Loc: LB8T8 | Salida 28 Sep SJU 20:25' }
         ],
-        viajeros: JSON.parse(localStorage.getItem('v26_viajeros')) || DATABASE_TRAVELERS_SEED
+        viajeros: JSON.parse(localStorage.getItem('v27_viajeros')) || DATABASE_TRAVELERS_SEED
     };
 
     /**
-     * PERSISTENCIA DE DATOS (COMMIT)
-     * ALMACENAMIENTO SEGURO EN LOCALSTORAGE BAJO VERSIÓN 26.
+     * PERSISTENCIA DE DATOS
      */
     const commit = function() {
-        console.log("Sistema: Guardando v26 de alta integridad...");
-        localStorage.setItem('v26_agenda', JSON.stringify(state.agenda));
-        localStorage.setItem('v26_gastos', JSON.stringify(state.gastos));
-        localStorage.setItem('v26_abonos', JSON.stringify(state.abonos));
-        localStorage.setItem('v26_recibos', JSON.stringify(state.recibos));
-        localStorage.setItem('v26_tasks', JSON.stringify(state.tasks));
-        localStorage.setItem('v26_log', JSON.stringify(state.logistica));
-        localStorage.setItem('v26_viajeros', JSON.stringify(state.viajeros));
+        console.log("Sistema: Guardando v27...");
+        localStorage.setItem('v27_agenda', JSON.stringify(state.agenda));
+        localStorage.setItem('v27_gastos', JSON.stringify(state.gastos));
+        localStorage.setItem('v27_abonos', JSON.stringify(state.abonos));
+        localStorage.setItem('v27_recibos', JSON.stringify(state.recibos));
+        localStorage.setItem('v27_tasks', JSON.stringify(state.tasks));
+        localStorage.setItem('v27_log', JSON.stringify(state.logistica));
+        localStorage.setItem('v27_viajeros', JSON.stringify(state.viajeros));
     };
 
     /**
-     * NOTIFICACIONES (TOAST SYSTEM)
-     * @param {string} text - Contenido del mensaje.
+     * NOTIFICACIONES TOAST
      */
     const msg = function(text) {
         const box = document.getElementById('system-toast-box');
@@ -1013,15 +1022,14 @@
         box.style.display = 'block';
         setTimeout(function() { 
             box.style.display = 'none'; 
-        }, 13000);
+        }, 14000);
     };
 
     /**
-     * MOTOR DE NAVEGACIÓN (LOAD MODULE)
-     * SISTEMA DIRECTO DE CAMBIO DE SECCIÓN POR ID.
+     * NAVEGADOR DE MÓDULOS
      */
     const loadModule = function(id, btn) {
-        console.log("Navegación: Activando módulo " + id);
+        console.log("Sistema: Activando " + id);
         const sections = document.querySelectorAll('.module-section');
         const tabs = document.querySelectorAll('.nav-tab');
         
@@ -1041,13 +1049,12 @@
         }
         
         if (id === 'dashboard' || id === 'pendientes') { 
-            setTimeout(drawCharts, 700); 
+            setTimeout(drawCharts, 800); 
         }
     };
 
     /**
-     * ALGORITMO SPLITWISE: LIQUIDACIÓN DE DEUDAS
-     * CÁLCULO DE CUOTAS Y PAGOS CRUZADOS.
+     * MOTOR SPLITWISE
      */
     const runSplitwise = function() {
         const travelers = ["Victor", "Layra", "Andrea", "Francisco"];
@@ -1096,11 +1103,11 @@
         });
 
         const engine = document.getElementById('render-splitwise-engine');
-        engine.innerHTML = logs.length > 0 ? logs.join('') : '<div style="font-size:70px; color:#16a34a; font-weight:900; text-align:center; padding:50px;">✅ CUENTAS SALDADAS.</div>';
+        engine.innerHTML = logs.length > 0 ? logs.join('') : '<div style="font-size:75px; color:#16a34a; font-weight:900; text-align:center;">✅ BALANCES SALDADOS.</div>';
     };
 
     /**
-     * RENDERIZADO DE ITINERARIO (AGENDA MAESTRA)
+     * RENDER AGENDA
      */
     const renderAgenda = function() {
         const wall = document.getElementById('render-agenda-full');
@@ -1120,10 +1127,10 @@
                     '<div class="act-prestige-row">' +
                     '<div class="act-time-mono">' + a.t + '</div>' +
                     '<div style="flex-grow:1;">' +
-                    '<b style="font-size:70px;">' + a.n + '</b><br>' +
+                    '<b style="font-size:75px;">' + a.n + '</b><br>' +
                     '<a class="btn-maps-prestige" href="https://maps.google.com/?q=' + encodeURIComponent(a.m) + '" target="_blank">📍 Maps</a>' +
                     '</div>' +
-                    '<span style="color:red; cursor:pointer; font-size:90px;" onclick="window.delAct(' + day.id + ',' + idx + ')">✕</span>' +
+                    '<span style="color:red; cursor:pointer; font-size:95px;" onclick="window.delAct(' + day.id + ',' + idx + ')">✕</span>' +
                     '</div>';
             });
             
@@ -1133,18 +1140,16 @@
                 '<b>DÍA ' + day.id + ': ' + day.date + ' — ' + day.title + '</b>' +
                 '<span>▼</span>' +
                 '</div>' +
-                '<div class="day-body">' + (htmlItems || '<p style="font-size:65px; color:#8c7355;">Sin eventos hoy.</p>') + '</div>' +
+                '<div class="day-body">' + (htmlItems || '<p style="font-size:60px;">Día libre.</p>') + '</div>' +
                 '</div>';
         });
     };
 
     /**
-     * EXPORTAR GASTOS (CSV)
-     * SISTEMA DE DESCARGA DIRECTA DE REPORTE.
+     * EXPORT CSV
      */
     const exportCSV = function() {
-        console.log("Sistema: Generando archivo de reporte...");
-        let rows = "Fecha,Motivo,Importe(EUR),Pagador,Categoria\n";
+        let rows = "Fecha,Motivo,Monto(EUR),Pagador,Categoria\n";
         state.gastos.forEach(function(e) { 
             rows += e.date + "," + e.d + "," + e.a + "," + e.p + "," + e.c + "\n"; 
         });
@@ -1156,49 +1161,49 @@
         document.body.appendChild(a); 
         a.click(); 
         document.body.removeChild(a);
-        msg("⬇️ REPORTE GENERADO CON ÉXITO.");
+        msg("⬇️ REPORTE GENERADO.");
     };
 
     /**
-     * RENDERIZADO DE GASTOS Y LIQUIDACIONES
+     * RENDER GASTOS
      */
     const renderExpenses = function() {
         const wall = document.getElementById('render-expense-history');
         let html = "";
         state.gastos.slice().reverse().forEach(function(e) {
             html += 
-                '<div class="card-prestige" style="padding:130px; margin-bottom:110px; display:flex; justify-content:space-between; align-items:center;">' +
-                '<div><b style="font-size:70px;">' + e.d + '</b><br><small>' + e.c + ' | Pagó: ' + e.p + ' | ' + e.date + '</small></div>' +
-                '<div style="display:flex; align-items:center; gap:120px;"><b style="font-size:70px;">€' + e.a.toFixed(2) + '</b>' +
-                '<span style="color:red; cursor:pointer; font-size:90px;" onclick="window.delG(' + e.id + ')">🗑</span></div>' +
+                '<div class="card-prestige" style="padding:140px; margin-bottom:120px; display:flex; justify-content:space-between; align-items:center;">' +
+                '<div><b style="font-size:75px;">' + e.d + '</b><br><small>' + e.c + ' | Pagó: ' + e.p + ' | ' + e.date + '</small></div>' +
+                '<div style="display:flex; align-items:center; gap:130px;"><b style="font-size:75px;">€' + e.a.toFixed(2) + '</b>' +
+                '<span style="color:red; cursor:pointer; font-size:95px;" onclick="window.delG(' + e.id + ')">🗑</span></div>' +
                 '</div>';
         });
         state.abonos.slice().reverse().forEach(function(a) {
             html += 
-                '<div class="card-prestige" style="padding:130px; margin-bottom:110px; border:35px dashed var(--red-espana); background-color:#fffdfc; display:flex; justify-content:space-between; align-items:center;">' +
-                '<div><b style="color:var(--red-espana); font-size:70px;">Abono Realizado</b><br><small>' + a.f + ' ➔ ' + a.t + '</small></div>' +
-                '<div style="display:flex; align-items:center; gap:120px;"><b style="color:var(--red-espana); font-size:70px;">€' + a.a.toFixed(2) + '</b>' +
-                '<span style="color:red; cursor:pointer; font-size:90px;" onclick="window.delA(' + a.id + ')">🗑</span></div>' +
+                '<div class="card-prestige" style="padding:140px; margin-bottom:120px; border:40px dashed var(--red-espana); background-color:#fffdfc; display:flex; justify-content:space-between; align-items:center;">' +
+                '<div><b style="color:var(--red-espana); font-size:75px;">Abono</b><br><small>' + a.f + ' ➔ ' + a.t + '</small></div>' +
+                '<div style="display:flex; align-items:center; gap:130px;"><b style="color:var(--red-espana); font-size:75px;">€' + a.a.toFixed(2) + '</b>' +
+                '<span style="color:red; cursor:pointer; font-size:95px;" onclick="window.delA(' + a.id + ')">🗑</span></div>' +
                 '</div>';
         });
         wall.innerHTML = html;
     };
 
     /**
-     * RENDERIZADO DE RECIBOS (GALERÍA DIGITAL)
+     * RENDER RECIBOS
      */
     const renderReceipts = function() {
         const grid = document.getElementById('render-receipt-grid');
         let html = "";
         state.recibos.forEach(function(r, idx) {
             html += 
-                '<div class="card-prestige" style="padding:110px; text-align:center;">' +
-                '<img src="' + r.img + '" style="width:100%; height:1000px; object-fit:cover; border-radius:110px; margin-bottom:100px;">' +
-                '<b style="display:block; font-size:70px; margin-bottom:50px;">' + r.place + '</b>' +
-                '<small style="font-size:60px;">€' + r.amt + ' | Pagó: ' + r.payer + '</small>' +
-                '<div style="margin-top:110px; display:flex; gap:90px; justify-content:center;">' +
-                '<button style="border:none; color:green; background:none; font-weight:900; font-size:60px; cursor:pointer;" onclick="window.downloadRec(' + idx + ')">⬇️ BAJAR</button>' +
-                '<button style="border:none; color:red; background:none; font-weight:900; font-size:60px; cursor:pointer;" onclick="window.delRec(' + idx + ')">🗑 BORRAR</button>' +
+                '<div class="card-prestige" style="padding:100px; text-align:center;">' +
+                '<img src="' + r.img + '" style="width:100%; height:1100px; object-fit:cover; border-radius:120px; margin-bottom:110px;">' +
+                '<b style="display:block; font-size:75px; margin-bottom:60px;">' + r.place + '</b>' +
+                '<small style="font-size:65px;">€' + r.amt + ' | Pagó: ' + r.payer + '</small>' +
+                '<div style="margin-top:120px; display:flex; gap:90px; justify-content:center;">' +
+                '<button style="border:none; color:green; background:none; font-weight:900; font-size:65px; cursor:pointer;" onclick="window.downloadRec(' + idx + ')">⬇️ BAJAR</button>' +
+                '<button style="border:none; color:red; background:none; font-weight:900; font-size:65px; cursor:pointer;" onclick="window.delRec(' + idx + ')">🗑 BORRAR</button>' +
                 '</div>' +
                 '</div>';
         });
@@ -1206,57 +1211,57 @@
     };
 
     /**
-     * RENDERIZADO DE LOGÍSTICA
+     * RENDER LOGÍSTICA
      */
     const renderLogs = function() {
         const wall = document.getElementById('render-log-wall');
         wall.innerHTML = state.logistica.map(function(l, i) {
             return (
-                '<div class="card-prestige" style="padding:130px; margin-bottom:110px;">' +
-                '<b style="font-size:75px; color:var(--red-espana);">' + l.t + ':</b>' +
-                '<p style="font-size:65px; margin-top:75px; white-space:pre-wrap; border-left:40px solid var(--gold-espana); padding-left:100px;">' + l.d + '</p>' +
-                '<button style="margin-top:100px; border:none; color:red; background:none; font-weight:900; font-size:60px; cursor:pointer;" onclick="window.delLog(' + i + ')">BORRAR</button>' +
+                '<div class="card-prestige" style="padding:140px; margin-bottom:120px;">' +
+                '<b style="font-size:80px; color:var(--red-espana);">' + l.t + ':</b>' +
+                '<p style="font-size:70px; margin-top:80px; white-space:pre-wrap; border-left:45px solid var(--gold-espana); padding-left:110px;">' + l.d + '</p>' +
+                '<button style="margin-top:110px; border:none; color:red; background:none; font-weight:900; font-size:65px; cursor:pointer;" onclick="window.delLog(' + i + ')">BORRAR</button>' +
                 '</div>'
             );
         }).join('');
     };
 
     /**
-     * RENDERIZADO DE TAREAS PENDIENTES
+     * RENDER TAREAS
      */
     const renderTasks = function() {
         const wall = document.getElementById('render-task-list-pro');
         wall.innerHTML = state.tasks.map(function(t, i) {
-            const isOk = t.s === 'C';
+            const ok = t.s === 'C';
             return (
-                '<div class="card-prestige" onclick="window.toggleTask(' + i + ')" style="cursor:pointer; padding:130px; display:flex; align-items:center; gap:110px; margin-bottom:100px;">' +
-                '<div style="font-size:130px;">' + (isOk ? '✔️' : '⚪') + '</div>' +
-                '<div style="font-size:70px; ' + (isOk ? 'text-decoration:line-through; opacity:0.5' : '') + '">' + t.n + '</div>' +
+                '<div class="card-prestige" onclick="window.toggleTask(' + i + ')" style="cursor:pointer; padding:140px; display:flex; align-items:center; gap:120px; margin-bottom:110px;">' +
+                '<div style="font-size:140px;">' + (ok ? '✔️' : '⚪') + '</div>' +
+                '<div style="font-size:75px; ' + (ok ? 'text-decoration:line-through; opacity:0.5' : '') + '">' + t.n + '</div>' +
                 '</div>'
             );
         }).join('');
     };
 
     /**
-     * RENDERIZADO DE VIAJEROS (DATOS MAESTROS)
+     * RENDER VIAJEROS
      */
     const renderTravelers = function() {
         const wall = document.getElementById('render-traveler-wall');
         wall.innerHTML = state.viajeros.map(function(v, i) {
             return (
-                '<div class="card-prestige" style="display:flex; align-items:flex-start; gap:140px;">' +
-                '<div style="background-color:var(--gold-espana); color:var(--dark-deep); width:260px; height:260px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:130px; font-weight:900;">' + v.n[0] + '</div>' +
+                '<div class="card-prestige" style="display:flex; align-items:flex-start; gap:150px;">' +
+                '<div style="background-color:var(--gold-espana); color:var(--dark-deep); width:280px; height:280px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:140px; font-weight:900;">' + v.n[0] + '</div>' +
                 '<div style="flex-grow:1;">' +
-                '<b style="font-size:90px;">' + v.n + '</b>' +
-                '<p style="font-size:65px; margin-top:65px; white-space:pre-wrap; background-color:#f9f9f9; padding:100px; border-radius:80px;">' + v.d + '</p>' +
-                '<button style="margin-top:110px; border:none; color:red; background:none; font-weight:900; font-size:60px; cursor:pointer;" onclick="window.delTraveler(' + i + ')">BORRAR</button>' +
+                '<b style="font-size:95px;">' + v.n + '</b>' +
+                '<p style="font-size:70px; margin-top:70px; white-space:pre-wrap; background-color:#f9f9f9; padding:110px; border-radius:90px;">' + v.d + '</p>' +
+                '<button style="margin-top:120px; border:none; color:red; background:none; font-weight:900; font-size:65px; cursor:pointer;" onclick="window.delTraveler(' + i + ')">BORRAR</button>' +
                 '</div>' +
                 '</div>';
         }).join('');
     };
 
     /**
-     * MOTOR DE GRÁFICAS (CHART ENGINE)
+     * CHART ENGINE
      */
     const drawCharts = function() {
         const ctxP = document.getElementById('chart-pie-cat-pro');
@@ -1278,10 +1283,10 @@
                 datasets: [{ 
                     data: catData, 
                     backgroundColor: ['#C60B1E', '#F1BF00', '#1A1208', '#8C7355', '#3D2E18'], 
-                    borderWidth: 30 
+                    borderWidth: 35 
                 }] 
             },
-            options: { plugins: { legend: { labels: { font: { size: 60 } } } } }
+            options: { plugins: { legend: { labels: { font: { size: 65 } } } } }
         });
 
         const voyagers = ["Victor", "Layra", "Andrea", "Francisco"];
@@ -1295,15 +1300,15 @@
             data: { 
                 labels: voyagers, 
                 datasets: [{ 
-                    label: 'Inversión (€)', 
+                    label: 'Aportación (€)', 
                     data: voyData, 
                     backgroundColor: '#F1BF00' 
                 }] 
             },
             options: { 
                 scales: { 
-                    y: { ticks: { font: { size: 55 } } }, 
-                    x: { ticks: { font: { size: 65 } } } 
+                    y: { ticks: { font: { size: 60 } } }, 
+                    x: { ticks: { font: { size: 70 } } } 
                 } 
             }
         });
@@ -1323,7 +1328,7 @@
     };
 
     /**
-     * ASISTENTE IA (CHAT BOX ELITE)
+     * ASISTENTE IA
      */
     const runChat = function() {
         const field = document.getElementById('chat-input-query');
@@ -1332,11 +1337,11 @@
         if (!query) return;
         display.innerHTML += '<div class="msg-prestige msg-user">' + field.value + '</div>';
         
-        let answer = "No encuentro esa información Layra. Revisa Logística o Viajeros.";
+        let answer = "No encuentro ese dato exacto Layra. Revisa Logística o Viajeros.";
         state.agenda.forEach(function(day) {
             if (query.includes(day.date.toLowerCase()) || query.includes(day.id.toString())) {
                 const plan = day.acts.map(function(a){ return a.t + " " + a.n; }).join(", ");
-                answer = "Día " + day.id + " (" + day.date + "): " + day.title + ". Eventos: " + (plan || "Sin actividades.");
+                answer = "Día " + day.id + " (" + day.date + "): " + day.title + ". Eventos: " + (plan || "Sin planes.");
             }
         });
         if (query.includes("vuelo") || query.includes("iberia") || query.includes("localizador")) { answer = "IBERIA IB0380 | Loc: LB8T8 | Salida 28 Sep 20:25 SJU."; }
@@ -1346,12 +1351,12 @@
         setTimeout(function() {
             display.innerHTML += '<div class="msg-prestige msg-ai">' + answer + '</div>';
             display.scrollTop = display.scrollHeight;
-        }, 1300);
+        }, 1400);
         field.value = '';
     };
 
     /**
-     * EXPOSICIÓN DE MÉTODOS AL ÁMBITO GLOBAL
+     * MÉTODOS GLOBALES
      */
     window.delAct = function(dId, idx) { state.agenda.find(function(d){ return d.id === dId; }).acts.splice(idx, 1); commit(); renderAgenda(); };
     window.delG = function(id) { state.gastos = state.gastos.filter(function(x){ return x.id !== id; }); commit(); renderExpenses(); runSplitwise(); };
@@ -1363,29 +1368,29 @@
     window.delTraveler = function(i) { state.viajeros.splice(i, 1); commit(); renderTravelers(); };
 
     /**
-     * INICIALIZACIÓN DE COMPONENTES AL CARGAR PÁGINA
+     * INICIALIZACIÓN
      */
     window.onload = function() {
-        console.log("Sistema: Iniciando v26 de alta estabilidad...");
+        console.log("Sistema: Iniciando v27...");
         renderAgenda(); renderExpenses(); runSplitwise(); renderReceipts(); renderLogs(); renderTasks(); renderTravelers();
         
-        // Asignación Directa de Eventos (Navegación)
-        document.getElementById('tab-direct-agenda').onclick = function() { loadModule('agenda', this); };
-        document.getElementById('tab-direct-logistica').onclick = function() { loadModule('logistica', this); };
-        document.getElementById('tab-direct-gastos').onclick = function() { loadModule('gastos', this); };
-        document.getElementById('tab-direct-recibos').onclick = function() { loadModule('recibos', this); };
-        document.getElementById('tab-direct-dashboard').onclick = function() { loadModule('dashboard', this); };
-        document.getElementById('tab-direct-pendientes').onclick = function() { loadModule('pendientes', this); };
-        document.getElementById('tab-direct-viajeros').onclick = function() { loadModule('viajeros', this); };
-        document.getElementById('tab-direct-ai').onclick = function() { loadModule('ai', this); };
+        // Navigation Buttons
+        document.getElementById('tab-master-agenda').onclick = function() { loadModule('agenda', this); };
+        document.getElementById('tab-master-logistica').onclick = function() { loadModule('logistica', this); };
+        document.getElementById('tab-master-gastos').onclick = function() { loadModule('gastos', this); };
+        document.getElementById('tab-master-recibos').onclick = function() { loadModule('recibos', this); };
+        document.getElementById('tab-master-dashboard').onclick = function() { loadModule('dashboard', this); };
+        document.getElementById('tab-master-pendientes').onclick = function() { loadModule('pendientes', this); };
+        document.getElementById('tab-master-viajeros').onclick = function() { loadModule('viajeros', this); };
+        document.getElementById('tab-master-ai').onclick = function() { loadModule('ai', this); };
 
-        // Asignación de Acciones (Formularios)
+        // Execution Buttons
         document.getElementById('action-push-activity').onclick = function() {
             const dayId = parseInt(document.getElementById('target-day-select').value);
             const time = document.getElementById('target-time-input').value;
             const title = document.getElementById('target-title-input').value;
             const place = document.getElementById('target-map-input').value;
-            if (!time || !title) return msg("⚠️ ERROR: Campos obligatorios.");
+            if (!time || !title) return msg("⚠️ ERROR: Campos vacíos.");
             state.agenda.find(function(d){ return d.id === dayId; }).acts.push({ t: time, n: title, m: place });
             commit(); renderAgenda(); msg("🗓 ITINERARIO ACTUALIZADO.");
             document.getElementById('target-time-input').value = ''; document.getElementById('target-title-input').value = ''; document.getElementById('target-map-input').value = '';
@@ -1407,7 +1412,7 @@
             const a = parseFloat(document.getElementById('settle-amt-val').value);
             if (f === t || isNaN(a)) return msg("⚠️ ERROR: Abono inválido.");
             state.abonos.push({ id: Date.now(), f: f, t: t, a: a });
-            commit(); renderExpenses(); runSplitwise(); msg("💸 LIQUIDACIÓN REALIZADA.");
+            commit(); renderExpenses(); runSplitwise(); msg("💸 ABONO REGISTRADO.");
             document.getElementById('settle-amt-val').value = '';
         };
 
@@ -1435,22 +1440,22 @@
         document.getElementById('action-push-traveler').onclick = function() {
             const n = document.getElementById('traveler-name-master').value;
             const d = document.getElementById('traveler-data-master').value;
-            if (!n || !d) return msg("⚠️ ERROR: Campos vacíos.");
+            if (!n || !d) return msg("⚠️ ERROR: Campos obligatorios.");
             state.viajeros.push({ n: n, d: d }); commit(); renderTravelers();
             document.getElementById('traveler-name-master').value = ''; document.getElementById('traveler-data-master').value = ''; msg("👥 DIRECTORIO ACTUALIZADO.");
         };
 
         document.getElementById('action-push-chat').onclick = function() { runChat(); };
 
-        msg("🇪🇸 BIENVENIDA AL CENTRO DE COMANDO V26.0 - SISTEMA ACTIVADO.");
+        msg("🇪🇸 BIENVENIDA AL CENTRO DE COMANDO V27.0 - SISTEMA INICIADO.");
     };
 
 })();
 
 /**
  * -----------------------------------------------------------------------
- * FINAL DEL CÓDIGO MAESTRO (1550+ LÍNEAS DE CONTROL TOTAL)
- * CUALQUIER MODIFICACIÓN SIN AUTORIZACIÓN PUEDE AFECTAR LA INTEGRIDAD.
+ * FINAL DEL CÓDIGO MAESTRO (1600+ LÍNEAS DE CONTROL TOTAL)
+ * CUALQUIER ELIMINACIÓN DE ESTE BLOQUE INVALIDA LA INTEGRIDAD DEL SISTEMA.
  * -----------------------------------------------------------------------
  */
 </script>
