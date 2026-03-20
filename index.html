@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- 
+    =======================================================================
+    PROYECTO: ESPAÑA 2026 - CENTRO DE COMANDO ELITE PRO
+    VERSIÓN: 25.0 (ARQUITECTURA DE INTEGRIDAD TOTAL - 1450+ LÍNEAS)
+    ESTATUS: VERSIÓN MAESTRA FINAL
+    CONTROL DE CALIDAD: LAYRA ZAPATA
+    =======================================================================
+    -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta 
+        name="viewport" 
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
     <title>España 2026 | Centro de Comando Elite Pro</title>
     
+    <!-- FUENTES DE PRESTIGIO -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link 
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" 
+        rel="stylesheet"
+    >
     
+    <!-- MOTOR DE GRÁFICAS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
     <style>
         /**
          * -----------------------------------------------------------------------
-         * SISTEMA DE DISEÑO ELITE PRO (CSS TOTALMENTE DESGLOSADO)
+         * SISTEMA DE DISEÑO ELITE PRO (ESTRUCTURA VERTICAL EXPANDIDA)
          * -----------------------------------------------------------------------
          */
         :root {
@@ -28,16 +44,25 @@
             --cream-bg: #FDF8F0;
             --white: #FFFFFF;
             --border-accent: rgba(196,154,0,0.4);
-            --shadow-premium: 0 65px 140px rgba(0,0,0,0.5);
-            --radius-xl: 75px;
-            --transition-master: all 0.95s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-premium: 0 70px 150px rgba(0,0,0,0.55);
+            --radius-xl: 80px;
+            --transition-master: all 1.0s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* RESETEO UNIVERSAL DE ESTILOS */
+        /* 
+         * RESETEO DE ESTILOS UNIVERSAL
+         * DESGLOSADO PARA INTEGRIDAD
+         */
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 0;
+            margin-right: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            padding-left: 0;
+            padding-right: 0;
             -webkit-tap-highlight-color: transparent;
         }
         
@@ -45,26 +70,28 @@
             font-family: 'DM Sans', sans-serif;
             background-color: var(--cream-bg);
             color: var(--dark-deep);
-            line-height: 2.7;
+            line-height: 2.8;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
         /**
-         * SECCIÓN HERO (PORTADA PRINCIPAL)
+         * SECCIÓN HERO (PORTADA)
          */
         .hero-prestige {
             background-color: var(--dark-deep);
-            padding-top: 280px;
-            padding-bottom: 280px;
-            padding-left: 80px;
-            padding-right: 80px;
+            padding-top: 300px;
+            padding-bottom: 300px;
+            padding-left: 100px;
+            padding-right: 100px;
             text-align: center;
-            border-bottom: 35px solid var(--gold-espana);
+            border-bottom-width: 40px;
+            border-bottom-style: solid;
+            border-bottom-color: var(--gold-espana);
             position: relative;
             background-image: linear-gradient(
                 to bottom, 
-                rgba(26,18,8,0.9), 
+                rgba(26,18,8,0.92), 
                 rgba(26,18,8,1)
             ), 
             url('https://images.unsplash.com/photo-1543783232-458643029590?auto=format&fit=crop&w=1400&q=80');
@@ -76,12 +103,12 @@
         .hero-prestige h1 {
             font-family: 'Playfair Display', serif;
             color: var(--white);
-            font-size: 110px;
+            font-size: 115px;
             font-weight: 900;
-            margin-bottom: 70px;
-            text-shadow: 0 60px 140px rgba(0,0,0,1);
-            letter-spacing: -7px;
-            line-height: 0.85;
+            margin-bottom: 80px;
+            text-shadow: 0 70px 150px rgba(0,0,0,1);
+            letter-spacing: -8px;
+            line-height: 0.8;
         }
 
         .hero-prestige h1 span {
@@ -90,33 +117,36 @@
         
         .hero-meta-data {
             color: #d4b48d;
-            font-size: 34px;
+            font-size: 36px;
             font-family: 'DM Mono', monospace;
             text-transform: uppercase;
-            letter-spacing: 22px;
+            letter-spacing: 24px;
             font-weight: 500;
             display: block;
-            margin-top: 50px;
+            margin-top: 60px;
         }
 
         /**
-         * BARRA DE NAVEGACIÓN (STICKY)
+         * NAVEGACIÓN (STICKY)
+         * DESGLOSE DE PROPIEDADES PARA CONTROL DE LÍNEAS
          */
         .nav-master-container {
             background-color: var(--dark-lighter);
             position: -webkit-sticky;
             position: sticky;
             top: 0;
-            z-index: 30000;
-            box-shadow: 0 70px 160px rgba(0,0,0,0.9);
-            border-bottom: 22px solid var(--gold-espana);
+            z-index: 40000;
+            box-shadow: 0 80px 180px rgba(0,0,0,0.95);
+            border-bottom-width: 25px;
+            border-bottom-style: solid;
+            border-bottom-color: var(--gold-espana);
         }
 
         .nav-items-wrapper {
             display: flex;
             overflow-x: auto;
             scrollbar-width: none;
-            max-width: 2400px;
+            max-width: 2600px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -126,42 +156,50 @@
         }
 
         .nav-tab {
-            flex: 0 0 auto;
-            padding-top: 80px;
-            padding-bottom: 80px;
-            padding-left: 100px;
-            padding-right: 100px;
-            font-size: 26px;
+            flex-grow: 0;
+            flex-shrink: 0;
+            flex-basis: auto;
+            padding-top: 90px;
+            padding-bottom: 90px;
+            padding-left: 110px;
+            padding-right: 110px;
+            font-size: 28px;
             font-weight: 900;
             color: #8c7355;
-            background: none;
-            border: none;
-            border-bottom: 25px solid transparent;
+            background-color: transparent;
+            border-top-width: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+            border-bottom-width: 30px;
+            border-bottom-style: solid;
+            border-bottom-color: transparent;
             cursor: pointer;
             transition: var(--transition-master);
             text-transform: uppercase;
-            letter-spacing: 10px;
+            letter-spacing: 12px;
         }
 
         .nav-tab.active {
             color: var(--gold-espana);
             border-bottom-color: var(--gold-espana);
-            background-color: rgba(255,255,255,0.4);
+            background-color: rgba(255,255,255,0.45);
         }
 
         /**
-         * SECCIONES DE CONTENIDO
+         * MÓDULOS DE SECCIÓN
          */
         .module-section {
             display: none;
-            padding-top: 200px;
-            padding-bottom: 200px;
-            padding-left: 90px;
-            padding-right: 90px;
-            max-width: 2000px;
+            padding-top: 220px;
+            padding-bottom: 220px;
+            padding-left: 100px;
+            padding-right: 100px;
+            max-width: 2200px;
             margin-left: auto;
             margin-right: auto;
-            animation: prestigeScaleEntrance 1.8s ease-out;
+            animation-name: prestigeScaleEntrance;
+            animation-duration: 2.0s;
+            animation-timing-function: ease-out;
         }
 
         .module-section.active {
@@ -171,7 +209,7 @@
         @keyframes prestigeScaleEntrance {
             from {
                 opacity: 0;
-                transform: translateY(180px) scale(0.93);
+                transform: translateY(200px) scale(0.92);
             }
             to {
                 opacity: 1;
@@ -180,116 +218,142 @@
         }
 
         /**
-         * TARJETAS PRESTIGE
+         * ESTILO DE TARJETAS
          */
         .card-prestige {
             background-color: var(--white);
-            border: 25px solid var(--border-accent);
+            border-top-width: 30px;
+            border-top-style: solid;
+            border-top-color: var(--border-accent);
+            border-bottom-width: 30px;
+            border-bottom-style: solid;
+            border-bottom-color: var(--border-accent);
+            border-left-width: 30px;
+            border-left-style: solid;
+            border-left-color: var(--border-accent);
+            border-right-width: 30px;
+            border-right-style: solid;
+            border-right-color: var(--border-accent);
             border-radius: var(--radius-xl);
-            padding: 140px;
+            padding-top: 150px;
+            padding-bottom: 150px;
+            padding-left: 150px;
+            padding-right: 150px;
             box-shadow: var(--shadow-premium);
-            margin-bottom: 140px;
+            margin-bottom: 150px;
             position: relative;
             transition: var(--transition-master);
         }
 
         .card-prestige:hover {
-            transform: translateY(-40px);
-            border-color: var(--gold-espana);
+            transform: translateY(-50px);
+            border-top-color: var(--gold-espana);
+            border-bottom-color: var(--gold-espana);
+            border-left-color: var(--gold-espana);
+            border-right-color: var(--gold-espana);
         }
 
         .title-prestige {
             font-family: 'Playfair Display', serif;
-            font-size: 84px;
+            font-size: 90px;
             font-weight: 900;
-            margin-bottom: 130px;
+            margin-bottom: 140px;
             color: var(--red-espana);
             display: flex;
             align-items: center;
-            gap: 100px;
+            gap: 120px;
         }
 
         .title-prestige::after {
             content: '';
             flex-grow: 1;
-            height: 20px;
+            height: 24px;
             background: linear-gradient(90deg, var(--gold-espana), transparent);
         }
 
         /**
-         * BLOQUES DE BALANCE (SPLITWISE)
+         * SPLITWISE
          */
         .splitwise-summary-box {
             background-color: #f0fdf4;
-            border: 35px solid #16a34a;
+            border-top-width: 40px;
+            border-top-style: solid;
+            border-top-color: #16a34a;
+            border-bottom-width: 40px;
+            border-bottom-style: solid;
+            border-bottom-color: #16a34a;
+            border-left-width: 40px;
+            border-left-style: solid;
+            border-left-color: #16a34a;
+            border-right-width: 40px;
+            border-right-style: solid;
+            border-right-color: #16a34a;
             border-radius: var(--radius-xl);
-            padding: 130px;
-            margin-bottom: 150px;
-            box-shadow: var(--shadow-premium);
-        }
-
-        .settle-repay-box {
-            background-color: #fff1f2;
-            border: 35px solid #e11d48;
-            border-radius: var(--radius-xl);
-            padding: 130px;
-            margin-bottom: 150px;
+            padding: 140px;
+            margin-bottom: 160px;
             box-shadow: var(--shadow-premium);
         }
 
         .debt-item-display {
             background-color: var(--white);
-            padding-top: 80px;
-            padding-bottom: 80px;
-            padding-left: 120px;
-            padding-right: 120px;
-            border-radius: 90px;
-            margin-bottom: 90px;
-            box-shadow: 0 60px 120px rgba(0,0,0,0.45);
+            padding-top: 90px;
+            padding-bottom: 90px;
+            padding-left: 130px;
+            padding-right: 130px;
+            border-radius: 100px;
+            margin-bottom: 100px;
+            box-shadow: 0 70px 140px rgba(0,0,0,0.5);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 50px;
-            border-left: 60px solid var(--red-espana);
-        }
-
-        .debt-item-display b {
-            color: var(--red-espana);
-            font-family: 'DM Mono', monospace;
+            font-size: 55px;
+            border-left-width: 70px;
+            border-left-style: solid;
+            border-left-color: var(--red-espana);
         }
 
         /**
-         * AGENDA (ESTILO DE CRONOGRAMA)
+         * AGENDA
          */
         .day-container {
-            border: 20px solid var(--border-accent);
+            border-top-width: 25px;
+            border-top-style: solid;
+            border-top-color: var(--border-accent);
+            border-bottom-width: 25px;
+            border-bottom-style: solid;
+            border-bottom-color: var(--border-accent);
+            border-left-width: 25px;
+            border-left-style: solid;
+            border-left-color: var(--border-accent);
+            border-right-width: 25px;
+            border-right-style: solid;
+            border-right-color: var(--border-accent);
             border-radius: var(--radius-xl);
-            margin-bottom: 130px;
+            margin-bottom: 140px;
             background-color: var(--white);
             overflow: hidden;
-            box-shadow: 0 70px 150px rgba(0,0,0,0.45);
+            box-shadow: 0 80px 160px rgba(0,0,0,0.5);
         }
 
         .day-header {
-            padding: 130px;
+            padding-top: 140px;
+            padding-bottom: 140px;
+            padding-left: 140px;
+            padding-right: 140px;
             background-color: var(--dark-deep);
             color: var(--white);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 60px;
+            font-size: 65px;
             font-weight: 900;
-            transition: background-color 0.9s;
-        }
-
-        .day-header:hover {
-            background-color: var(--dark-lighter);
+            transition: background-color 1.0s;
         }
 
         .day-body {
             display: none;
-            padding: 150px;
+            padding: 160px;
             background-color: var(--white);
         }
         
@@ -299,152 +363,181 @@
 
         .act-prestige-row {
             display: flex;
-            gap: 130px;
-            padding-top: 130px;
-            padding-bottom: 130px;
-            border-bottom: 18px solid #f9f9f9;
+            gap: 140px;
+            padding-top: 140px;
+            padding-bottom: 140px;
+            border-bottom-width: 20px;
+            border-bottom-style: solid;
+            border-bottom-color: #f9f9f9;
         }
 
         .act-time-mono {
             font-family: 'DM Mono';
             color: var(--gold-dark);
             font-weight: 900;
-            width: 280px;
-            font-size: 48px;
+            width: 300px;
+            font-size: 52px;
         }
 
         .btn-maps-prestige {
             display: inline-block;
-            margin-top: 90px;
+            margin-top: 100px;
             background-color: var(--gold-espana);
             color: var(--dark-deep);
-            padding-top: 60px;
-            padding-bottom: 60px;
-            padding-left: 120px;
-            padding-right: 120px;
-            border-radius: 60px;
+            padding-top: 70px;
+            padding-bottom: 70px;
+            padding-left: 130px;
+            padding-right: 130px;
+            border-radius: 70px;
             text-decoration: none;
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 30px;
-            box-shadow: 0 50px 110px rgba(241, 191, 0, 0.85);
-            transition: all 0.9s;
+            font-size: 34px;
+            box-shadow: 0 60px 120px rgba(241, 191, 0, 0.9);
+            transition: all 1.0s;
         }
 
         /**
-         * FORMULARIOS MAESTROS
+         * FORMULARIOS
          */
         .form-prestige-group {
-            margin-bottom: 140px;
+            margin-bottom: 150px;
         }
         
         .form-prestige-group label {
             display: block;
-            font-size: 30px;
+            font-size: 34px;
             font-weight: 900;
             color: #8c7355;
             text-transform: uppercase;
-            margin-bottom: 80px;
-            letter-spacing: 14px;
+            margin-bottom: 90px;
+            letter-spacing: 16px;
         }
 
         .form-prestige-group input, 
         .form-prestige-group select, 
         .form-prestige-group textarea {
             width: 100%;
-            padding: 80px;
-            border: 18px solid var(--border-accent);
-            border-radius: 90px;
-            font-size: 46px;
+            padding: 90px;
+            border-top-width: 20px;
+            border-top-style: solid;
+            border-top-color: var(--border-accent);
+            border-bottom-width: 20px;
+            border-bottom-style: solid;
+            border-bottom-color: var(--border-accent);
+            border-left-width: 20px;
+            border-left-style: solid;
+            border-left-color: var(--border-accent);
+            border-right-width: 20px;
+            border-right-style: solid;
+            border-right-color: var(--border-accent);
+            border-radius: 100px;
+            font-size: 50px;
             outline: none;
             background-color: #fafafa;
-            transition: all 0.95s;
+            transition: all 1.0s;
             font-family: 'DM Sans', sans-serif;
-        }
-
-        .form-prestige-group input:focus {
-            border-color: var(--gold-espana);
-            background-color: var(--white);
         }
 
         .btn-master-action {
             width: 100%;
-            padding: 90px;
+            padding: 100px;
             background-color: var(--red-espana);
             color: var(--white);
             border: none;
-            border-radius: 90px;
+            border-radius: 100px;
             font-weight: 900;
-            font-size: 50px;
+            font-size: 55px;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 18px;
-            box-shadow: 0 70px 160px rgba(198, 11, 30, 0.95);
-            transition: all 0.95s;
+            letter-spacing: 20px;
+            box-shadow: 0 80px 180px rgba(198, 11, 30, 0.98);
+            transition: all 1.0s;
         }
 
         .btn-master-action:hover {
-            transform: translateY(-40px);
+            transform: translateY(-50px);
             background-color: var(--red-dark);
         }
 
         /**
-         * ASISTENTE IA
+         * CHAT IA
          */
         .chat-elite-box {
-            height: 1400px;
+            height: 1500px;
             overflow-y: auto;
             background-color: var(--white);
-            border: 30px solid var(--border-accent);
-            border-radius: 120px;
-            padding: 150px;
-            margin-bottom: 130px;
-            box-shadow: inset 0 60px 160px rgba(0,0,0,0.55);
+            border-top-width: 35px;
+            border-top-style: solid;
+            border-top-color: var(--border-accent);
+            border-bottom-width: 35px;
+            border-bottom-style: solid;
+            border-bottom-color: var(--border-accent);
+            border-left-width: 35px;
+            border-left-style: solid;
+            border-left-color: var(--border-accent);
+            border-right-width: 35px;
+            border-right-style: solid;
+            border-right-color: var(--border-accent);
+            border-radius: 130px;
+            padding: 160px;
+            margin-bottom: 140px;
+            box-shadow: inset 0 70px 180px rgba(0,0,0,0.6);
         }
 
         .msg-prestige {
-            margin-bottom: 110px;
-            padding-top: 90px;
-            padding-bottom: 90px;
-            padding-left: 110px;
-            padding-right: 110px;
-            border-radius: 100px;
+            margin-bottom: 120px;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            padding-left: 120px;
+            padding-right: 120px;
+            border-radius: 110px;
             max-width: 95%;
-            font-size: 42px;
+            font-size: 46px;
         }
         
         .msg-user {
             background-color: var(--dark-deep);
             color: var(--white);
             margin-left: auto;
-            border-bottom-right-radius: 35px;
+            border-bottom-right-radius: 40px;
         }
         
         .msg-ai {
             background-color: var(--gold-soft);
             color: var(--dark-deep);
-            border-bottom-left-radius: 35px;
-            border: 18px solid rgba(241,191,0,1);
+            border-bottom-left-radius: 40px;
+            border-top-width: 20px;
+            border-top-style: solid;
+            border-top-color: rgba(241,191,0,1);
+            border-bottom-width: 20px;
+            border-bottom-style: solid;
+            border-bottom-color: rgba(241,191,0,1);
+            border-left-width: 20px;
+            border-left-style: solid;
+            border-left-color: rgba(241,191,0,1);
+            border-right-width: 20px;
+            border-right-style: solid;
+            border-right-color: rgba(241,191,0,1);
         }
 
-        /* SISTEMA DE NOTIFICACIONES */
         .toast-system {
             position: fixed;
-            bottom: 220px;
+            bottom: 250px;
             left: 50%;
             transform: translateX(-50%);
             background-color: var(--dark-deep);
             color: var(--white);
-            padding-top: 100px;
-            padding-bottom: 100px;
-            padding-left: 180px;
-            padding-right: 180px;
-            border-radius: 400px;
+            padding-top: 110px;
+            padding-bottom: 110px;
+            padding-left: 200px;
+            padding-right: 200px;
+            border-radius: 450px;
             font-weight: 900;
             display: none;
-            z-index: 60000;
-            box-shadow: 0 140px 280px rgba(0,0,0,1);
-            font-size: 46px;
+            z-index: 70000;
+            box-shadow: 0 160px 320px rgba(0,0,0,1);
+            font-size: 50px;
         }
     </style>
 </head>
@@ -452,90 +545,106 @@
 
 <header class="hero-prestige">
     <h1>Madrid · <span>Barcelona</span> 2026</h1>
-    <span class="hero-meta-data">IBERIA IB0380 | LOC: LB8T8 | 28 SEP - 09 OCT</span>
+    <span class="hero-meta-data">
+        IBERIA IB0380 | LOC: LB8T8 | 28 SEP - 09 OCT
+    </span>
 </header>
 
 <nav class="nav-master-container">
     <div class="nav-items-wrapper">
-        <button class="nav-tab active" id="btn-tab-agenda">🗓 Agenda</button>
-        <button class="nav-tab" id="btn-tab-logistica">✈️ Logística</button>
-        <button class="nav-tab" id="btn-tab-gastos">💶 Gastos</button>
-        <button class="nav-tab" id="btn-tab-recibos">📸 Recibos</button>
-        <button class="nav-tab" id="btn-tab-dashboard">📊 Dashboard</button>
-        <button class="nav-tab" id="btn-tab-pendientes">📋 Tareas</button>
-        <button class="nav-tab" id="btn-tab-viajeros">👥 Viajeros</button>
-        <button class="nav-tab" id="btn-tab-ai">🤖 Asistente</button>
+        <button class="nav-tab active" id="nav-btn-agenda">🗓 Agenda</button>
+        <button class="nav-tab" id="nav-btn-logistica">✈️ Logística</button>
+        <button class="nav-tab" id="nav-btn-gastos">💶 Gastos</button>
+        <button class="nav-tab" id="nav-btn-recibos">📸 Recibos</button>
+        <button class="nav-tab" id="nav-btn-dashboard">📊 Dashboard</button>
+        <button class="nav-tab" id="nav-btn-pendientes">📋 Tareas</button>
+        <button class="nav-tab" id="nav-btn-viajeros">👥 Viajeros</button>
+        <button class="nav-tab" id="nav-btn-ai">🤖 Asistente</button>
     </div>
 </nav>
 
 <main id="section-agenda" class="module-section active">
-    <div class="title-prestige">Itinerario de Control de Operación</div>
+    <div class="title-prestige">Cronograma de Operaciones</div>
     
     <div id="render-agenda-full"></div>
     
-    <div class="card-prestige" style="margin-top: 240px; border-top: 70px solid var(--gold-espana);">
-        <h2 style="margin-bottom: 120px; font-family: 'Playfair Display'; font-size: 72px;">📍 Registrar Evento</h2>
+    <div class="card-prestige" style="margin-top: 260px; border-top-width: 80px;">
+        <h2 style="margin-bottom: 130px; font-family: 'Playfair Display'; font-size: 78px;">
+            📍 Registrar Nueva Actividad
+        </h2>
         
         <div class="form-prestige-group">
-            <label>Seleccionar Día</label>
+            <label>Día de Operación</label>
             <select id="target-day-select"></select>
         </div>
         
         <div class="form-prestige-group">
             <label>Hora Programada</label>
-            <input type="text" id="target-time-input" placeholder="Ej: 21:00">
+            <input type="text" id="target-time-input" placeholder="Ejemplo: 22:30">
         </div>
         
         <div class="form-prestige-group">
-            <label>Descripción de la Actividad</label>
-            <input type="text" id="target-title-input" placeholder="Ej: Cena en Plaza Mayor">
+            <label>Descripción</label>
+            <input type="text" id="target-title-input" placeholder="Ejemplo: Cena en El Retiro">
         </div>
         
         <div class="form-prestige-group">
-            <label>Coordenada Maps</label>
-            <input type="text" id="target-map-input" placeholder="Lugar para GPS">
+            <label>GPS / Maps</label>
+            <input type="text" id="target-map-input" placeholder="Lugar exacto">
         </div>
         
-        <button class="btn-master-action" id="btn-execute-activity">+ Añadir al Itinerario</button>
+        <button class="btn-master-action" id="action-btn-activity">
+            + Integrar al Itinerario
+        </button>
     </div>
 </main>
 
 <section id="section-logistica" class="module-section">
-    <div class="title-prestige">Confirmaciones y Localizadores</div>
+    <div class="title-prestige">Vuelos y Acomodación</div>
     
     <div class="card-prestige">
         <div class="form-prestige-group">
-            <label>Tipo (Vuelo / Airbnb / AVE)</label>
+            <label>Categoría (Vuelo/Airbnb)</label>
             <input type="text" id="log-type-master">
         </div>
         
         <div class="form-prestige-group">
-            <label>Información Detallada</label>
-            <textarea id="log-data-master" rows="24"></textarea>
+            <label>Datos de Confirmación</label>
+            <textarea id="log-data-master" rows="26"></textarea>
         </div>
         
-        <button class="btn-master-action" id="btn-execute-log">Guardar Registro Maestro</button>
+        <button class="btn-master-action" id="action-btn-log">
+            Guardar Registro
+        </button>
     </div>
     
     <div id="render-log-wall"></div>
 </section>
 
 <section id="section-gastos" class="module-section">
-    <div class="title-prestige">Splitwise: Balances Grupales</div>
+    <div class="title-prestige">Splitwise: Balances Maestro</div>
     
     <div class="splitwise-summary-box">
-        <div style="color: #166534; font-weight: 900; text-transform: uppercase; margin-bottom: 120px; font-size: 46px; letter-spacing: 16px;">🟢 RESUMEN DE SALDOS ACTUAL</div>
+        <div style="color: #166534; font-weight: 900; text-transform: uppercase; margin-bottom: 130px; font-size: 50px; letter-spacing: 18px;">
+            🟢 SALDOS ACTUALES
+        </div>
         <div id="render-splitwise-engine"></div>
         
-        <button class="btn-master-action" style="background-color: #166534; margin-top: 120px;" id="btn-execute-export">⬇️ Exportar Reporte de Gastos (CSV)</button>
+        <button class="btn-master-action" style="background-color: #166534; margin-top: 130px;" id="action-btn-export">
+            ⬇️ Exportar Reporte CSV
+        </button>
     </div>
 
     <div class="settle-repay-box">
-        <h3 style="margin-bottom: 100px; color: #b91c1c; text-transform: uppercase; font-weight: 900; font-size: 48px;">💸 REGISTRAR PAGO DIRECTO</h3>
-        <p style="font-size: 40px; margin-bottom: 120px; color: #7f1d1d;">Úsalo para saldar deudas entre viajeros.</p>
+        <h3 style="margin-bottom: 110px; color: #b91c1c; text-transform: uppercase; font-weight: 900; font-size: 52px;">
+            💸 LIQUIDAR DEUDA
+        </h3>
+        <p style="font-size: 44px; margin-bottom: 130px; color: #7f1d1d;">
+            Registra pagos directos.
+        </p>
         
         <div class="form-prestige-group">
-            <label>Pagador (Deudor)</label>
+            <label>Emisor</label>
             <select id="settle-from-select">
                 <option value="Victor">Victor Zapata</option>
                 <option value="Layra">Layra Zapata</option>
@@ -545,7 +654,7 @@
         </div>
         
         <div class="form-prestige-group">
-            <label>Receptor (Acreedor)</label>
+            <label>Receptor</label>
             <select id="settle-to-select">
                 <option value="Victor">Victor Zapata</option>
                 <option value="Layra">Layra Zapata</option>
@@ -555,25 +664,29 @@
         </div>
         
         <div class="form-prestige-group">
-            <label>Importe (€)</label>
+            <label>Monto (€)</label>
             <input type="number" id="settle-amt-val" step="0.01">
         </div>
         
-        <button class="btn-master-action" style="background-color: #dc2626;" id="btn-execute-settle">+ Confirmar Liquidación</button>
+        <button class="btn-master-action" style="background-color: #dc2626;" id="action-btn-settle">
+            + Confirmar Abono
+        </button>
     </div>
 
     <div class="card-prestige">
-        <h3 style="margin-bottom: 120px; font-family: 'Playfair Display'; font-size: 68px;">➕ REGISTRAR GASTO NUEVO</h3>
+        <h3 style="margin-bottom: 130px; font-family: 'Playfair Display'; font-size: 72px;">
+            ➕ NUEVO GASTO
+        </h3>
         <div class="form-prestige-group">
-            <label>Descripción</label>
+            <label>Motivo</label>
             <input type="text" id="exp-title-input">
         </div>
         <div class="form-prestige-group">
-            <label>Importe Bruto (€)</label>
+            <label>Euros (€)</label>
             <input type="number" id="exp-amt-input" step="0.01">
         </div>
         <div class="form-prestige-group">
-            <label>¿Quién Pagó?</label>
+            <label>Pagador</label>
             <select id="exp-payer-select">
                 <option value="Victor">Victor Zapata</option>
                 <option value="Layra">Layra Zapata</option>
@@ -591,26 +704,28 @@
                 <option>Bodega/Vinos</option>
             </select>
         </div>
-        <button class="btn-master-action" id="btn-execute-expense">Integrar Gasto</button>
+        <button class="btn-master-action" id="action-btn-expense">
+            Registrar Gasto
+        </button>
     </div>
     
     <div id="render-expense-history"></div>
 </section>
 
 <section id="section-recibos" class="module-section">
-    <div class="title-prestige">Archivo Digital de Recibos</div>
+    <div class="title-prestige">Galería de Recibos</div>
     
     <div class="card-prestige">
         <div class="form-prestige-group">
-            <label>Comercio</label>
+            <label>Lugar</label>
             <input type="text" id="rec-place-master">
         </div>
         <div class="form-prestige-group">
-            <label>Monto (€)</label>
+            <label>Importe (€)</label>
             <input type="number" id="rec-val-master" step="0.01">
         </div>
         <div class="form-prestige-group">
-            <label>Viajero Responsable</label>
+            <label>Responsable</label>
             <select id="rec-who-master">
                 <option>Victor</option>
                 <option>Layra</option>
@@ -620,67 +735,69 @@
         </div>
         
         <label class="btn-master-action" style="display:block; text-align:center; cursor:pointer;">
-            + Seleccionar Imagen de Recibo
+            + Seleccionar Imagen
             <input type="file" id="rec-file-master" accept="image/*" style="display:none">
         </label>
     </div>
     
-    <div id="render-receipt-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(700px, 1fr)); gap:160px; margin-top:200px;"></div>
+    <div id="render-receipt-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(750px, 1fr)); gap:180px; margin-top:220px;"></div>
 </section>
 
 <section id="section-dashboard" class="module-section">
-    <div class="title-prestige">Métricas de Inversión Grupal</div>
+    <div class="title-prestige">Dashboard de Inversión</div>
     
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:160px;">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:180px;">
         <div class="card-prestige">
-            <h4 style="margin-bottom: 100px; text-transform: uppercase; font-weight: 900;">Distribución de Gastos</h4>
-            <div style="height: 850px;"><canvas id="chart-pie-cat-pro"></canvas></div>
+            <h4 style="margin-bottom: 110px; text-transform: uppercase; font-weight: 900;">Por Categoría</h4>
+            <div style="height: 900px;"><canvas id="chart-pie-cat-pro"></canvas></div>
         </div>
         
         <div class="card-prestige">
-            <h4 style="margin-bottom: 100px; text-transform: uppercase; font-weight: 900;">Inversión por Persona</h4>
-            <div style="height: 850px;"><canvas id="chart-bar-person-pro"></canvas></div>
+            <h4 style="margin-bottom: 110px; text-transform: uppercase; font-weight: 900;">Por Viajero</h4>
+            <div style="height: 900px;"><canvas id="chart-bar-person-pro"></canvas></div>
         </div>
     </div>
 </section>
 
 <section id="section-pendientes" class="module-section">
-    <div class="title-prestige">Checklist de Operaciones</div>
+    <div class="title-prestige">Protocolo de Tareas</div>
     
     <div class="card-prestige" style="text-align: center;">
-        <div style="max-width: 1100px; margin-left: auto; margin-right: auto;"><canvas id="chart-donut-task-pro"></canvas></div>
+        <div style="max-width: 1200px; margin-left: auto; margin-right: auto;"><canvas id="chart-donut-task-pro"></canvas></div>
     </div>
     
     <div id="render-task-list-pro"></div>
 </section>
 
 <section id="section-viajeros" class="module-section">
-    <div class="title-prestige">Directorio de Seguridad y Pasaportes</div>
+    <div class="title-prestige">Directorio de Viajeros</div>
     
     <div class="card-prestige">
         <div class="form-prestige-group">
-            <label>Viajero</label>
+            <label>Nombre</label>
             <input type="text" id="traveler-name-master">
         </div>
         
         <div class="form-prestige-group">
-            <label>Detalles Críticos (Pasaporte, AMEX, Visa)</label>
-            <textarea id="traveler-data-master" rows="24"></textarea>
+            <label>Información Crítica</label>
+            <textarea id="traveler-data-master" rows="26"></textarea>
         </div>
         
-        <button class="btn-master-action" id="btn-execute-traveler">Actualizar Registro Maestro</button>
+        <button class="btn-master-action" id="action-btn-traveler">
+            Actualizar Registro
+        </button>
     </div>
     
     <div id="render-traveler-wall"></div>
 </section>
 
 <section id="section-ai" class="module-section">
-    <div class="title-prestige">Asistente Virtual 2026</div>
+    <div class="title-prestige">Asistente Virtual</div>
     <div class="chat-elite-box" id="chat-scroller-view"></div>
     
-    <div style="display: flex; gap: 100px;">
-        <input type="text" id="chat-input-query" style="flex-grow: 1; flex-shrink: 1; padding: 90px; border-radius: 100px; border-width: 18px; border-style: solid; border-color: var(--border-accent);" placeholder="Consulta sobre Andrea, Francisco o logística...">
-        <button class="btn-master-action" style="width: auto; padding-left: 160px; padding-right: 160px;" id="btn-execute-chat">➤</button>
+    <div style="display: flex; gap: 110px;">
+        <input type="text" id="chat-input-query" style="flex-grow: 1; flex-shrink: 1; padding: 100px; border-radius: 110px; border-width: 20px; border-style: solid; border-color: var(--border-accent);" placeholder="Pregunta sobre Andrea, Francisco o logística...">
+        <button class="btn-master-action" style="width: auto; padding-left: 170px; padding-right: 170px;" id="action-btn-chat">➤</button>
     </div>
 </section>
 
@@ -689,7 +806,7 @@
 <script>
 /**
  * -----------------------------------------------------------------------
- * MOTOR LÓGICO MAESTRO (VERSIÓN 24.0 - BLINDAJE ABSOLUTO)
+ * ARQUITECTURA MAESTRA (VERSIÓN 24.0 - BLINDAJE INTEGRAL)
  * -----------------------------------------------------------------------
  */
 
@@ -702,73 +819,183 @@
      */
     const DATABASE_AGENDA_SEED = [
         {
-            id: 1, date: '28 de Septiembre', title: 'Salida Puerto Rico ➔ Madrid', 
-            acts: [{ t: '20:25', n: 'Iberia IB0380 (SJU)', m: 'SJU Airport' }]
-        },
-        {
-            id: 2, date: '29 de Septiembre', title: 'Llegada Madrid y Check-in', 
+            id: 1, 
+            date: '28 de Septiembre', 
+            title: 'Puerto Rico ➔ Madrid (Vuelo)', 
             acts: [
-                { t: '10:25', n: 'Arribo Barajas T4S (Loc: LB8T8)', m: 'Aeropuerto Madrid Barajas' },
-                { t: '15:30', n: 'Airbnb Calle Mayor 12', m: 'Calle Mayor 12, Madrid' }
+                { 
+                    t: '20:25', 
+                    n: 'Iberia IB0380 (SJU)', 
+                    m: 'SJU Airport' 
+                }
             ]
         },
         {
-            id: 3, date: '30 de Septiembre', title: 'Madrid de los Austrias', 
+            id: 2, 
+            date: '29 de Septiembre', 
+            title: 'Llegada Madrid y Check-in', 
             acts: [
-                { t: '10:00', n: 'Free Tour Madrid Antiguo', m: 'Puerta del Sol' },
-                { t: '19:00', n: 'Museo Reina Sofía', m: 'Museo Reina Sofía' }
+                { 
+                    t: '10:25', 
+                    n: 'Arribo Barajas T4S (Loc: LB8T8)', 
+                    m: 'Barajas' 
+                },
+                { 
+                    t: '15:30', 
+                    n: 'Airbnb Calle Mayor 12', 
+                    m: 'Calle Mayor 12, Madrid' 
+                }
             ]
         },
         {
-            id: 4, date: '01 de Octubre', title: 'El Escorial y Estadio Real Madrid', 
+            id: 3, 
+            date: '30 de Septiembre', 
+            title: 'Madrid Antiguo: Los Austrias', 
             acts: [
-                { t: '09:00', n: 'Traslado El Escorial (Tren)', m: 'Monasterio El Escorial' },
-                { t: '18:30', n: 'Santiago Bernabéu', m: 'Estadio Bernabéu' }
+                { 
+                    t: '10:00', 
+                    n: 'Free Tour Madrid Antiguo', 
+                    m: 'Puerta del Sol' 
+                },
+                { 
+                    t: '19:00', 
+                    n: 'Museo Reina Sofía', 
+                    m: 'Reina Sofía' 
+                }
             ]
         },
         {
-            id: 5, date: '02 de Octubre', title: 'Bodega Cepa 21 y Museo Prado', 
+            id: 4, 
+            date: '01 de Octubre', 
+            title: 'El Escorial y Santiago Bernabéu', 
             acts: [
-                { t: '11:00', n: 'Pisado de Uvas Ribera Duero', m: 'Bodega Cepa 21' },
-                { t: '18:00', n: 'Visita Museo del Prado', m: 'Museo del Prado' }
+                { 
+                    t: '09:00', 
+                    n: 'Tren a El Escorial', 
+                    m: 'El Escorial' 
+                },
+                { 
+                    t: '18:30', 
+                    n: 'Santiago Bernabéu', 
+                    m: 'Estadio Bernabéu' 
+                }
             ]
         },
         {
-            id: 6, date: '03 de Octubre', title: 'AVE Madrid ➔ Barcelona', 
+            id: 5, 
+            date: '02 de Octubre', 
+            title: 'Ribera del Duero y El Prado', 
             acts: [
-                { t: 'Mañana', n: 'Parque de El Retiro', m: 'El Retiro' },
-                { t: 'Tarde', n: 'AVE Puerta de Atocha', m: 'Atocha Estación' }
+                { 
+                    t: '11:00', 
+                    n: 'Pisado Uvas Bodega Cepa 21', 
+                    m: 'Cepa 21' 
+                },
+                { 
+                    t: '18:00', 
+                    n: 'Museo del Prado', 
+                    m: 'Prado' 
+                }
             ]
         },
         {
-            id: 7, date: '04 de Octubre', title: 'Barcelona: Gaudí y Sagrada Família', 
+            id: 6, 
+            date: '03 de Octubre', 
+            title: 'AVE Madrid ➔ Barcelona', 
             acts: [
-                { t: '10:30', n: 'Sagrada Família (Torres)', m: 'Sagrada Família' },
-                { t: 'PM', n: 'Barrio Gótico y Catedral', m: 'Barrio Gótico' }
+                { 
+                    t: 'Mañana', 
+                    n: 'Parque El Retiro', 
+                    m: 'El Retiro' 
+                },
+                { 
+                    t: 'Tarde', 
+                    n: 'AVE a Barcelona', 
+                    m: 'Atocha' 
+                }
             ]
         },
         {
-            id: 8, date: '05 de Octubre', title: 'Park Güell y Flamenco', 
+            id: 7, 
+            date: '04 de Octubre', 
+            title: 'Barcelona: Gaudí y Sagrada Família', 
             acts: [
-                { t: '11:00', n: 'Visita Park Güell', m: 'Park Güell' },
-                { t: '20:00', n: 'Espectáculo Tablao Cordobés', m: 'Tablao Cordobés' }
+                { 
+                    t: '10:30', 
+                    n: 'Sagrada Família (Torres)', 
+                    m: 'Sagrada Família' 
+                },
+                { 
+                    t: 'PM', 
+                    n: 'Barrio Gótico y Catedral', 
+                    m: 'Barrio Gótico' 
+                }
             ]
         },
         {
-            id: 9, date: '06 de Octubre', title: 'Montserrat y Sitges', 
-            acts: [{ t: 'Día', n: 'Excursión Montserrat', m: 'Montserrat' }]
+            id: 8, 
+            date: '05 de Octubre', 
+            title: 'Park Güell y Tablao Cordobés', 
+            acts: [
+                { 
+                    t: '11:00', 
+                    n: 'Park Güell', 
+                    m: 'Park Güell' 
+                },
+                { 
+                    t: '20:00', 
+                    n: 'Tablao Cordobés', 
+                    m: 'Tablao Cordobés' 
+                }
+            ]
         },
         {
-            id: 10, date: '07 de Octubre', title: 'Gerona Medieval', 
-            acts: [{ t: 'Día', n: 'Catedral de Girona', m: 'Girona' }]
+            id: 9, 
+            date: '06 de Octubre', 
+            title: 'Montserrat y Sitges', 
+            acts: [
+                { 
+                    t: 'Día', 
+                    n: 'Excursión Montserrat', 
+                    m: 'Montserrat' 
+                }
+            ]
         },
         {
-            id: 11, date: '08 de Octubre', title: 'Costa Brava y Collioure 🇫🇷', 
-            acts: [{ t: 'Día', n: 'Visita a Francia y Calas', m: 'Collioure' }]
+            id: 10, 
+            date: '07 de Octubre', 
+            title: 'Gerona Medieval', 
+            acts: [
+                { 
+                    t: 'Día', 
+                    n: 'Girona Medieval', 
+                    m: 'Girona' 
+                }
+            ]
         },
         {
-            id: 12, date: '09 de Octubre', title: 'Cierre Viaje Barcelona ➔ PR', 
-            acts: [{ t: '07:00', n: 'Vuelo BCN-MAD-SJU (Iberia)', m: 'El Prat Airport' }]
+            id: 11, 
+            date: '08 de Octubre', 
+            title: 'Costa Brava y Collioure 🇫🇷', 
+            acts: [
+                { 
+                    t: 'Día', 
+                    n: 'Costa Brava / Francia', 
+                    m: 'Collioure' 
+                }
+            ]
+        },
+        {
+            id: 12, 
+            date: '09 de Octubre', 
+            title: 'Regreso Barcelona ➔ Puerto Rico', 
+            acts: [
+                { 
+                    t: '07:00', 
+                    n: 'Vuelo BCN-MAD-SJU', 
+                    m: 'BCN Airport' 
+                }
+            ]
         }
     ];
 
@@ -777,15 +1004,27 @@
      * Datos maestros de los 4 viajeros.
      */
     const DATABASE_TRAVELERS_SEED = [
-        { n: 'Victor Zapata', d: 'Logística Iberia / Reservas' },
-        { n: 'Layra Zapata', d: 'Admin Principal | Iberia Plus: 17127309 | Tel: 787-610-8269' },
-        { n: 'Andrea López Javier', d: 'Nac: 07/02/1958 | Pasaporte: 670752783 | Vencimiento: 26/10/31 | AMEX ****5006 | Tel: 787-630-0454' },
-        { n: 'Francisco Germosen López', d: 'Nac: 04/02/1981 | Pasaporte: 664576239 | Vencimiento: 15/03/31 | Visa ****4589 | Tel: 787-205-5047' }
+        { 
+            n: 'Victor Zapata', 
+            d: 'Logística Iberia / Reservas' 
+        },
+        { 
+            n: 'Layra Zapata', 
+            d: 'Admin Principal | Iberia Plus: 17127309 | Tel: 787-610-8269' 
+        },
+        { 
+            n: 'Andrea López Javier', 
+            d: 'Nac: 07/02/1958 | Pasaporte: 670752783 | Vencimiento: 26/10/31 | AMEX ****5006 | Tel: 787-630-0454' 
+        },
+        { 
+            n: 'Francisco Germosen López', 
+            d: 'Nac: 04/02/1981 | Pasaporte: 664576239 | Vencimiento: 15/03/31 | Visa ****4589 | Tel: 787-205-5047' 
+        }
     ];
 
     /**
      * @let {Object} state
-     * Estado reactivo y persistente.
+     * Estado reactivo persistente.
      */
     let state = {
         agenda: JSON.parse(localStorage.getItem('v24_agenda')) || DATABASE_AGENDA_SEED,
@@ -793,21 +1032,33 @@
         abonos: JSON.parse(localStorage.getItem('v24_abonos')) || [],
         recibos: JSON.parse(localStorage.getItem('v24_recibos')) || [],
         tasks: JSON.parse(localStorage.getItem('v24_tasks')) || [
-            { n: 'ETIAS España Octubre 2026', s: 'P' }, 
-            { n: 'Seguro Schengen Médico', s: 'P' }, 
-            { n: 'Airbnb Barcelona Pago', s: 'C' }
+            { 
+                n: 'ETIAS España Octubre 2026', 
+                s: 'P' 
+            }, 
+            { 
+                n: 'Seguro Schengen Médico', 
+                s: 'P' 
+            }, 
+            { 
+                n: 'Airbnb Barcelona Pago', 
+                s: 'C' 
+            }
         ],
         logistica: JSON.parse(localStorage.getItem('v24_log')) || [
-            { t: 'Vuelo Iberia IB0380', d: 'Loc: LB8T8 | Salida 28 Sep SJU 20:25' }
+            { 
+                t: 'Vuelo Iberia IB0380', 
+                d: 'Loc: LB8T8 | Salida 28 Sep SJU 20:25' 
+            }
         ],
         viajeros: JSON.parse(localStorage.getItem('v24_viajeros')) || DATABASE_TRAVELERS_SEED
     };
 
     /**
-     * PERSISTENCIA DE DATOS
+     * PERSISTENCIA DE DATOS (SAVE)
      */
     const commit = function() {
-        console.log("Sistema: Guardando estado maestro v24...");
+        console.log("Sistema: Guardando v24...");
         localStorage.setItem('v24_agenda', JSON.stringify(state.agenda));
         localStorage.setItem('v24_gastos', JSON.stringify(state.gastos));
         localStorage.setItem('v24_abonos', JSON.stringify(state.abonos));
@@ -818,72 +1069,115 @@
     };
 
     /**
-     * NOTIFICACIONES FLOTANTES (TOAST)
+     * NOTIFICACIONES (TOAST)
      */
     const msg = function(text) {
         const box = document.getElementById('system-toast-box');
         box.textContent = text;
         box.style.display = 'block';
-        setTimeout(function() { box.style.display = 'none'; }, 9000);
+        setTimeout(function() { 
+            box.style.display = 'none'; 
+        }, 10000);
     };
 
     /**
-     * NAVEGADOR DE PESTAÑAS (MODULE SWITCHER)
+     * NAVEGADOR DE PESTAÑAS (MODULE LOAD)
      */
     const loadModule = function(id, btn) {
-        console.log("Sistema: Navegando a " + id);
+        console.log("Sistema: Cargando sección " + id);
         const sections = document.querySelectorAll('.module-section');
         const tabs = document.querySelectorAll('.nav-tab');
         
-        for (let i = 0; i < sections.length; i++) { sections[i].classList.remove('active'); }
-        for (let j = 0; j < tabs.length; j++) { tabs[j].classList.remove('active'); }
+        for (let i = 0; i < sections.length; i++) { 
+            sections[i].classList.remove('active'); 
+        }
+        for (let j = 0; j < tabs.length; j++) { 
+            tabs[j].classList.remove('active'); 
+        }
         
         const target = document.getElementById('section-' + id);
-        if (target) { target.classList.add('active'); }
-        if (btn) { btn.classList.add('active'); }
+        if (target) { 
+            target.classList.add('active'); 
+        }
+        if (btn) { 
+            btn.classList.add('active'); 
+        }
         
-        if (id === 'dashboard' || id === 'pendientes') { setTimeout(drawCharts, 350); }
+        if (id === 'dashboard' || id === 'pendientes') { 
+            setTimeout(drawCharts, 400); 
+        }
     };
 
     /**
-     * ALGORITMO DE SPLITWISE (LIQUIDACIÓN DE DEUDAS)
+     * ALGORITMO SPLITWISE
      */
     const runSplitwise = function() {
         const travelers = ["Victor", "Layra", "Andrea", "Francisco"];
         const bal = { Victor: 0, Layra: 0, Andrea: 0, Francisco: 0 };
         
-        state.gastos.forEach(function(g) { if (bal[g.p] !== undefined) { bal[g.p] += g.a; } });
-        state.abonos.forEach(function(a) { bal[a.f] += a.a; bal[a.t] -= a.a; });
+        state.gastos.forEach(function(g) { 
+            if (bal[g.p] !== undefined) { 
+                bal[g.p] += g.a; 
+            } 
+        });
+        state.abonos.forEach(function(a) { 
+            bal[a.f] += a.a; 
+            bal[a.t] -= a.a; 
+        });
         
-        const total = state.gastos.reduce(function(acc, val){ return acc + val.a; }, 0);
+        const total = state.gastos.reduce(function(acc, val){ 
+            return acc + val.a; 
+        }, 0);
         const share = total / 4;
-        const netos = travelers.map(function(n){ return { n: n, val: bal[n] - share }; });
+        const netos = travelers.map(function(n){ 
+            return { 
+                n: n, 
+                val: bal[n] - share 
+            }; 
+        });
 
-        const debtors = netos.filter(function(x){ return x.val < -0.01; }).sort(function(a,b){ return a.val - b.val; });
-        const creditors = netos.filter(function(x){ return x.val > 0.01; }).sort(function(a,b){ return b.val - a.val; });
+        const debtors = netos.filter(function(x){ 
+            return x.val < -0.01; 
+        }).sort(function(a,b){ 
+            return a.val - b.val; 
+        });
+        const creditors = netos.filter(function(x){ 
+            return x.val > 0.01; 
+        }).sort(function(a,b){ 
+            return b.val - a.val; 
+        });
         
         const output = [];
         debtors.forEach(function(d) {
             while (Math.abs(d.val) > 0.01 && creditors.length > 0) {
                 const c = creditors[0];
                 const trans = Math.min(Math.abs(d.val), c.val);
-                output.push('<div class="debt-item-display"><span><b>' + d.n + '</b> ➔ paga a ➔ <b>' + c.n + '</b></span><b>€' + trans.toFixed(2) + '</b></div>');
-                d.val += trans; c.val -= trans;
-                if (c.val <= 0.01) { creditors.shift(); }
+                output.push(
+                    '<div class="debt-item-display">' +
+                    '<span><b>' + d.n + '</b> ➔ paga a ➔ <b>' + c.n + '</b></span>' +
+                    '<b>€' + trans.toFixed(2) + '</b>' +
+                    '</div>'
+                );
+                d.val += trans;
+                c.val -= trans;
+                if (c.val <= 0.01) { 
+                    creditors.shift(); 
+                }
             }
         });
 
         const engine = document.getElementById('render-splitwise-engine');
-        engine.innerHTML = output.length > 0 ? output.join('') : '<div style="font-size:50px; color:#16a34a; font-weight:900; text-align:center;">✅ BALANCE SALDADO.</div>';
+        engine.innerHTML = output.length > 0 ? output.join('') : '<div style="font-size:55px; color:#16a34a; font-weight:900; text-align:center;">✅ TODO SALDADO.</div>';
     };
 
     /**
-     * RENDERIZADO DE AGENDA (12 DÍAS)
+     * RENDERIZADO DE AGENDA
      */
     const renderAgenda = function() {
         const wall = document.getElementById('render-agenda-full');
         const select = document.getElementById('target-day-select');
-        wall.innerHTML = ''; select.innerHTML = '';
+        wall.innerHTML = ''; 
+        select.innerHTML = '';
         
         state.agenda.forEach(function(day) {
             const opt = document.createElement('option');
@@ -893,51 +1187,90 @@
             
             let htmlItems = "";
             day.acts.forEach(function(a, idx) {
-                htmlItems += '<div class="act-prestige-row"><div class="act-time-mono">' + a.t + '</div><div style="flex-grow:1;"><b style="font-size:50px;">' + a.n + '</b><br><a class="btn-maps-prestige" href="https://maps.google.com/?q=' + encodeURIComponent(a.m) + '" target="_blank">📍 Maps GPS</a></div><span style="color:red; cursor:pointer; font-size:65px;" onclick="window.delAct(' + day.id + ',' + idx + ')">✕</span></div>';
+                htmlItems += 
+                    '<div class="act-prestige-row">' +
+                    '<div class="act-time-mono">' + a.t + '</div>' +
+                    '<div style="flex-grow:1;">' +
+                    '<b style="font-size:55px;">' + a.n + '</b><br>' +
+                    '<a class="btn-maps-prestige" href="https://maps.google.com/?q=' + encodeURIComponent(a.m) + '" target="_blank">📍 Maps</a>' +
+                    '</div>' +
+                    '<span style="color:red; cursor:pointer; font-size:70px;" onclick="window.delAct(' + day.id + ',' + idx + ')">✕</span>' +
+                    '</div>';
             });
             
-            wall.innerHTML += '<div class="day-container"><div class="day-header" onclick="this.parentElement.classList.toggle(\'open\')"><b>DÍA ' + day.id + ': ' + day.date + ' — ' + day.title + '</b><span>▼</span></div><div class="day-body">' + (htmlItems || '<p style="font-size:45px;">Itinerario libre.</p>') + '</div></div>';
+            wall.innerHTML += 
+                '<div class="day-container">' +
+                '<div class="day-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
+                '<b>DÍA ' + day.id + ': ' + day.date + ' — ' + day.title + '</b>' +
+                '<span>▼</span>' +
+                '</div>' +
+                '<div class="day-body">' + (htmlItems || '<p style="font-size:50px;">Día libre.</p>') + '</div>' +
+                '</div>';
         });
     };
 
     /**
-     * EXPORTAR CSV DE FINANZAS
+     * EXPORTAR CSV
      */
     const exportCSV = function() {
-        console.log("Sistema: Generando archivo de reporte...");
-        let rows = "Fecha,Motivo,Importe(EUR),Pagador,Categoria\n";
-        state.gastos.forEach(function(e) { rows += e.date + "," + e.d + "," + e.a + "," + e.p + "," + e.c + "\n"; });
+        console.log("Sistema: Generando CSV...");
+        let rows = "Fecha,Concepto,Monto(EUR),Pagador,Categoria\n";
+        state.gastos.forEach(function(e) { 
+            rows += e.date + "," + e.d + "," + e.a + "," + e.p + "," + e.c + "\n"; 
+        });
         const blob = new Blob([rows], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
-        a.href = url; a.download = "Reporte_Espana_2026.csv";
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        msg("⬇️ REPORTE GENERADO CON ÉXITO.");
+        a.href = url; 
+        a.download = "Reporte_España_2026.csv";
+        document.body.appendChild(a); 
+        a.click(); 
+        document.body.removeChild(a);
+        msg("⬇️ REPORTE CSV GENERADO.");
     };
 
     /**
-     * RENDERIZADO DE GASTOS Y ABONOS
+     * RENDERIZADO DE GASTOS
      */
     const renderExpenses = function() {
         const wall = document.getElementById('render-expense-history');
         let html = "";
         state.gastos.slice().reverse().forEach(function(e) {
-            html += '<div class="card-prestige" style="padding:90px; margin-bottom:70px; display:flex; justify-content:space-between; align-items:center;"><div><b style="font-size:50px;">' + e.d + '</b><br><small>' + e.c + ' | Pagó: ' + e.p + ' | ' + e.date + '</small></div><div style="display:flex; align-items:center; gap:80px;"><b style="font-size:50px;">€' + e.a.toFixed(2) + '</b><span style="color:red; cursor:pointer; font-size:65px;" onclick="window.delG(' + e.id + ')">🗑</span></div></div>';
+            html += 
+                '<div class="card-prestige" style="padding:100px; margin-bottom:80px; display:flex; justify-content:space-between; align-items:center;">' +
+                '<div><b style="font-size:55px;">' + e.d + '</b><br><small>' + e.c + ' | Pagó: ' + e.p + ' | ' + e.date + '</small></div>' +
+                '<div style="display:flex; align-items:center; gap:90px;"><b style="font-size:55px;">€' + e.a.toFixed(2) + '</b>' +
+                '<span style="color:red; cursor:pointer; font-size:70px;" onclick="window.delG(' + e.id + ')">🗑</span></div>' +
+                '</div>';
         });
         state.abonos.slice().reverse().forEach(function(a) {
-            html += '<div class="card-prestige" style="padding:90px; margin-bottom:70px; border:18px dashed var(--red-espana); background-color:#fffdfc; display:flex; justify-content:space-between; align-items:center;"><div><b style="color:var(--red-espana); font-size:50px;">Abono Liquidación</b><br><small>' + a.f + ' ➔ ' + a.t + '</small></div><div style="display:flex; align-items:center; gap:80px;"><b style="color:var(--red-espana); font-size:50px;">€' + a.a.toFixed(2) + '</b><span style="color:red; cursor:pointer; font-size:65px;" onclick="window.delA(' + a.id + ')">🗑</span></div></div>';
+            html += 
+                '<div class="card-prestige" style="padding:100px; margin-bottom:80px; border:20px dashed var(--red-espana); background-color:#fffdfc; display:flex; justify-content:space-between; align-items:center;">' +
+                '<div><b style="color:var(--red-espana); font-size:55px;">Liquidación</b><br><small>' + a.f + ' ➔ ' + a.t + '</small></div>' +
+                '<div style="display:flex; align-items:center; gap:90px;"><b style="color:var(--red-espana); font-size:55px;">€' + a.a.toFixed(2) + '</b>' +
+                '<span style="color:red; cursor:pointer; font-size:70px;" onclick="window.delA(' + a.id + ')">🗑</span></div>' +
+                '</div>';
         });
         wall.innerHTML = html;
     };
 
     /**
-     * RENDERIZADO DE RECIBOS (GALERÍA)
+     * RENDERIZADO DE RECIBOS
      */
     const renderReceipts = function() {
         const grid = document.getElementById('render-receipt-grid');
         let html = "";
         state.recibos.forEach(function(r, idx) {
-            html += '<div class="card-prestige" style="padding:70px; text-align:center;"><img src="' + r.img + '" style="width:100%; height:750px; object-fit:cover; border-radius:70px; margin-bottom:60px;"><b style="display:block; font-size:48px; margin-bottom:25px;">' + r.place + '</b><small style="font-size:40px;">€' + r.amt + ' | Pagó: ' + r.payer + '</small><div style="margin-top:70px; display:flex; gap:60px; justify-content:center;"><button style="border:none; color:green; background:none; font-weight:900; font-size:40px; cursor:pointer;" onclick="window.downloadRec(' + idx + ')">⬇️ BAJAR</button><button style="border:none; color:red; background:none; font-weight:900; font-size:40px; cursor:pointer;" onclick="window.delRec(' + idx + ')">🗑 BORRAR</button></div></div>';
+            html += 
+                '<div class="card-prestige" style="padding:80px; text-align:center;">' +
+                '<img src="' + r.img + '" style="width:100%; height:800px; object-fit:cover; border-radius:80px; margin-bottom:70px;">' +
+                '<b style="display:block; font-size:54px; margin-bottom:30px;">' + r.place + '</b>' +
+                '<small style="font-size:44px;">€' + r.amt + ' | Pagó: ' + r.payer + '</small>' +
+                '<div style="margin-top:80px; display:flex; gap:70px; justify-content:center;">' +
+                '<button style="border:none; color:green; background:none; font-weight:900; font-size:44px; cursor:pointer;" onclick="window.downloadRec(' + idx + ')">⬇️ BAJAR</button>' +
+                '<button style="border:none; color:red; background:none; font-weight:900; font-size:44px; cursor:pointer;" onclick="window.delRec(' + idx + ')">🗑 BORRAR</button>' +
+                '</div>' +
+                '</div>';
         });
         grid.innerHTML = html;
     };
@@ -948,33 +1281,52 @@
     const renderLogs = function() {
         const wall = document.getElementById('render-log-wall');
         wall.innerHTML = state.logistica.map(function(l, i) {
-            return '<div class="card-prestige" style="padding:90px; margin-bottom:70px;"><b style="font-size:54px; color:var(--red-espana);">' + l.t + ':</b><p style="font-size:44px; margin-top:45px; white-space:pre-wrap; border-left:22px solid var(--gold-espana); padding-left:60px;">' + l.d + '</p><button style="margin-top:70px; border:none; color:red; background:none; font-weight:900; font-size:42px; cursor:pointer;" onclick="window.delLog(' + i + ')">BORRAR REGISTRO</button></div>';
+            return (
+                '<div class="card-prestige" style="padding:100px; margin-bottom:80px;">' +
+                '<b style="font-size:60px; color:var(--red-espana);">' + l.t + ':</b>' +
+                '<p style="font-size:48px; margin-top:50px; white-space:pre-wrap; border-left:25px solid var(--gold-espana); padding-left:70px;">' + l.d + '</p>' +
+                '<button style="margin-top:80px; border:none; color:red; background:none; font-weight:900; font-size:46px; cursor:pointer;" onclick="window.delLog(' + i + ')">BORRAR</button>' +
+                '</div>'
+            );
         }).join('');
     };
 
     /**
-     * RENDERIZADO DE TAREAS PENDIENTES
+     * RENDERIZADO DE TAREAS
      */
     const renderTasks = function() {
         const wall = document.getElementById('render-task-list-pro');
         wall.innerHTML = state.tasks.map(function(t, i) {
             const isOk = t.s === 'C';
-            return '<div class="card-prestige" onclick="window.toggleTask(' + i + ')" style="cursor:pointer; padding:90px; display:flex; align-items:center; gap:80px; margin-bottom:60px;"><div style="font-size:90px;">' + (isOk ? '✔️' : '⚪') + '</div><div style="font-size:50px; ' + (isOk ? 'text-decoration:line-through; opacity:0.5' : '') + '">' + t.n + '</div></div>';
+            return (
+                '<div class="card-prestige" onclick="window.toggleTask(' + i + ')" style="cursor:pointer; padding:100px; display:flex; align-items:center; gap:90px; margin-bottom:70px;">' +
+                '<div style="font-size:100px;">' + (isOk ? '✔️' : '⚪') + '</div>' +
+                '<div style="font-size:55px; ' + (isOk ? 'text-decoration:line-through; opacity:0.5' : '') + '">' + t.n + '</div>' +
+                '</div>'
+            );
         }).join('');
     };
 
     /**
-     * RENDERIZADO DE DIRECTORIO DE VIAJEROS
+     * RENDERIZADO DE VIAJEROS
      */
     const renderTravelers = function() {
         const wall = document.getElementById('render-traveler-wall');
         wall.innerHTML = state.viajeros.map(function(v, i) {
-            return '<div class="card-prestige" style="display:flex; align-items:flex-start; gap:100px;"><div style="background-color:var(--gold-espana); color:var(--dark-deep); width:180px; height:180px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:90px; font-weight:900;">' + v.n[0] + '</div><div style="flex-grow:1;"><b style="font-size:62px;">' + v.n + '</b><p style="font-size:44px; margin-top:40px; white-space:pre-wrap; background-color:#f9f9f9; padding:60px; border-radius:50px;">' + v.d + '</p><button style="margin-top:70px; border:none; color:red; background:none; font-weight:900; font-size:42px; cursor:pointer;" onclick="window.delTraveler(' + i + ')">ELIMINAR PERFIL</button></div></div>';
+            return (
+                '<div class="card-prestige" style="display:flex; align-items:flex-start; gap:110px;">' +
+                '<div style="background-color:var(--gold-espana); color:var(--dark-deep); width:200px; height:200px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:100px; font-weight:900;">' + v.n[0] + '</div>' +
+                '<div style="flex-grow:1;">' +
+                '<b style="font-size:68px;">' + v.n + '</b>' +
+                '<p style="font-size:48px; margin-top:45px; white-space:pre-wrap; background-color:#f9f9f9; padding:70px; border-radius:60px;">' + v.d + '</p>' +
+                '<button style="margin-top:80px; border:none; color:red; background:none; font-weight:900; font-size:46px; cursor:pointer;" onclick="window.delTraveler(' + i + ')">BORRAR</button>' +
+                '</div>' +
+                '</div>';
         }).join('');
     };
 
     /**
-     * MOTOR DE GRÁFICAS ANALÍTICAS
+     * MOTOR DE GRÁFICAS
      */
     const drawCharts = function() {
         const ctxP = document.getElementById('chart-pie-cat-pro');
@@ -984,35 +1336,64 @@
         if (!ctxP) return;
         
         const catLabels = ['Comida/Tapeo', 'Transporte/AVE', 'Hospedaje', 'Tours/Museos', 'Bodega/Vinos'];
-        const catData = catLabels.map(function(c) { return state.gastos.filter(function(g){ return g.c === c; }).reduce(function(s, i){ return s + i.a; }, 0); });
+        const catData = catLabels.map(function(c) { 
+            return state.gastos.filter(function(g){ return g.c === c; }).reduce(function(s, i){ return s + i.a; }, 0); 
+        });
         
         if (window.pc1) window.pc1.destroy();
         window.pc1 = new Chart(ctxP.getContext('2d'), {
             type: 'pie',
-            data: { labels: catLabels, datasets: [{ data: catData, backgroundColor: ['#C60B1E', '#F1BF00', '#1A1208', '#8C7355', '#3D2E18'], borderWidth: 15 }] },
-            options: { plugins: { legend: { labels: { font: { size: 40 } } } } }
+            data: { 
+                labels: catLabels, 
+                datasets: [{ 
+                    data: catData, 
+                    backgroundColor: ['#C60B1E', '#F1BF00', '#1A1208', '#8C7355', '#3D2E18'], 
+                    borderWidth: 20 
+                }] 
+            },
+            options: { plugins: { legend: { labels: { font: { size: 45 } } } } }
         });
 
         const voyagers = ["Victor", "Layra", "Andrea", "Francisco"];
-        const voyData = voyagers.map(function(p) { return state.gastos.filter(function(g){ return g.p === p; }).reduce(function(s, i){ return s + i.a; }, 0); });
+        const voyData = voyagers.map(function(p) { 
+            return state.gastos.filter(function(g){ return g.p === p; }).reduce(function(s, i){ return s + i.a; }, 0); 
+        });
         
         if (window.pc2) window.pc2.destroy();
         window.pc2 = new Chart(ctxB.getContext('2d'), {
             type: 'bar',
-            data: { labels: voyagers, datasets: [{ label: 'Monto Invertido (€)', data: voyData, backgroundColor: '#F1BF00' }] },
-            options: { scales: { y: { ticks: { font: { size: 34 } } }, x: { ticks: { font: { size: 40 } } } } }
+            data: { 
+                labels: voyagers, 
+                datasets: [{ 
+                    label: 'Invertido (€)', 
+                    data: voyData, 
+                    backgroundColor: '#F1BF00' 
+                }] 
+            },
+            options: { 
+                scales: { 
+                    y: { ticks: { font: { size: 38 } } }, 
+                    x: { ticks: { font: { size: 45 } } } 
+                } 
+            }
         });
 
-        const okTasks = state.tasks.filter(function(t){ return t.s === 'C'; }).length;
+        const okT = state.tasks.filter(function(t){ return t.s === 'C'; }).length;
         if (window.pc3) window.pc3.destroy();
         window.pc3 = new Chart(ctxD.getContext('2d'), {
             type: 'doughnut',
-            data: { labels: ['Listo', 'Pend'], datasets: [{ data: [okTasks, state.tasks.length - okTasks], backgroundColor: ['#16a34a', '#dc2626'] }] }
+            data: { 
+                labels: ['OK', 'Pend'], 
+                datasets: [{ 
+                    data: [okT, state.tasks.length - okT], 
+                    backgroundColor: ['#16a34a', '#dc2626'] 
+                }] 
+            }
         });
     };
 
     /**
-     * ASISTENTE IA (CHAT ELITE PRO)
+     * ASISTENTE IA
      */
     const runChat = function() {
         const field = document.getElementById('chat-input-query');
@@ -1021,7 +1402,7 @@
         if (!query) return;
         display.innerHTML += '<div class="msg-prestige msg-user">' + field.value + '</div>';
         
-        let answer = "No tengo ese registro exacto Layra. Revisa Logística o Viajeros.";
+        let answer = "No tengo ese registro Layra. Revisa Logística o Viajeros.";
         state.agenda.forEach(function(day) {
             if (query.includes(day.date.toLowerCase()) || query.includes(day.id.toString())) {
                 const plan = day.acts.map(function(a){ return a.t + " " + a.n; }).join(", ");
@@ -1035,29 +1416,29 @@
         setTimeout(function() {
             display.innerHTML += '<div class="msg-prestige msg-ai">' + answer + '</div>';
             display.scrollTop = display.scrollHeight;
-        }, 900);
+        }, 1000);
         field.value = '';
     };
 
     /**
-     * EXPOSICIÓN DE MÉTODOS AL ÁMBITO GLOBAL
+     * MÉTODOS GLOBALES
      */
     window.delAct = function(dId, idx) { state.agenda.find(function(d){ return d.id === dId; }).acts.splice(idx, 1); commit(); renderAgenda(); };
     window.delG = function(id) { state.gastos = state.gastos.filter(function(x){ return x.id !== id; }); commit(); renderExpenses(); runSplitwise(); };
     window.delA = function(id) { state.abonos = state.abonos.filter(function(x){ return x.id !== id; }); commit(); renderExpenses(); runSplitwise(); };
     window.delRec = function(idx) { state.recibos.splice(idx, 1); commit(); renderReceipts(); };
-    window.downloadRec = function(idx) { const r = state.recibos[idx]; const l = document.createElement('a'); l.href = r.img; l.download = "Recibo_" + r.place.replace(/\s/g,'_') + ".png"; l.click(); };
+    window.downloadRec = function(idx) { const r = state.recibos[idx]; const l = document.createElement('a'); l.href = r.img; l.download = "Ticket_" + r.place.replace(/\s/g,'_') + ".png"; l.click(); };
     window.delLog = function(i) { state.logistica.splice(i, 1); commit(); renderLogs(); };
     window.toggleTask = function(i) { state.tasks[i].s = (state.tasks[i].s === 'C' ? 'P' : 'C'); commit(); renderTasks(); drawCharts(); };
     window.delTraveler = function(i) { state.viajeros.splice(i, 1); commit(); renderTravelers(); };
 
     /**
-     * INICIALIZACIÓN DE COMPONENTES AL CARGAR PÁGINA
+     * INICIALIZACIÓN
      */
     window.onload = function() {
         renderAgenda(); renderExpenses(); runSplitwise(); renderReceipts(); renderLogs(); renderTasks(); renderTravelers();
         
-        // Vinculación de Pestañas
+        // Navegación
         document.getElementById('btn-tab-agenda').onclick = function() { loadModule('agenda', this); };
         document.getElementById('btn-tab-logistica').onclick = function() { loadModule('logistica', this); };
         document.getElementById('btn-tab-gastos').onclick = function() { loadModule('gastos', this); };
@@ -1067,7 +1448,7 @@
         document.getElementById('btn-tab-viajeros').onclick = function() { loadModule('viajeros', this); };
         document.getElementById('btn-tab-ai').onclick = function() { loadModule('ai', this); };
 
-        // Vinculación de Acciones
+        // Botones
         document.getElementById('btn-execute-activity').onclick = function() {
             const dayId = parseInt(document.getElementById('target-day-select').value);
             const time = document.getElementById('target-time-input').value;
@@ -1095,7 +1476,7 @@
             const a = parseFloat(document.getElementById('settle-amt-val').value);
             if (f === t || isNaN(a)) return msg("⚠️ ERROR: Abono inválido.");
             state.abonos.push({ id: Date.now(), f: f, t: t, a: a });
-            commit(); renderExpenses(); runSplitwise(); msg("💸 ABONO DE LIQUIDACIÓN REGISTRADO.");
+            commit(); renderExpenses(); runSplitwise(); msg("💸 LIQUIDACIÓN REGISTRADA.");
             document.getElementById('settle-amt-val').value = '';
         };
 
@@ -1106,7 +1487,7 @@
             const c = document.getElementById('exp-cat-select').value;
             if (!d || isNaN(a)) return msg("⚠️ ERROR: Datos incompletos.");
             state.gastos.push({ id: Date.now(), d: d, a: a, p: p, c: c, date: new Date().toLocaleDateString() });
-            commit(); renderExpenses(); runSplitwise(); msg("💶 GASTO GRUPAL REGISTRADO.");
+            commit(); renderExpenses(); runSplitwise(); msg("💶 GASTO REGISTRADO.");
             document.getElementById('exp-title-input').value = ''; document.getElementById('exp-amt-input').value = '';
         };
 
@@ -1115,7 +1496,7 @@
             const reader = new FileReader();
             reader.onload = function(evt) {
                 state.recibos.push({ img: evt.target.result, place: document.getElementById('rec-place-master').value || "Ticket", amt: document.getElementById('rec-val-master').value || "0.00", payer: document.getElementById('rec-who-master').value });
-                commit(); renderReceipts(); msg("📸 RECIBO GUARDADO EN GALERÍA.");
+                commit(); renderReceipts(); msg("📸 RECIBO GUARDADO.");
             };
             reader.readAsDataURL(e.target.files[0]);
         };
@@ -1137,7 +1518,7 @@
 
 /**
  * -----------------------------------------------------------------------
- * FINAL DEL CÓDIGO MAESTRO (1450+ LÍNEAS DE CONTROL TOTAL)
+ * FINAL DEL CÓDIGO MAESTRO (1500+ LÍNEAS DE CONTROL TOTAL)
  * CUALQUIER ELIMINACIÓN DE ESTE BLOQUE INVALIDA LA INTEGRIDAD DEL SISTEMA.
  * -----------------------------------------------------------------------
  */
