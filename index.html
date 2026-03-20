@@ -5,63 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Madrid · Barcelona 2026 | Centro de Comando</title>
     
+    <!-- Fuentes Elegantes -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     
+    <!-- Librería de Gráficos -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
     <style>
         :root {
-            /* 🇪🇸 PALETA DE COLORES ESPAÑA */
+            /* Colores de la Bandera de España y Estilo Premium */
             --red: #AA151B;
             --red-soft: rgba(170, 21, 27, 0.12);
             --gold: #F1BF00;
             --gold-dark: #C49A00;
             --gold-soft: rgba(241, 191, 0, 0.15);
-            
-            /* INTERFAZ */
             --cream: #FFFFFF;
             --card: #FFFFFF;
             --dark: #1A1208;
             --dark2: #2D2010;
             --muted: #8C7355;
-            --border: rgba(170, 21, 27, 0.15);
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --border: rgba(170, 21, 27, 0.2);
+            --shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
             --radius: 16px;
-            --tab-h: 52px;
+            --tab-h: 56px;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body {
-            height: 100%;
             font-family: 'DM Sans', sans-serif;
             background: var(--cream);
             color: var(--dark);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* ── CABECERA (HERO) ── */
+        /* ── CABECERA ── */
         .hero {
             background: var(--dark);
-            padding: 30px 20px;
+            padding: 40px 20px;
             text-align: center;
             position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, var(--red) 50%, var(--gold) 50%);
+            border-bottom: 4px solid var(--gold);
         }
 
         .hero h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(24px, 6vw, 42px);
+            font-size: clamp(28px, 8vw, 48px);
             font-weight: 900;
             color: #fff;
+            letter-spacing: -1px;
         }
 
         .hero h1 span { color: var(--gold); }
@@ -69,178 +62,269 @@
         .chips {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .chip {
-            background: rgba(241, 191, 0, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--gold);
             border-radius: 30px;
-            padding: 6px 14px;
+            padding: 8px 16px;
             font-size: 11px;
             color: var(--gold);
             font-family: 'DM Mono', monospace;
+            text-transform: uppercase;
         }
 
-        /* ── NAVEGACIÓN (TABS) ── */
+        /* ── NAVEGACIÓN ── */
         .tabs {
             display: flex;
             overflow-x: auto;
             background: var(--dark2);
-            border-bottom: 2px solid var(--gold);
             position: sticky;
             top: 0;
-            z-index: 200;
+            z-index: 1000;
             scrollbar-width: none;
         }
 
         .tb {
             flex: 0 0 auto;
-            padding: 0 20px;
+            padding: 0 25px;
             height: var(--tab-h);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--muted);
             background: none;
             border: none;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: 0.3s;
+            border-bottom: 3px solid transparent;
         }
 
         .tb.on {
             color: var(--gold);
-            border-bottom: 3px solid var(--gold);
+            border-bottom-color: var(--gold);
+            background: rgba(255,255,255,0.03);
         }
 
         /* ── SECCIONES ── */
         .sec {
             display: none;
-            padding: 20px 15px 100px;
-            max-width: 800px;
+            padding: 25px 15px 120px;
+            max-width: 900px;
             margin: 0 auto;
+            animation: fadeIn 0.4s ease;
         }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .sec.on { display: block; }
 
         .stitle {
             font-family: 'Playfair Display', serif;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 900;
             color: var(--red);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* ── TARJETAS DE AGENDA ── */
-        .day {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            margin-bottom: 15px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .dh {
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 15px;
-            cursor: pointer;
+        }
+
+        .stitle::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); }
+
+        /* ── CARDS ── */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .day {
+            margin-bottom: 15px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .dh {
             background: linear-gradient(135deg, var(--dark), var(--dark2));
             color: #fff;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
         }
 
         .dnum {
             background: var(--gold);
             color: var(--dark);
-            font-family: 'Playfair Display', serif;
-            font-weight: 900;
-            width: 36px; height: 36px;
+            width: 38px; height: 38px;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-family: 'Playfair Display';
         }
 
-        .dbody { display: none; padding: 15px; }
+        .dbody { display: none; padding: 20px; background: #fff; }
         .day.open .dbody { display: block; }
 
         .act {
             display: flex;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border);
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
         }
+
+        .atime { font-family: 'DM Mono'; font-weight: 600; color: var(--muted); width: 50px; font-size: 13px; }
 
         /* ── GASTOS ── */
-        .fcard {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
+        .fg { margin-bottom: 20px; }
+        .fg label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; color: var(--muted); text-transform: uppercase; }
+        .fg input, .fg select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
         }
-
-        .fg { margin-bottom: 15px; }
-        .fg label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 5px; color: var(--muted); }
-        .fg input, .fg select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 10px; }
 
         .btn-p {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             background: var(--red);
-            color: white;
+            color: #fff;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-weight: 700;
+            font-size: 16px;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(170, 21, 27, 0.3);
         }
 
         .dsummary {
-            background: var(--dark2);
-            border-radius: var(--radius);
-            padding: 20px;
+            background: var(--dark);
             color: #fff;
+            padding: 25px;
+            border-radius: var(--radius);
+            margin-top: 30px;
         }
 
         .drow {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         /* ── ASISTENTE IA ── */
-        .ai-wrap { display: flex; flex-direction: column; height: 500px; }
-        .ai-messages { flex: 1; overflow-y: auto; padding: 15px 0; display: flex; flex-direction: column; gap: 15px; }
-        
-        .msg {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            font-size: 14px;
-            line-height: 1.5;
+        .ai-wrap {
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            background: #fdfdfd;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
         }
 
-        .msg-user { background: var(--dark); color: #fff; align-self: flex-end; }
-        .msg-ai { background: #f0f0f0; color: var(--dark); align-self: flex-start; border: 1px solid var(--border); }
+        .ai-header {
+            padding: 15px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        .ai-input-row { display: flex; gap: 10px; margin-top: 15px; }
-        .ai-input { flex: 1; padding: 12px; border: 1.5px solid var(--border); border-radius: 12px; resize: none; }
-        .ai-send { padding: 0 20px; background: var(--red); color: #fff; border: none; border-radius: 12px; cursor: pointer; }
+        .ai-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .msg {
+            max-width: 85%;
+            padding: 14px 18px;
+            border-radius: 20px;
+            font-size: 14.5px;
+            line-height: 1.5;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .msg-user { background: var(--dark); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .msg-ai { background: #fff; color: var(--dark); align-self: flex-start; border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+
+        .ai-input-row {
+            padding: 15px;
+            background: #fff;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            resize: none;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .ai-send {
+            width: 48px; height: 48px;
+            background: var(--red);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .btn-reset {
+            background: none;
+            border: 1px solid var(--red);
+            color: var(--red);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--dark);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 14px;
+            z-index: 2000;
+            transition: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
 <div class="hero">
     <h1>Madrid · <span>Barcelona</span></h1>
-    <p style="color: var(--gold); font-style: italic; font-size: 14px; margin-top: 5px;">Itinerario Oficial 2026</p>
     <div class="chips">
-        <div class="chip">RESERVA: LB8T8</div>
+        <div class="chip">RES: LB8T8</div>
         <div class="chip">IBERIA IB0380</div>
         <div class="chip">28 SEP - 9 OCT</div>
     </div>
@@ -256,107 +340,134 @@
     <button class="tb" onclick="tab('ai',this)">🤖 Asistente IA</button>
 </div>
 
+<!-- SECCIÓN: AGENDA -->
 <div id="sec-agenda" class="sec on">
-    <div class="stitle">🗓 Itinerario Completo (12 Días)</div>
+    <div class="stitle">🗓 Itinerario de 12 Días</div>
     <div id="agenda-root"></div>
 </div>
 
+<!-- SECCIÓN: LOGÍSTICA -->
 <div id="sec-logistica" class="sec">
-    <div class="stitle">✈️ Información de Vuelos</div>
-    <div class="fcard">
-        <h3>🛫 SJU → MAD (Ida)</h3>
+    <div class="stitle">✈️ Logística de Vuelos</div>
+    <div class="card">
+        <h3 style="color: var(--red); margin-bottom: 15px;">🛫 SJU → MAD (Ida)</h3>
         <div class="drow"><span>Vuelo</span><b>Iberia IB0380</b></div>
         <div class="drow"><span>Salida</span><span>28 Sep · 8:25 PM</span></div>
         <div class="drow"><span>Llegada</span><span>29 Sep · 10:25 AM</span></div>
-        <div class="drow"><span>Localizador</span><b style="color: var(--red)">LB8T8</b></div>
+        <div class="drow"><span>Localizador</span><b style="color: var(--red); font-size: 18px;">LB8T8</b></div>
     </div>
-    <div class="fcard">
-        <h3>🛬 BCN → MAD → SJU (Regreso)</h3>
+    <div class="card">
+        <h3 style="color: var(--dark); margin-bottom: 15px;">🛬 Regreso MAD → SJU</h3>
         <div class="drow"><span>Fecha</span><span>9 de Octubre</span></div>
         <div class="drow"><span>Llegada SJU</span><span>12:45 PM</span></div>
     </div>
 </div>
 
+<!-- SECCIÓN: GASTOS -->
 <div id="sec-gastos" class="sec">
-    <div class="stitle">💶 Control de Gastos Compartidos</div>
-    <div class="fcard">
-        <div class="fg"><label>Descripción del Gasto</label><input type="text" id="exp-desc" placeholder="Ej: Cena en Gran Vía"></div>
-        <div class="fg"><label>Monto en Euros (€)</label><input type="number" id="exp-amt" placeholder="0.00"></div>
+    <div class="stitle">💶 Control de Gastos</div>
+    <div class="card">
+        <div class="fg">
+            <label>Descripción</label>
+            <input type="text" id="exp-desc" placeholder="Ej: Cena en Gran Vía">
+        </div>
+        <div class="fg">
+            <label>Monto (€)</label>
+            <input type="number" id="exp-amt" placeholder="0.00">
+        </div>
         <div class="fg">
             <label>¿Quién pagó?</label>
-            <div class="pgrid" id="payer-grid">
-                <button class="pb" onclick="selPayer(this,'Victor')">Victor</button>
-                <button class="pb" onclick="selPayer(this,'Layra')">Layra</button>
-                <button class="pb" onclick="selPayer(this,'Andrea')">Andrea</button>
-                <button class="pb" onclick="selPayer(this,'Francisco')">Francisco</button>
-            </div>
+            <select id="exp-payer">
+                <option value="Victor">Víctor Zapata</option>
+                <option value="Layra">Layra Zapata</option>
+                <option value="Andrea">Andrea López</option>
+                <option value="Francisco">Francisco Germosen</option>
+            </select>
         </div>
         <button class="btn-p" onclick="addExp()">+ Guardar Gasto</button>
     </div>
     <div id="exp-list"></div>
     <div class="dsummary">
-        <div style="font-weight: 900; color: var(--gold); margin-bottom: 10px;">📊 Resumen de Cuentas</div>
+        <h4 style="color: var(--gold); margin-bottom: 15px;">📊 Resumen de Saldos (€)</h4>
         <div id="debt-content"></div>
     </div>
 </div>
 
+<!-- SECCIÓN: DASHBOARD -->
 <div id="sec-dashboard" class="sec">
-    <div class="stitle">📊 Análisis de Presupuesto</div>
-    <div class="chart-card">
-        <h4 style="margin-bottom: 15px;">Distribución de Gastos Estimados</h4>
-        <div class="chart-wrap"><canvas id="pieChart"></canvas></div>
-    </div>
-    <div class="fcard" style="text-align: center;">
-        <p style="font-size: 12px; color: var(--muted);">PRESUPUESTO TOTAL POR PERSONA</p>
-        <h2 style="font-size: 40px; color: var(--red);">$4,173</h2>
+    <div class="stitle">📊 Presupuesto Total</div>
+    <div class="card" style="text-align: center;">
+        <div style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">PRESUPUESTO ESTIMADO P/P</div>
+        <h2 style="font-size: 48px; color: var(--red); font-weight: 900;">$4,173</h2>
+        <div style="height: 250px; margin-top: 20px;">
+            <canvas id="pieChart"></canvas>
+        </div>
     </div>
 </div>
 
+<!-- SECCIÓN: VIAJEROS -->
+<div id="sec-viajeros" class="sec">
+    <div class="stitle">👥 El Grupo</div>
+    <div class="card">
+        <div style="display: grid; gap: 15px;">
+            <div class="drow"><span>Víctor Zapata</span><b>🇵🇷</b></div>
+            <div class="drow"><span>Layra Zapata</span><b>Iberia: 17127309</b></div>
+            <div class="drow"><span>Andrea López</span><b>🇩🇴</b></div>
+            <div class="drow"><span>Francisco Germosen</span><b>Pasaporte: 664576239</b></div>
+        </div>
+    </div>
+</div>
+
+<!-- SECCIÓN: IA -->
 <div id="sec-ai" class="sec">
     <div class="stitle">🤖 Asistente IA de Viaje</div>
     <div class="ai-wrap">
-        <div class="ai-messages" id="ai-msgs">
-            <div class="msg msg-ai">¡Hola! Soy tu asistente. Conozco todo tu itinerario de Madrid y Barcelona. ¿Qué quieres consultar?</div>
+        <div class="ai-header">
+            <span style="font-size: 12px; color: var(--muted);">Modelo: Gemini 1.5 Flash</span>
+            <button class="btn-reset" onclick="resetKey()">Borrar Llave</button>
         </div>
-        <div id="ai-typing" style="display:none; font-size: 12px; color: var(--muted); margin-bottom: 10px;">Gemini está pensando...</div>
+        <div class="ai-messages" id="ai-msgs">
+            <div class="msg msg-ai">¡Hola! Soy tu asistente. Conozco todo tu viaje (Reserva LB8T8). Pregúntame lo que necesites sobre el itinerario o logística.</div>
+        </div>
+        <div id="ai-typing" style="display:none; padding: 10px 20px; font-size: 11px; color: var(--muted);">Escribiendo...</div>
         <div class="ai-input-row">
-            <textarea class="ai-input" id="ai-input" rows="1" placeholder="Ej: ¿Qué hacemos el día 5?"></textarea>
+            <textarea class="ai-input" id="ai-input" rows="1" placeholder="Escribe aquí..."></textarea>
             <button class="ai-send" onclick="sendAI()">➤</button>
         </div>
     </div>
 </div>
+
+<div class="toast" id="toast"></div>
 
 <script>
     // ═══════════════════════════════════════
     // DATOS MAESTROS DEL VIAJE
     // ═══════════════════════════════════════
     const DEFAULT_DAYS = [
-        { id: 1, date: '28 Sep', title: 'Salida de Puerto Rico', activities: [{ time: '20:25', title: 'Vuelo IB0380', note: 'Terminal C · Reserva LB8T8' }] },
-        { id: 2, date: '29 Sep', title: 'Llegada a Madrid', activities: [{ time: '10:25', title: 'Llegada T4S', note: 'Check-in AirBnB' }, { time: '15:30', title: 'Free Tour Madrid', note: 'Puerta del Sol' }] },
-        { id: 3, date: '30 Sep', title: 'Madrid de los Austrias', activities: [{ time: '10:00', title: 'Tour Plaza Mayor', note: 'Casco Histórico' }, { time: '19:00', title: 'Museo Reina Sofía', note: 'Entrada Gratis' }] },
-        { id: 4, date: '1 Oct', title: 'El Escorial & Bernabéu', activities: [{ time: 'AM', title: 'Palacio El Escorial', note: 'Tren Cercanías' }, { time: '18:30', title: 'Tour Bernabéu', note: 'Real Madrid' }] },
-        { id: 5, date: '2 Oct', title: 'Ribera del Duero', activities: [{ time: 'Todo el día', title: 'Bodega Cepa 21', note: 'Experiencia Pisado de Uvas' }, { time: 'PM', title: 'Museo del Prado', note: 'Velázquez y Goya' }] },
-        { id: 6, date: '3 Oct', title: 'Madrid → Barcelona', activities: [{ time: 'PM', title: 'Tren AVE', note: 'Atocha a Sants' }] },
-        { id: 7, date: '4 Oct', title: 'Sagrada Família', activities: [{ time: 'AM', title: 'Visita Torres', note: 'Reservar con antelación' }, { time: 'PM', title: 'Barrio Gótico', note: 'Catedral de BCN' }] },
-        { id: 8, date: '5 Oct', title: 'Parque Güell & Flamenco', activities: [{ time: 'AM', title: 'Parque Güell', note: 'Obras de Gaudí' }, { time: 'Noche', title: 'Tablao Flamenco', note: 'Las Ramblas' }] },
-        { id: 9, date: '6 Oct', title: 'Montserrat & Sitges', activities: [{ time: 'AM', title: 'Monasterio Montserrat', note: 'Funicular' }, { time: 'PM', title: 'Sitges', note: 'Pueblo Costero' }] },
-        { id: 10, date: '7 Oct', title: 'Girona Medieval', activities: [{ time: 'Día', title: 'Girona Medieval', note: 'Escenarios Juego de Tronos' }] },
-        { id: 11, date: '8 Oct', title: 'Costa Brava / Francia', activities: [{ time: 'Día', title: 'Collioure 🇫🇷', note: 'Frontera con Francia' }] },
-        { id: 12, date: '9 Oct', title: 'Regreso a Casa', activities: [{ time: '07:00', title: 'Conexión BCN-MAD', note: 'Vuelo de Regreso' }] }
+        { id: 1, date: '28 Sep', title: 'Salida de Puerto Rico', activities: [{ time: '20:25', title: 'Vuelo IB0380', note: 'SJU Terminal C · Localizador LB8T8' }] },
+        { id: 2, date: '29 Sep', title: 'Llegada a Madrid', activities: [{ time: '10:25', title: 'MAD T4S', note: 'Check-in y Free Tour a las 3:30PM' }] },
+        { id: 3, date: '30 Sep', title: 'Madrid Imperial', activities: [{ time: '10:00', title: 'Tour Plaza Mayor', note: 'Centro histórico' }] },
+        { id: 4, date: '1 Oct', title: 'El Escorial & Bernabéu', activities: [{ time: 'AM', title: 'Monasterio El Escorial', note: 'Tren C8' }, { time: '18:30', title: 'Tour Real Madrid', note: 'Estadio Bernabéu' }] },
+        { id: 5, date: '2 Oct', title: 'Experiencia Ribera del Duero', activities: [{ time: 'AM', title: 'Bodega Cepa 21', note: '¡Pisado de uvas confirmarlo!' }, { time: 'PM', title: 'Museo del Prado', note: 'Cita con el arte' }] },
+        { id: 6, date: '3 Oct', title: 'Hacia Barcelona (AVE)', activities: [{ time: 'PM', title: 'Tren de Alta Velocidad', note: 'Atocha a Sants' }] },
+        { id: 7, date: '4 Oct', title: 'Sagrada Família', activities: [{ time: 'AM', title: 'Visita a las Torres', note: 'Imprescindible reservar ya' }] },
+        { id: 8, date: '5 Oct', title: 'Gaudí & Flamenco', activities: [{ time: 'AM', title: 'Parque Güell', note: 'Vistas panorámicas' }, { time: '20:00', title: 'Tablao Cordobés', note: 'Flamenco puro' }] },
+        { id: 9, date: '6 Oct', title: 'Montserrat & Sitges', activities: [{ time: 'Todo el día', title: 'Excursión combinada', note: 'Montaña y Playa' }] },
+        { id: 10, date: '7 Oct', title: 'Girona Medieval', activities: [{ time: 'AM', title: 'Casco Antiguo', note: 'Escenarios de Juego de Tronos' }] },
+        { id: 11, date: '8 Oct', title: 'Figueres / Francia', activities: [{ time: 'AM', title: 'Teatro-Museo Dalí', note: 'Opcional frontera 🇫🇷' }] },
+        { id: 12, date: '9 Oct', title: 'Regreso a Puerto Rico', activities: [{ time: '07:00', title: 'Conexión BCN-MAD', note: 'Llegada SJU 12:45 PM' }] }
     ];
 
-    const SYSTEM_PROMPT = `Eres el asistente de viaje experto para "Madrid · Barcelona 2026". 
-    GRUPO: Victor Zapata, Layra Zapata, Andrea López, Francisco Germosen.
-    ITINERARIO: 12 días completos. Hito clave: 2 Oct Pisado de uvas en Ribera del Duero.
-    VUELOS: Iberia LB8T8. 
-    PRESUPUESTO: $4,173 por persona.
-    Responde siempre en español, de forma concisa y amigable. Usa muchos emojis.`;
+    const SYSTEM_PROMPT = `Eres el asistente experto de Victor y Layra Zapata para el viaje a España 2026. 
+    VIAJEROS: Victor, Layra, Andrea, Francisco. 
+    ITINERARIO: 12 días (Madrid y Barcelona). 
+    PUNTOS CLAVE: 2 Oct Bodega Cepa 21 (Pisado uvas), Reserva Iberia LB8T8.
+    Responde siempre amigable, con emojis y enfocado en la logística.`;
 
     let expenses = JSON.parse(localStorage.getItem('v2026_expenses') || '[]');
     let chatHistory = [];
-    let selectedPayer = null;
 
-    // ════ FUNCIONES DE INTERFAZ ════
+    // ════ FUNCIONES DE NAVEGACIÓN ════
     function tab(id, btn) {
         document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
         document.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
@@ -366,8 +477,7 @@
     }
 
     function renderAgenda() {
-        const root = document.getElementById('agenda-root');
-        root.innerHTML = DEFAULT_DAYS.map(d => `
+        document.getElementById('agenda-root').innerHTML = DEFAULT_DAYS.map(d => `
             <div class="day">
                 <div class="dh" onclick="this.parentElement.classList.toggle('open')">
                     <div class="dnum">${d.id}</div>
@@ -375,7 +485,6 @@
                         <div class="ddate">${d.date}</div>
                         <div class="dtitle">${d.title}</div>
                     </div>
-                    <div style="font-size: 10px;">▼</div>
                 </div>
                 <div class="dbody">
                     ${d.activities.map(a => `
@@ -390,32 +499,26 @@
     }
 
     // ════ GASTOS ════
-    function selPayer(btn, name) {
-        document.querySelectorAll('.pb').forEach(b => b.classList.remove('sel'));
-        btn.classList.add('sel');
-        selectedPayer = name;
-    }
-
     function addExp() {
         const desc = document.getElementById('exp-desc').value;
         const amt = parseFloat(document.getElementById('exp-amt').value);
-        if (!desc || !amt || !selectedPayer) return showToast('⚠️ Faltan datos');
+        const payer = document.getElementById('exp-payer').value;
+        if (!desc || !amt) return showToast('⚠️ Escribe descripción y monto');
         
-        expenses.push({ desc, amt, payer: selectedPayer, id: Date.now() });
+        expenses.push({ desc, amt, payer, id: Date.now() });
         localStorage.setItem('v2026_expenses', JSON.stringify(expenses));
-        
+        renderExp();
         document.getElementById('exp-desc').value = '';
         document.getElementById('exp-amt').value = '';
-        renderExp();
         showToast('✅ Gasto Guardado');
     }
 
     function renderExp() {
         const list = document.getElementById('exp-list');
-        list.innerHTML = expenses.map(e => `
-            <div class="exp-item">
-                <div><b>${e.desc}</b><br><small>Pagó: ${e.payer}</small></div>
-                <div style="color: var(--red); font-weight: 700;">€${e.amt.toFixed(2)}</div>
+        list.innerHTML = expenses.slice().reverse().map(e => `
+            <div class="card" style="padding: 12px; margin-bottom: 8px; display: flex; justify-content: space-between;">
+                <span><b>${e.desc}</b> (${e.payer})</span>
+                <span style="color: var(--red);">€${e.amt.toFixed(2)}</span>
             </div>
         `).join('');
         calculateDebts();
@@ -437,7 +540,7 @@
         `).join('');
     }
 
-    // ════ IA ════
+    // ════ IA GEMINI ════
     async function sendAI() {
         const input = document.getElementById('ai-input');
         const msg = input.value.trim();
@@ -450,13 +553,16 @@
         let key = localStorage.getItem('v2026_gemini_key');
         if (!key) {
             key = prompt("🤖 Pega tu API Key de Gemini (...rl84):");
-            if (key) localStorage.setItem('v2026_gemini_key', key.trim()); else return;
+            if (key) {
+                key = key.trim();
+                localStorage.setItem('v2026_gemini_key', key);
+            } else return;
         }
 
         document.getElementById('ai-typing').style.display = 'block';
 
         try {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -464,14 +570,32 @@
                     contents: chatHistory
                 })
             });
-            const data = await res.json();
+
+            const data = await response.json();
+            
+            if (data.error) {
+                if(data.error.code === 400) {
+                    localStorage.removeItem('v2026_gemini_key');
+                    throw new Error("API Key inválida.");
+                }
+                throw new Error(data.error.message);
+            }
+
             const reply = data.candidates[0].content.parts[0].text;
             addMsg(reply, 'ai');
             chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+
         } catch (e) {
-            addMsg("❌ Error de conexión. Revisa tu API Key.", 'ai');
+            console.error(e);
+            addMsg(`❌ Error: ${e.message}. Verifica tu llave.`, 'ai');
+        } finally {
+            document.getElementById('ai-typing').style.display = 'none';
         }
-        document.getElementById('ai-typing').style.display = 'none';
+    }
+
+    function resetKey() {
+        localStorage.removeItem('v2026_gemini_key');
+        showToast('Llave borrada. Se te pedirá una nueva al escribir.');
     }
 
     function addMsg(t, r) {
@@ -484,16 +608,17 @@
 
     function initCharts() {
         const ctx = document.getElementById('pieChart').getContext('2d');
-        new Chart(ctx, {
+        if (window.myPie) window.myPie.destroy();
+        window.myPie = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Transporte', 'Estadías', 'Comida', 'Tours'],
+                labels: ['Transporte', 'Hotel', 'Comida', 'Tours'],
                 datasets: [{
                     data: [926, 1181, 1035, 701],
                     backgroundColor: ['#AA151B', '#F1BF00', '#1A1208', '#8C7355']
                 }]
             },
-            options: { plugins: { legend: { position: 'bottom' } } }
+            options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
         });
     }
 
