@@ -151,4 +151,337 @@
 </section>
 
 <section id="section-dashboard" class="module-section">
-    <div class="title-prestige">Anal
+    <div class="title-prestige">Analítica</div>
+    <div class="card-prestige">
+        <h4 style="text-align: center; margin-bottom: 1rem;">Por Categoría</h4>
+        <div class="chart-wrapper"><canvas id="chart-pie-cat-pro"></canvas></div>
+    </div>
+    <div class="card-prestige">
+        <h4 style="text-align: center; margin-bottom: 1rem;">Por Viajero</h4>
+        <div class="chart-wrapper"><canvas id="chart-bar-person-pro"></canvas></div>
+    </div>
+</section>
+
+<section id="section-pendientes" class="module-section">
+    <div class="title-prestige">Verificación Final</div>
+    <div class="card-prestige"><div class="chart-wrapper"><canvas id="chart-donut-task-pro"></canvas></div></div>
+    <div id="render-task-list-pro"></div>
+</section>
+
+<section id="section-viajeros" class="module-section">
+    <div class="title-prestige">Directorio</div>
+    <div class="card-prestige">
+        <div class="form-prestige-group"><label>Nombre</label><input type="text" id="traveler-name-master"></div>
+        <div class="form-prestige-group"><label>Datos Críticos</label><textarea id="traveler-data-master" rows="3"></textarea></div>
+        <button class="btn-master-action" id="action-push-traveler">Añadir Viajero</button>
+    </div>
+    <div id="render-traveler-wall"></div>
+</section>
+
+<section id="section-ai" class="module-section">
+    <div class="title-prestige">Asistente Virtual</div>
+    <div class="chat-elite-box" id="chat-scroller-view"></div>
+    <div style="display: flex; gap: 0.5rem;">
+        <input type="text" id="chat-input-query" style="flex-grow: 1; padding: 0.8rem; border-radius: 8px; border: 1px solid #ccc;" placeholder="Pregunta algo...">
+        <button class="btn-master-action" style="width: auto; padding: 0.8rem 1.5rem;" id="action-push-chat">➤</button>
+    </div>
+</section>
+
+<div class="toast-system" id="system-toast-box"></div>
+
+<script>
+(function() {
+    'use strict';
+
+    // DATOS MAESTROS (Protegidos)
+    const AGENDA_SEED = [
+        { id: 1, date: '28 Sep', title: 'SJU ➔ MAD', acts: [{ t: '20:25', n: 'IB0380', m: 'SJU' }] },
+        { id: 2, date: '29 Sep', title: 'Llegada MAD', acts: [{ t: '10:25', n: 'Arribo T4S', m: 'MAD' }, { t: '15:30', n: 'Airbnb', m: 'Calle Mayor 12' }] },
+        { id: 3, date: '30 Sep', title: 'Los Austrias', acts: [{ t: '10:00', n: 'Tour Antiguo', m: 'Sol' }, { t: '19:00', n: 'Reina Sofía', m: 'Atocha' }] },
+        { id: 4, date: '01 Oct', title: 'El Escorial', acts: [{ t: '09:00', n: 'Tren Escorial', m: 'Atocha' }, { t: '18:30', n: 'Bernabéu', m: 'Bernabéu' }] },
+        { id: 5, date: '02 Oct', title: 'Vinos y Prado', acts: [{ t: '11:00', n: 'Cepa 21', m: 'Valladolid' }, { t: '18:00', n: 'Prado', m: 'Prado' }] },
+        { id: 6, date: '03 Oct', title: 'AVE a BCN', acts: [{ t: '10:00', n: 'Retiro', m: 'Retiro' }, { t: '14:00', n: 'AVE', m: 'Atocha' }] },
+        { id: 7, date: '04 Oct', title: 'Sagrada Família', acts: [{ t: '10:30', n: 'Torres', m: 'Sagrada Família' }] },
+        { id: 8, date: '05 Oct', title: 'Park Güell', acts: [{ t: '11:00', n: 'Park Güell', m: 'Gracia' }, { t: '20:00', n: 'Flamenco', m: 'Ramblas' }] },
+        { id: 9, date: '06 Oct', title: 'Montserrat', acts: [{ t: '09:00', n: 'Excursión', m: 'Montserrat' }] },
+        { id: 10, date: '07 Oct', title: 'Girona', acts: [{ t: '09:00', n: 'Catedral', m: 'Girona' }] },
+        { id: 11, date: '08 Oct', title: 'Francia', acts: [{ t: '09:00', n: 'Collioure', m: 'Francia' }] },
+        { id: 12, date: '09 Oct', title: 'Regreso', acts: [{ t: '07:00', n: 'Vuelo a SJU', m: 'BCN' }] }
+    ];
+
+    const TRAVELERS_SEED = [
+        { n: 'Victor Zapata', d: 'Logística de Vuelos y AVE.' },
+        { n: 'Layra Zapata', d: 'Admin | Iberia: 17127309 | Tel: 787-610-8269' },
+        { n: 'Andrea López Javier', d: 'Nac: 07/02/1958 | Pasaporte: 670752783 | Vence: 26/10/31' },
+        { n: 'Francisco Germosen', d: 'Nac: 04/02/1981 | Pasaporte: 664576239 | Vence: 15/03/31' }
+    ];
+
+    // CARGA SEGURA DE DATOS
+    function safeLoad(key, fallback) {
+        try {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : fallback;
+        } catch(e) {
+            console.warn("Reseteando datos corruptos para: " + key);
+            return fallback;
+        }
+    }
+
+    let state = {
+        agenda: safeLoad('app_agenda', AGENDA_SEED),
+        gastos: safeLoad('app_gastos', []),
+        abonos: safeLoad('app_abonos', []),
+        recibos: safeLoad('app_recibos', []),
+        tasks: safeLoad('app_tasks', [{ n: 'ETIAS España 2026', s: 'P' }, { n: 'Seguro Médico', s: 'P' }]),
+        logistica: safeLoad('app_log', [{ t: 'IB0380', d: 'Loc: LB8T8' }]),
+        viajeros: safeLoad('app_viajeros', TRAVELERS_SEED)
+    };
+
+    function commit() {
+        localStorage.setItem('app_agenda', JSON.stringify(state.agenda));
+        localStorage.setItem('app_gastos', JSON.stringify(state.gastos));
+        localStorage.setItem('app_abonos', JSON.stringify(state.abonos));
+        localStorage.setItem('app_recibos', JSON.stringify(state.recibos));
+        localStorage.setItem('app_tasks', JSON.stringify(state.tasks));
+        localStorage.setItem('app_log', JSON.stringify(state.logistica));
+        localStorage.setItem('app_viajeros', JSON.stringify(state.viajeros));
+    }
+
+    function msg(text) {
+        const box = document.getElementById('system-toast-box');
+        box.textContent = text;
+        box.style.display = 'block';
+        setTimeout(() => box.style.display = 'none', 3000);
+    }
+
+    window.loadModule = function(id, btn) {
+        document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('section-' + id).classList.add('active');
+        if(btn) btn.classList.add('active');
+        if(id === 'dashboard' || id === 'pendientes') setTimeout(drawCharts, 100);
+    };
+
+    // POBLAR SELECTS DE VIAJEROS
+    function populateTravelerSelects() {
+        const selects = document.querySelectorAll('.traveler-options');
+        selects.forEach(select => {
+            const currentVal = select.value;
+            select.innerHTML = '';
+            state.viajeros.forEach(v => {
+                const opt = document.createElement('option');
+                opt.value = opt.textContent = v.n;
+                select.appendChild(opt);
+            });
+            if (currentVal) select.value = currentVal;
+        });
+    }
+
+    // SPLITWISE
+    function runSplitwise() {
+        const names = state.viajeros.map(v => v.n);
+        const bal = {}; names.forEach(n => bal[n] = 0);
+        
+        state.gastos.forEach(g => { if(bal[g.p] !== undefined) bal[g.p] += g.a; });
+        state.abonos.forEach(a => { if(bal[a.f] !== undefined) bal[a.f] += a.a; if(bal[a.t] !== undefined) bal[a.t] -= a.a; });
+        
+        const total = state.gastos.reduce((acc, val) => acc + val.a, 0);
+        const quota = names.length ? (total / names.length) : 0;
+        
+        const netos = names.map(n => ({ n, val: bal[n] - quota }));
+        const debtors = netos.filter(x => x.val < -0.01).sort((a,b) => a.val - b.val);
+        const creditors = netos.filter(x => x.val > 0.01).sort((a,b) => b.val - a.val);
+        
+        const logs = [];
+        debtors.forEach(d => {
+            while(Math.abs(d.val) > 0.01 && creditors.length > 0) {
+                const c = creditors[0];
+                const trans = Math.min(Math.abs(d.val), c.val);
+                logs.push(`<div class="debt-item-display"><span><b>${d.n}</b> ➔ <b>${c.n}</b></span><b>€${trans.toFixed(2)}</b></div>`);
+                d.val += trans; c.val -= trans;
+                if(c.val <= 0.01) creditors.shift();
+            }
+        });
+        document.getElementById('render-splitwise-engine').innerHTML = logs.length ? logs.join('') : '<h4 style="text-align:center; color:#16a34a;">✅ SALDADOS</h4>';
+    }
+
+    // RENDERS
+    function renderAgenda() {
+        const wall = document.getElementById('render-agenda-full');
+        const select = document.getElementById('target-day-select');
+        wall.innerHTML = select.innerHTML = '';
+        state.agenda.forEach((day, idx) => {
+            select.innerHTML += `<option value="${day.id}">Día ${day.id}: ${day.date}</option>`;
+            let acts = day.acts.map((a, i) => `
+                <div class="act-prestige-row">
+                    <span class="act-time-mono">${a.t}</span>
+                    <div style="flex-grow:1"><b>${a.n}</b><br><a class="btn-maps-prestige" href="https://maps.google.com/?q=${a.m}" target="_blank">📍 Maps</a></div>
+                    <button style="border:none; background:none; color:red; font-size:1.5rem;" onclick="delAct(${day.id}, ${i})">✕</button>
+                </div>`).join('');
+            wall.innerHTML += `
+                <div class="day-container">
+                    <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
+                        <span>Día ${day.id}: ${day.title}</span><span>▼</span>
+                    </div>
+                    <div class="day-body">${acts || 'Sin eventos'}</div>
+                </div>`;
+        });
+    }
+
+    function renderGastos() {
+        let h = state.gastos.map(e => `
+            <div class="card-prestige" style="display:flex; justify-content:space-between; padding:1rem;">
+                <div><b>${e.d}</b><br><small>${e.p} | ${e.c}</small></div>
+                <div style="text-align:right;"><b>€${e.a.toFixed(2)}</b><br><span style="color:red;cursor:pointer" onclick="delG(${e.id})">Borrar</span></div>
+            </div>`).join('');
+        h += state.abonos.map(a => `
+            <div class="card-prestige" style="display:flex; justify-content:space-between; padding:1rem; border-left:4px solid red;">
+                <div><b style="color:red">Abono</b><br><small>${a.f} ➔ ${a.t}</small></div>
+                <div style="text-align:right;"><b style="color:red">€${a.a.toFixed(2)}</b><br><span style="color:red;cursor:pointer" onclick="delA(${a.id})">Borrar</span></div>
+            </div>`).join('');
+        document.getElementById('render-expense-history').innerHTML = h;
+        runSplitwise();
+    }
+
+    function renderRecibos() {
+        document.getElementById('render-receipt-grid').innerHTML = state.recibos.map((r, i) => `
+            <div class="card-prestige" style="text-align:center">
+                <img src="${r.img}" style="width:100%; height:200px; object-fit:cover; border-radius:8px; margin-bottom:1rem;">
+                <b>${r.place}</b><p>€${r.amt} | ${r.payer}</p>
+                <button onclick="delRec(${i})" style="margin-top:1rem; color:red; border:none; background:none; cursor:pointer;">Borrar</button>
+            </div>`).join('');
+    }
+
+    function renderLog() {
+        document.getElementById('render-log-wall').innerHTML = state.logistica.map((l, i) => `
+            <div class="card-prestige">
+                <b style="color:var(--red-espana); font-size:1.2rem;">${l.t}</b>
+                <p style="white-space:pre-wrap; margin-top:0.5rem;">${l.d}</p>
+                <button onclick="delLog(${i})" style="margin-top:1rem; color:red; border:none; background:none; cursor:pointer;">Borrar</button>
+            </div>`).join('');
+    }
+
+    function renderTasks() {
+        document.getElementById('render-task-list-pro').innerHTML = state.tasks.map((t, i) => {
+            const ok = t.s === 'C';
+            return `<div class="card-prestige" onclick="toggleTask(${i})" style="cursor:pointer; display:flex; gap:1rem; align-items:center;">
+                <span style="font-size:1.5rem;">${ok ? '✔️' : '⚪'}</span>
+                <span style="${ok ? 'text-decoration:line-through; opacity:0.5' : ''}">${t.n}</span>
+            </div>`;
+        }).join('');
+    }
+
+    function renderTravelers() {
+        document.getElementById('render-traveler-wall').innerHTML = state.viajeros.map((v, i) => `
+            <div class="card-prestige" style="display:flex; gap:1rem;">
+                <div style="background:var(--gold-espana); width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:1.5rem;">${v.n[0]}</div>
+                <div><b>${v.n}</b><p style="white-space:pre-wrap; font-size:0.9rem; margin-top:0.5rem; color:#555;">${v.d}</p>
+                <button onclick="delTraveler(${i})" style="margin-top:0.5rem; color:red; border:none; background:none; cursor:pointer; font-size:0.8rem;">Borrar</button></div>
+            </div>`).join('');
+        populateTravelerSelects();
+    }
+
+    // CHARTS
+    let pc1, pc2, pc3;
+    function drawCharts() {
+        const catLabels = ['Comida/Tapeo', 'Transporte/AVE', 'Hospedaje', 'Tours/Museos', 'Bodega/Vinos'];
+        const catData = catLabels.map(c => state.gastos.filter(g => g.c === c).reduce((s, i) => s + i.a, 0));
+        
+        if(pc1) pc1.destroy();
+        pc1 = new Chart(document.getElementById('chart-pie-cat-pro'), { type: 'pie', data: { labels: catLabels, datasets: [{ data: catData, backgroundColor: ['#C60B1E', '#F1BF00', '#1A1208', '#8C7355', '#3D2E18'] }] }, options:{maintainAspectRatio:false} });
+
+        const voyagers = state.viajeros.map(v => v.n);
+        const voyData = voyagers.map(p => state.gastos.filter(g => g.p === p).reduce((s, i) => s + i.a, 0));
+        
+        if(pc2) pc2.destroy();
+        pc2 = new Chart(document.getElementById('chart-bar-person-pro'), { type: 'bar', data: { labels: voyagers, datasets: [{ label: 'Aportación (€)', data: voyData, backgroundColor: '#F1BF00' }] }, options:{maintainAspectRatio:false} });
+
+        const okT = state.tasks.filter(t => t.s === 'C').length;
+        if(pc3) pc3.destroy();
+        pc3 = new Chart(document.getElementById('chart-donut-task-pro'), { type: 'doughnut', data: { labels: ['OK', 'Pend'], datasets: [{ data: [okT, state.tasks.length - okT], backgroundColor: ['#16a34a', '#dc2626'] }] }, options:{maintainAspectRatio:false} });
+    }
+
+    // GLOBAL ACTIONS
+    window.delAct = (dId, idx) => { state.agenda.find(d => d.id === dId).acts.splice(idx,1); commit(); renderAgenda(); };
+    window.delG = id => { state.gastos = state.gastos.filter(x => x.id !== id); commit(); renderGastos(); };
+    window.delA = id => { state.abonos = state.abonos.filter(x => x.id !== id); commit(); renderGastos(); };
+    window.delRec = idx => { state.recibos.splice(idx,1); commit(); renderRecibos(); };
+    window.delLog = i => { state.logistica.splice(i,1); commit(); renderLog(); };
+    window.toggleTask = i => { state.tasks[i].s = state.tasks[i].s === 'C' ? 'P' : 'C'; commit(); renderTasks(); drawCharts(); };
+    window.delTraveler = i => { state.viajeros.splice(i,1); commit(); renderTravelers(); };
+
+    window.onload = function() {
+        renderTravelers(); renderAgenda(); renderGastos(); renderRecibos(); renderLog(); renderTasks();
+        
+        // Listeners
+        document.getElementById('action-push-activity').onclick = () => {
+            const id = parseInt(document.getElementById('target-day-select').value);
+            const t = document.getElementById('target-time-input').value;
+            const n = document.getElementById('target-title-input').value;
+            const m = document.getElementById('target-map-input').value;
+            if(!t || !n) return msg("Faltan datos");
+            state.agenda.find(d => d.id === id).acts.push({t,n,m}); commit(); renderAgenda(); msg("Guardado");
+        };
+
+        document.getElementById('action-push-log').onclick = () => {
+            const t = document.getElementById('log-type-master').value;
+            const d = document.getElementById('log-data-master').value;
+            if(!t || !d) return msg("Faltan datos");
+            state.logistica.push({t,d}); commit(); renderLog(); msg("Guardado");
+        };
+
+        document.getElementById('action-push-settle').onclick = () => {
+            const f = document.getElementById('settle-from-select').value;
+            const t = document.getElementById('settle-to-select').value;
+            const a = parseFloat(document.getElementById('settle-amt-val').value);
+            if(f===t || isNaN(a)) return msg("Error en abono");
+            state.abonos.push({id:Date.now(), f, t, a}); commit(); renderGastos(); msg("Abono ok");
+        };
+
+        document.getElementById('action-push-expense').onclick = () => {
+            const d = document.getElementById('exp-title-input').value;
+            const a = parseFloat(document.getElementById('exp-amt-input').value);
+            const p = document.getElementById('exp-payer-select').value;
+            const c = document.getElementById('exp-cat-select').value;
+            if(!d || isNaN(a)) return msg("Error en gasto");
+            state.gastos.push({id:Date.now(), d, a, p, c, date: new Date().toLocaleDateString()}); commit(); renderGastos(); msg("Gasto ok");
+        };
+
+        document.getElementById('rec-file-master').onchange = e => {
+            if(!e.target.files[0]) return;
+            const r = new FileReader();
+            r.onload = evt => {
+                state.recibos.push({img:evt.target.result, place:document.getElementById('rec-place-master').value||"Ticket", amt:document.getElementById('rec-val-master').value||"0", payer:document.getElementById('rec-who-master').value});
+                commit(); renderRecibos(); msg("Foto subida");
+            };
+            r.readAsDataURL(e.target.files[0]);
+        };
+
+        document.getElementById('action-push-traveler').onclick = () => {
+            const n = document.getElementById('traveler-name-master').value;
+            const d = document.getElementById('traveler-data-master').value;
+            if(!n) return; state.viajeros.push({n,d}); commit(); renderTravelers(); msg("Viajero añadido");
+        };
+
+        document.getElementById('action-push-chat').onclick = () => {
+            const input = document.getElementById('chat-input-query');
+            const view = document.getElementById('chat-scroller-view');
+            if(!input.value) return;
+            view.innerHTML += `<div class="msg-prestige msg-user">${input.value}</div>`;
+            setTimeout(() => {
+                view.innerHTML += `<div class="msg-prestige msg-ai">Revisa la pestaña de Viajeros o Logística para eso.</div>`;
+                view.scrollTop = view.scrollHeight;
+            }, 500);
+            input.value = '';
+        };
+
+        document.getElementById('action-push-export').onclick = () => {
+            let csv = "Fecha,Motivo,Importe,Pagador,Categoria\n" + state.gastos.map(g => `${g.date},${g.d},${g.a},${g.p},${g.c}`).join("\n");
+            const a = document.createElement("a"); a.href = window.URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
+            a.download = "Gastos.csv"; a.click();
+        };
+    };
+})();
+</script>
+</body>
+</html>
