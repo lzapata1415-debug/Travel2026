@@ -174,6 +174,30 @@ hr{border:none;border-top:1px solid #ede8df;margin:1.2rem 0;}
 .pill-green{background:#dcfce7;color:#166534;}
 .pill-gold{background:#fef9c3;color:#854d0e;}
 .pill-blue{background:#dbeafe;color:#1e40af;}
+.pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.pf{background:#faf7f2;border-radius:7px;padding:5px 9px;border:1px solid #ede8df;}
+.pf.pf-full{grid-column:1/-1;}
+.pf-l{font-size:0.58rem;font-family:'DM Mono',monospace;color:#8c7355;text-transform:uppercase;letter-spacing:0.06em;}
+.pf-v{font-size:0.82rem;font-weight:700;font-family:'DM Mono',monospace;color:var(--deep);}
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:0.5rem;}
+.stat-card{background:#faf7f2;border-radius:10px;padding:0.9rem;text-align:center;border:1px solid #ede8df;}
+.stat-num{font-family:'DM Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--red);}
+.stat-lbl{font-size:0.65rem;font-family:'DM Mono',monospace;color:#8c7355;text-transform:uppercase;letter-spacing:0.06em;margin-top:2px;}
+.balance-row{display:flex;align-items:center;justify-content:space-between;padding:0.8rem;background:#faf7f2;border-radius:9px;margin-bottom:0.5rem;border:1px solid #ede8df;}
+.balance-name{font-weight:700;font-size:0.88rem;}
+.balance-paid{font-size:0.75rem;color:#666;font-family:'DM Mono',monospace;}
+.balance-net{font-family:'DM Mono',monospace;font-size:0.95rem;font-weight:700;}
+.balance-bar-wrap{height:6px;background:#eee;border-radius:3px;margin-top:5px;overflow:hidden;}
+.balance-bar-fill{height:6px;border-radius:3px;transition:width 0.6s ease;}
+.debt-card{background:#fff5f5;border:1px solid #fecaca;border-radius:10px;padding:0.9rem;margin-bottom:0.6rem;display:flex;align-items:center;justify-content:space-between;}
+.debt-arrow{font-size:0.8rem;color:#666;margin:0 8px;}
+.debt-amount{font-family:'DM Mono',monospace;font-weight:700;color:#b91c1c;font-size:1rem;}
+.hist-row{display:flex;justify-content:space-between;align-items:flex-start;padding:0.7rem 0;border-bottom:1px solid #f0ede8;}
+.hist-row:last-child{border-bottom:none;}
+.hist-left{flex:1;}
+.hist-concept{font-weight:700;font-size:0.85rem;}
+.hist-meta{font-size:0.7rem;color:#888;font-family:'DM Mono',monospace;margin-top:2px;}
+.hist-amt{font-family:'DM Mono',monospace;font-weight:700;color:var(--red);font-size:0.92rem;}
 </style>
 </head>
 <body>
@@ -297,10 +321,25 @@ hr{border:none;border-top:1px solid #ede8df;margin:1.2rem 0;}
 <!-- ═══════════ GASTOS ═══════════ -->
 <section id="sec-gastos" class="module-section">
   <div class="section-title">Gastos & Splitwise</div>
+
+  <!-- RESUMEN RÁPIDO -->
+  <div class="card card-red" id="gastos-resumen-card">
+    <div class="card-title">📊 Resumen Rápido</div>
+    <div id="gastos-resumen-mini"></div>
+  </div>
+
+  <!-- SALDOS -->
   <div class="split-box">
-    <h3 style="color:#166534;font-family:'Cinzel',serif;font-size:1rem;margin-bottom:1rem;letter-spacing:0.04em;">🟢 Saldos Actuales</h3>
+    <h3 style="color:#166534;font-family:'Cinzel',serif;font-size:1rem;margin-bottom:1rem;letter-spacing:0.04em;">🟢 Saldos — Quién debe qué</h3>
     <div id="render-splitwise"></div>
   </div>
+
+  <!-- DESGLOSE POR PERSONA -->
+  <div class="card card-gold">
+    <div class="card-title">👤 Desglose por Viajero</div>
+    <div id="render-desglose"></div>
+  </div>
+
   <button class="btn btn-green" style="margin-bottom:1.2rem;" onclick="exportCSV()">⬇️ Exportar CSV</button>
 
   <div class="card" style="border-color:#dc2626;">
@@ -448,8 +487,35 @@ hr{border:none;border-top:1px solid #ede8df;margin:1.2rem 0;}
 <!-- ═══════════ DASHBOARD ═══════════ -->
 <section id="sec-dashboard" class="module-section">
   <div class="section-title">Analítica del Viaje</div>
-  <div class="card"><div class="card-title">Por Categoría</div><div class="chart-wrap"><canvas id="c-cat"></canvas></div></div>
-  <div class="card"><div class="card-title">Por Viajero</div><div class="chart-wrap"><canvas id="c-voy"></canvas></div></div>
+
+  <!-- RESUMEN TOTAL -->
+  <div class="card card-red">
+    <div class="card-title">💰 Resumen General</div>
+    <div class="stats-row" id="dash-totales"></div>
+  </div>
+
+  <!-- BALANCE POR PERSONA -->
+  <div class="card card-gold">
+    <div class="card-title">👤 Balance Individual</div>
+    <div id="dash-balances"></div>
+  </div>
+
+  <!-- DEUDAS -->
+  <div class="card" style="border-top:3px solid #dc2626;">
+    <div class="card-title" style="color:#b91c1c;">💸 Quién le debe a quién</div>
+    <div id="dash-deudas"></div>
+  </div>
+
+  <!-- GRAFICAS -->
+  <div class="card"><div class="card-title">📊 Gastos por Categoría</div><div class="chart-wrap"><canvas id="c-cat"></canvas></div></div>
+  <div class="card"><div class="card-title">📊 Aportación por Viajero</div><div class="chart-wrap"><canvas id="c-voy"></canvas></div></div>
+
+  <!-- HISTORIAL COMPLETO -->
+  <div class="card">
+    <div class="card-title">🧾 Historial de Gastos</div>
+    <div id="dash-historial"></div>
+    <button class="btn btn-green" style="margin-top:1rem;" onclick="exportCSV()">⬇️ Exportar CSV</button>
+  </div>
 </section>
 
 <!-- ═══════════ TAREAS ═══════════ -->
@@ -472,9 +538,18 @@ hr{border:none;border-top:1px solid #ede8df;margin:1.2rem 0;}
   <div id="render-viajeros"></div>
   <div class="card card-gold">
     <div class="card-title">+ Añadir Viajero</div>
-    <div class="fg"><label>Nombre</label><input type="text" id="tv-nombre"></div>
-    <div class="fg"><label>Datos (pasaporte, teléfono…)</label><textarea id="tv-datos" rows="3"></textarea></div>
-    <button class="btn btn-dark" onclick="addViajero()">Guardar</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div class="fg"><label>Nombre completo</label><input type="text" id="tv-nombre"></div>
+      <div class="fg"><label>Rol</label><input type="text" id="tv-rol" placeholder="Ej: Viajero"></div>
+      <div class="fg"><label>Pasaporte #</label><input type="text" id="tv-pasaporte"></div>
+      <div class="fg"><label>Vence (pasaporte)</label><input type="text" id="tv-vence" placeholder="DD/MM/AAAA"></div>
+      <div class="fg"><label>Fecha nacimiento</label><input type="text" id="tv-nac" placeholder="DD/MM/AAAA"></div>
+      <div class="fg"><label>Teléfono</label><input type="text" id="tv-tel"></div>
+      <div class="fg" style="grid-column:1/-1"><label>Email</label><input type="email" id="tv-email"></div>
+      <div class="fg" style="grid-column:1/-1"><label>Vuelo</label><input type="text" id="tv-vuelo" placeholder="Ej: IB0380 · SJU→MAD"></div>
+      <div class="fg" style="grid-column:1/-1"><label>Notas adicionales</label><textarea id="tv-datos" rows="2"></textarea></div>
+    </div>
+    <button class="btn btn-dark" onclick="addViajero()">Guardar Viajero</button>
   </div>
 </section>
 
@@ -513,27 +588,37 @@ const AGENDA_SEED=[
 ];
 
 const TRAVELERS_SEED=[
-  {n:'Victor Zapata',d:'Logística de Vuelos y AVE.\nResponsable de check-ins.'},
-  {n:'Layra Zapata',d:'Admin | Iberia Ref: 17127309\nTel: 787-610-8269'},
-  {n:'Andrea López Javier',d:'Nac: 07/02/1958\nPasaporte: 670752783\nVence: 26/10/2031\nNacionalidad: PR'},
-  {n:'Francisco Germosen',d:'Nac: 04/02/1981\nPasaporte: 664576239\nVence: 15/03/2031\nNacionalidad: PR'}
+  {n:'Victor Zapata', rol:'Organizador · Logística', pasaporte:'', vence:'', nac:'', tel:'', email:'', vuelo:'IB0380 · SJU→MAD · 28 Sep', ave:'MAD→BCN 03 Oct', notas:'Responsable de vuelos y AVE'},
+  {n:'Layra Zapata', rol:'Administradora', pasaporte:'', vence:'', nac:'', tel:'787-610-8269', email:'', vuelo:'IB0380 · Ref: 17127309', ave:'MAD→BCN 03 Oct', notas:'Referencia Iberia: 17127309'},
+  {n:'Andrea López Javier', rol:'Viajera', pasaporte:'670752783', vence:'26/10/2031', nac:'07/02/1958', tel:'', email:'', vuelo:'IB0380 · SJU→MAD', ave:'MAD→BCN 03 Oct', notas:'Nacionalidad: PR'},
+  {n:'Francisco Germosen', rol:'Viajero', pasaporte:'664576239', vence:'15/03/2031', nac:'04/02/1981', tel:'', email:'', vuelo:'IB0380 · SJU→MAD', ave:'MAD→BCN 03 Oct', notas:'Nacionalidad: PR'}
 ];
+const savedViajeros = (() => { try { const d=localStorage.getItem('esp_viajeros'); const p=d?JSON.parse(d):[]; return (p.length>0 && p[0].pasaporte!==undefined) ? p : TRAVELERS_SEED; } catch(e){ return TRAVELERS_SEED; }})();
 
 const TASKS_SEED=[
-  {n:'ETIAS España 2026 (tramitar)', s:'P'},
-  {n:'Seguro Médico de Viaje', s:'P'},
-  {n:'Confirmar Airbnb Madrid', s:'P'},
+  {n:'ETIAS España 2026 (tramitar en viashengen.eu)', s:'P'},
+  {n:'Seguro Médico de Viaje — cobertura Europa', s:'P'},
+  {n:'Confirmar Airbnb Madrid (Calle Mayor 12)', s:'P'},
   {n:'Confirmar Airbnb Barcelona', s:'P'},
-  {n:'Reservar Torres Sagrada Família', s:'P'},
-  {n:'Reservar Park Güell (entrada)', s:'P'},
+  {n:'Reservar Torres Sagrada Família (sagradafamilia.org)', s:'P'},
+  {n:'Reservar Park Güell — zona monumental', s:'P'},
   {n:'Reservar Tour Estadio Bernabéu', s:'P'},
-  {n:'Reservar AVE Renfe MAD-BCN', s:'P'},
-  {n:'Comprar tarjeta SIM España', s:'P'},
-  {n:'Reservar Bodega Cepa 21', s:'P'},
-  {n:'Confirmar show de Flamenco BCN', s:'P'},
-  {n:'Descargar Google Maps offline', s:'P'},
-  {n:'Avisar al banco — uso en España', s:'P'}
+  {n:'Comprar billetes AVE Renfe MAD→BCN (renfe.com)', s:'P'},
+  {n:'Comprar tarjeta SIM española (Vodafone/Orange)', s:'P'},
+  {n:'Reservar visita Bodega Cepa 21 — Valladolid', s:'P'},
+  {n:'Confirmar show de Flamenco Barcelona', s:'P'},
+  {n:'Descargar Google Maps offline (Madrid + Barcelona)', s:'P'},
+  {n:'Avisar al banco — uso tarjeta en España', s:'P'},
+  {n:'Reservar Museo del Prado (entradas anticipadas)', s:'P'},
+  {n:'Reservar Museo Reina Sofía', s:'P'},
+  {n:'Imprimir o guardar confirmaciones de vuelo', s:'P'},
+  {n:'Cambiar divisas / verificar tipo de cambio USD→EUR', s:'P'},
+  {n:'Instalar app Renfe, Iberia y Google Translate', s:'P'},
+  {n:'Confirmar excursión Montserrat — tren FGC', s:'P'},
+  {n:'Llevar adaptador de enchufe europeo (tipo F)', s:'P'}
 ];
+// Forzar recarga de tasks si tiene menos de 20
+const savedTasks = (() => { try { const d=localStorage.getItem('esp_tasks'); const p=d?JSON.parse(d):[]; return p.length >= 20 ? p : TASKS_SEED; } catch(e){ return TASKS_SEED; }})();
 
 function sl(k,fb){try{const d=localStorage.getItem(k);return d?JSON.parse(d):fb;}catch(e){return fb;}}
 let S={
@@ -541,9 +626,9 @@ let S={
   gastos:sl('esp_gastos',[]),
   abonos:sl('esp_abonos',[]),
   recibos:sl('esp_recibos',[]),
-  tasks:sl('esp_tasks',TASKS_SEED),
+  tasks:savedTasks,
   logistica:sl('esp_log',[{t:'IB0380',d:'Localizador: LB8T8\nIberia · SJU→MAD · 28 Sep 20:25'}]),
-  viajeros:sl('esp_viajeros',TRAVELERS_SEED)
+  viajeros:savedViajeros
 };
 
 function save(){
@@ -556,7 +641,7 @@ window.goTab=function(id,btn){
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('sec-'+id).classList.add('active');
   if(btn)btn.classList.add('active');
-  if(id==='dashboard'||id==='tareas')setTimeout(drawCharts,80);
+  if(id==='dashboard'||id==='tareas'){setTimeout(drawCharts,80);if(id==='dashboard')setTimeout(renderDashboard,80);}
 };
 
 function fillTvOpts(){
@@ -649,14 +734,50 @@ function runSplitwise(){
   document.getElementById('render-splitwise').innerHTML=logs.length?logs.join(''):`<div style="text-align:center;color:#16a34a;font-family:'Cinzel',serif;font-size:0.9rem;">✅ Todos los saldos están en cero</div>`;
 }
 function renderGastos(){
-  let h=S.gastos.map(e=>`
+  // Resumen mini
+  const total=S.gastos.reduce((ac,x)=>ac+x.a,0);
+  const quota=S.viajeros.length?total/S.viajeros.length:0;
+  document.getElementById('gastos-resumen-mini').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:0.5rem;">
+      <div class="stat-card"><div class="stat-num">€${total.toFixed(2)}</div><div class="stat-lbl">Total</div></div>
+      <div class="stat-card"><div class="stat-num">€${quota.toFixed(2)}</div><div class="stat-lbl">Por persona</div></div>
+      <div class="stat-card"><div class="stat-num">${S.gastos.length}</div><div class="stat-lbl">Gastos</div></div>
+    </div>`;
+
+  // Desglose por viajero
+  const names=S.viajeros.map(v=>v.n);
+  const bal={};names.forEach(n=>bal[n]=0);
+  S.gastos.forEach(g=>{if(bal[g.p]!==undefined)bal[g.p]+=g.a;});
+  S.abonos.forEach(a=>{if(bal[a.f]!==undefined)bal[a.f]+=a.a;if(bal[a.t]!==undefined)bal[a.t]-=a.a;});
+  document.getElementById('render-desglose').innerHTML=names.map(n=>{
+    const paid=bal[n]||0;
+    const net=paid-quota;
+    const myGastos=S.gastos.filter(g=>g.p===n);
+    const color=net>=0?'#16a34a':'#dc2626';
+    return `<div style="background:#faf7f2;border-radius:10px;padding:1rem;margin-bottom:0.7rem;border:1px solid #ede8df;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <b style="font-size:0.9rem;">${n}</b>
+        <span style="font-family:'DM Mono',monospace;font-weight:700;color:${color};font-size:0.95rem;">${net>=0?'+':''}€${net.toFixed(2)}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px;">
+        <div class="stat-card" style="padding:0.5rem;"><div style="font-family:'DM Mono',monospace;font-size:0.85rem;font-weight:700;color:var(--red);">€${paid.toFixed(2)}</div><div style="font-size:0.6rem;color:#8c7355;text-transform:uppercase;letter-spacing:0.05em;">Pagó</div></div>
+        <div class="stat-card" style="padding:0.5rem;"><div style="font-family:'DM Mono',monospace;font-size:0.85rem;font-weight:700;color:#8c7355;">€${quota.toFixed(2)}</div><div style="font-size:0.6rem;color:#8c7355;text-transform:uppercase;letter-spacing:0.05em;">Cuota</div></div>
+        <div class="stat-card" style="padding:0.5rem;"><div style="font-family:'DM Mono',monospace;font-size:0.85rem;font-weight:700;color:${color};">${net>=0?'A cobrar':'A pagar'}</div><div style="font-size:0.6rem;color:#8c7355;text-transform:uppercase;letter-spacing:0.05em;">Estado</div></div>
+      </div>
+      ${myGastos.length?`<div style="font-size:0.72rem;color:#aaa;font-family:'DM Mono',monospace;">${myGastos.map(g=>`${g.d}: €${g.a.toFixed(2)}`).join(' · ')}</div>`:'<div style="font-size:0.72rem;color:#ccc;">Sin gastos registrados</div>'}
+    </div>`;
+  }).join('');
+
+  // Historial gastos
+  let h=S.gastos.length===0?'<div style="text-align:center;padding:2rem;color:#aaa;font-size:0.85rem;">Sin gastos registrados aún.<br>Añade el primer gasto arriba ↑</div>':
+    S.gastos.map(e=>`
     <div class="card" style="display:flex;justify-content:space-between;padding:0.9rem;margin-bottom:0.6rem;">
       <div><b>${e.d}</b><br><small style="color:#888;">${e.p} · <span class="pill pill-gold">${e.c}</span></small><br><small style="color:#aaa;">${e.date}</small></div>
       <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px;"><b style="font-size:1rem;">€${e.a.toFixed(2)}</b><button style="color:var(--red);border:none;background:none;cursor:pointer;font-size:0.75rem;" onclick="delG(${e.id})">Borrar</button></div>
     </div>`).join('');
   h+=S.abonos.map(a=>`
     <div class="card" style="display:flex;justify-content:space-between;padding:0.9rem;margin-bottom:0.6rem;border-left:4px solid #dc2626;">
-      <div><b style="color:#b91c1c;">Abono</b><br><small>${a.f} ➔ ${a.t}</small></div>
+      <div><b style="color:#b91c1c;">💸 Abono</b><br><small>${a.f} ➔ ${a.t}</small></div>
       <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px;"><b style="color:#b91c1c;">€${a.a.toFixed(2)}</b><button style="color:var(--red);border:none;background:none;cursor:pointer;font-size:0.75rem;" onclick="delA(${a.id})">Borrar</button></div>
     </div>`).join('');
   document.getElementById('render-gastos').innerHTML=h;
@@ -668,17 +789,17 @@ window.addGasto=function(){
   const p=document.getElementById('exp-payer').value;
   const c=document.getElementById('exp-cat').value;
   if(!d||isNaN(a))return toast('⚠ Concepto y monto requeridos');
-  S.gastos.push({id:Date.now(),d,a,p,c,date:new Date().toLocaleDateString('es-ES')});save();renderGastos();toast('✓ Gasto guardado');
+  S.gastos.push({id:Date.now(),d,a,p,c,date:new Date().toLocaleDateString('es-ES')});save();renderGastos();renderDashboard();toast('✓ Gasto guardado');
 };
 window.addAbono=function(){
   const f=document.getElementById('sel-from').value;
   const t=document.getElementById('sel-to').value;
   const a=parseFloat(document.getElementById('settle-amt').value);
   if(f===t||isNaN(a))return toast('⚠ Error en abono');
-  S.abonos.push({id:Date.now(),f,t,a});save();renderGastos();toast('✓ Abono registrado');
+  S.abonos.push({id:Date.now(),f,t,a});save();renderGastos();renderDashboard();toast('✓ Abono registrado');
 };
-window.delG=id=>{S.gastos=S.gastos.filter(x=>x.id!==id);save();renderGastos();};
-window.delA=id=>{S.abonos=S.abonos.filter(x=>x.id!==id);save();renderGastos();};
+window.delG=id=>{S.gastos=S.gastos.filter(x=>x.id!==id);save();renderGastos();renderDashboard();};
+window.delA=id=>{S.abonos=S.abonos.filter(x=>x.id!==id);save();renderGastos();renderDashboard();};
 window.exportCSV=function(){
   const csv="Fecha,Concepto,Importe,Pagador,Categoria\n"+S.gastos.map(g=>`${g.date},"${g.d}",${g.a},${g.p},${g.c}`).join("\n");
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='Gastos_España2026.csv';a.click();
@@ -722,21 +843,46 @@ window.addTask=function(){
 
 /* ── VIAJEROS ── */
 function renderViajeros(){
-  document.getElementById('render-viajeros').innerHTML=S.viajeros.map((v,i)=>`
-    <div class="traveler-card">
-      <div class="traveler-avatar">${v.n.charAt(0)}</div>
+  document.getElementById('render-viajeros').innerHTML=S.viajeros.map((v,i)=>{
+    const initials=v.n.split(' ').map(x=>x[0]).slice(0,2).join('');
+    const fields=[
+      v.pasaporte?`<div class="pf"><div class="pf-l">Pasaporte</div><div class="pf-v">${v.pasaporte}</div></div>`:'',
+      v.vence?`<div class="pf"><div class="pf-l">Vence</div><div class="pf-v">${v.vence}</div></div>`:'',
+      v.nac?`<div class="pf"><div class="pf-l">Nacimiento</div><div class="pf-v">${v.nac}</div></div>`:'',
+      v.tel?`<div class="pf"><div class="pf-l">Teléfono</div><div class="pf-v">${v.tel}</div></div>`:'',
+      v.email?`<div class="pf"><div class="pf-l">Email</div><div class="pf-v">${v.email}</div></div>`:'',
+      v.vuelo?`<div class="pf pf-full"><div class="pf-l">Vuelo</div><div class="pf-v">${v.vuelo}</div></div>`:'',
+      v.ave?`<div class="pf pf-full"><div class="pf-l">AVE</div><div class="pf-v">${v.ave}</div></div>`:'',
+      v.notas?`<div class="pf pf-full"><div class="pf-l">Notas</div><div class="pf-v">${v.notas}</div></div>`:'',
+      v.d?`<div class="pf pf-full"><div class="pf-l">Info</div><div class="pf-v">${v.d}</div></div>`:''
+    ].filter(Boolean).join('');
+    return `<div class="traveler-card">
+      <div class="traveler-avatar">${initials}</div>
       <div style="flex:1;">
         <div class="traveler-name">${v.n}</div>
-        <div class="traveler-data">${v.d}</div>
-        <button onclick="delViajero(${i})" style="margin-top:0.5rem;color:var(--red);border:none;background:none;cursor:pointer;font-size:0.75rem;">Borrar</button>
+        <div style="font-size:0.7rem;color:#8c7355;font-family:'DM Mono',monospace;margin-bottom:8px;">${v.rol||''}</div>
+        <div class="pf-grid">${fields}</div>
+        <button onclick="delViajero(${i})" style="margin-top:0.6rem;color:var(--red);border:none;background:none;cursor:pointer;font-size:0.72rem;">Borrar</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
   fillTvOpts();
 }
 window.addViajero=function(){
   const n=document.getElementById('tv-nombre').value.trim();
-  const d=document.getElementById('tv-datos').value.trim();
-  if(!n)return;S.viajeros.push({n,d});save();renderViajeros();toast('✓ Viajero añadido');
+  if(!n)return;
+  S.viajeros.push({
+    n, rol:document.getElementById('tv-rol').value.trim(),
+    pasaporte:document.getElementById('tv-pasaporte').value.trim(),
+    vence:document.getElementById('tv-vence').value.trim(),
+    nac:document.getElementById('tv-nac').value.trim(),
+    tel:document.getElementById('tv-tel').value.trim(),
+    email:document.getElementById('tv-email').value.trim(),
+    vuelo:document.getElementById('tv-vuelo').value.trim(),
+    d:document.getElementById('tv-datos').value.trim()
+  });
+  save();renderViajeros();toast('✓ Viajero añadido');
+  ['tv-nombre','tv-rol','tv-pasaporte','tv-vence','tv-nac','tv-tel','tv-email','tv-vuelo','tv-datos'].forEach(id=>{document.getElementById(id).value='';});
 };
 window.delViajero=i=>{S.viajeros.splice(i,1);save();renderViajeros();};
 
@@ -798,6 +944,7 @@ window.onload=function(){
   
   renderAgenda();renderLog();renderGastos();renderRecibos();
   renderTareas();renderViajeros();fillTvOpts();
+  renderDashboard();
 };
 })();
 </script>
