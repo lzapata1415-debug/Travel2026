@@ -198,6 +198,18 @@ hr{border:none;border-top:1px solid #ede8df;margin:1.2rem 0;}
 .hist-concept{font-weight:700;font-size:0.85rem;}
 .hist-meta{font-size:0.7rem;color:#888;font-family:'DM Mono',monospace;margin-top:2px;}
 .hist-amt{font-family:'DM Mono',monospace;font-weight:700;color:var(--red);font-size:0.92rem;}
+
+/* EDIT MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem;}
+.modal-box{background:var(--white);border-radius:14px;padding:1.5rem;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+.modal-title{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--red);margin-bottom:1rem;}
+.modal-close{float:right;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#999;}
+.btn-edit-act{background:none;border:none;color:var(--gold-dark);cursor:pointer;font-size:0.85rem;padding:2px 6px;}
+.btn-edit-viajero{background:var(--gold);color:var(--deep);border:none;padding:4px 10px;border-radius:6px;font-size:0.7rem;cursor:pointer;font-family:'DM Mono',monospace;margin-right:6px;}
+.split-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:0.5rem;}
+.split-check{display:flex;align-items:center;gap:4px;font-size:0.82rem;cursor:pointer;}
+.split-check input{accent-color:var(--red);}
+
 </style>
 </head>
 <body>
@@ -234,6 +246,7 @@ hr{border:none;border-top:1px solid #ede8df;margin:1.2rem 0;}
 <!-- ═══════════ AGENDA ═══════════ -->
 <main id="sec-agenda" class="module-section active">
   <div class="section-title">Cronograma Maestro</div>
+  <div style="display:flex;gap:8px;margin-bottom:1rem;"><button class="btn btn-dark btn-sm" onclick="exportAgendaPDF()">🖨 Imprimir</button><button class="btn btn-gold btn-sm" onclick="exportAgendaText()">📄 Exportar</button></div>
   <div id="render-agenda"></div>
   <div class="card card-gold" style="margin-top:1rem;">
     <div class="card-title">+ Añadir Actividad</div>
@@ -362,6 +375,7 @@ hr{border:none;border-top:1px solid #ede8df;margin:1.2rem 0;}
         <option>Shopping</option><option>Otros</option>
       </select>
     </div>
+    <div class="fg"><label>Dividir entre</label><div class="split-checks" id="split-checks"></div></div>
     <button class="btn btn-red" onclick="addGasto()">Guardar Gasto</button>
   </div>
   <div id="render-gastos"></div>
@@ -380,21 +394,13 @@ hr{border:none;border-top:1px solid #ede8df;margin:1.2rem 0;}
         <div class="drive-label">Carpeta del Viaje</div>
         <div class="drive-sub">Abrir en Drive</div>
       </a>
-      <a href="https://drive.google.com/drive/folders/1zuy7quO2H0LxSkQuoSzKmVj_oxiBnJhb" target="_blank" class="drive-btn">
-        <div class="drive-icon">📤</div>
-        <div class="drive-label">Subir Fotos</div>
-        <div class="drive-sub">App Google Drive</div>
-      </a>
+      
       <a href="https://photos.google.com" target="_blank" class="drive-btn">
         <div class="drive-icon">🖼</div>
         <div class="drive-label">Google Fotos</div>
         <div class="drive-sub">Ver álbum</div>
       </a>
-      <a href="https://drive.google.com/drive/folders/1zuy7quO2H0LxSkQuoSzKmVj_oxiBnJhb" target="_blank" class="drive-btn">
-        <div class="drive-icon">📊</div>
-        <div class="drive-label">Hoja de Gastos</div>
-        <div class="drive-sub">Google Sheets</div>
-      </a>
+      
     </div>
     <div style="background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:0.8rem;font-size:0.78rem;color:#713f12;font-family:'DM Mono',monospace;">
       💡 Para subir fotos desde el móvil: abre la app Google Drive o Google Fotos y comparte directo a la carpeta del viaje.
@@ -456,6 +462,14 @@ hr{border:none;border-top:1px solid #ede8df;margin:1.2rem 0;}
     </div>
   </div>
 
+  <div class="card" style="margin-top:0.5rem;">
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="new-place-name" placeholder="Nombre lugar" style="flex:1;border-radius:9px;border:1.5px solid #ddd;padding:0.5rem;font-size:0.85rem;">
+        <input type="text" id="new-place-query" placeholder="Búsqueda Maps" style="flex:1;border-radius:9px;border:1.5px solid #ddd;padding:0.5rem;font-size:0.85rem;">
+        <button class="btn btn-red btn-sm" onclick="addPlace()">+</button>
+      </div>
+    </div>
+  </div>
   <!-- Apps de navegación -->
   <div class="card">
     <div class="card-title">📱 Abrir en App</div>
@@ -566,6 +580,7 @@ hr{border:none;border-top:1px solid #ede8df;margin:1.2rem 0;}
   </div>
 </section>
 
+<div id="edit-modal" class="modal-overlay" style="display:none;"></div>
 <div class="toast" id="toast-box"></div>
 
 <script>
@@ -652,6 +667,7 @@ function fillTvOpts(){
   });
   const daysel=document.getElementById('sel-day');
   if(daysel)daysel.innerHTML=S.agenda.map(d=>`<option value="${d.id}">Día ${d.id}: ${d.date}</option>`).join('');
+  if(typeof renderSplitChecks==='function')renderSplitChecks();
 }
 
 /* ── AGENDA ── */
@@ -666,6 +682,7 @@ function renderAgenda(){
           ${a.m?`<div class="act-desc">📍 ${a.m}</div>`:''}
           <div class="act-actions">
             ${a.m?`<a class="btn-maps" href="https://maps.google.com/?q=${encodeURIComponent(a.m)}" target="_blank">🗺 Maps</a>`:''}
+            <button class="btn-edit-act" onclick="editAct(${day.id},${i})">✏️</button>
             <button class="btn-del-act" onclick="delAct(${day.id},${i})">✕</button>
           </div>
         </div>
@@ -717,10 +734,11 @@ function runSplitwise(){
   const names=S.viajeros.map(v=>v.n);
   const bal={};names.forEach(n=>bal[n]=0);
   S.gastos.forEach(g=>{if(bal[g.p]!==undefined)bal[g.p]+=g.a;});
+  var owesMap={};names.forEach(n=>owesMap[n]=0);
+  S.gastos.forEach(g=>{var sp=g.split||names;var sh=g.a/sp.length;sp.forEach(n=>{if(owesMap[n]!==undefined)owesMap[n]+=sh;});});
   S.abonos.forEach(a=>{if(bal[a.f]!==undefined)bal[a.f]+=a.a;if(bal[a.t]!==undefined)bal[a.t]-=a.a;});
   const total=S.gastos.reduce((ac,x)=>ac+x.a,0);
-  const quota=names.length?total/names.length:0;
-  const netos=names.map(n=>({n,val:bal[n]-quota}));
+  const netos=names.map(n=>({n,val:bal[n]-(owesMap[n]||0)}));
   const deb=netos.filter(x=>x.val<-0.01).sort((a,b)=>a.val-b.val);
   const cre=netos.filter(x=>x.val>0.01).sort((a,b)=>b.val-a.val);
   const logs=[];
@@ -789,7 +807,12 @@ window.addGasto=function(){
   const p=document.getElementById('exp-payer').value;
   const c=document.getElementById('exp-cat').value;
   if(!d||isNaN(a))return toast('⚠ Concepto y monto requeridos');
-  S.gastos.push({id:Date.now(),d,a,p,c,date:new Date().toLocaleDateString('es-ES')});save();renderGastos();renderDashboard();toast('✓ Gasto guardado');
+  var checks=document.querySelectorAll('#split-checks input:checked');
+  var splitNames=Array.from(checks).map(function(cb){return cb.value;});
+  if(splitNames.length===0)return toast('⚠ Selecciona al menos una persona');
+  var allNames=S.viajeros.map(function(v){return v.n;});
+  var isAll=splitNames.length===allNames.length;
+  S.gastos.push({id:Date.now(),d:d,a:a,p:p,c:c,date:new Date().toLocaleDateString('es-ES'),split:isAll?null:splitNames});save();renderGastos();renderDashboard();toast('✓ Gasto guardado (÷'+splitNames.length+')');
 };
 window.addAbono=function(){
   const f=document.getElementById('sel-from').value;
@@ -862,7 +885,8 @@ function renderViajeros(){
         <div class="traveler-name">${v.n}</div>
         <div style="font-size:0.7rem;color:#8c7355;font-family:'DM Mono',monospace;margin-bottom:8px;">${v.rol||''}</div>
         <div class="pf-grid">${fields}</div>
-        <button onclick="delViajero(${i})" style="margin-top:0.6rem;color:var(--red);border:none;background:none;cursor:pointer;font-size:0.72rem;">Borrar</button>
+        <button class="btn-edit-viajero" onclick="editViajero(${i})">✏️ Editar</button>
+        <button onclick="delViajero(${i})" style="color:var(--red);border:none;background:none;cursor:pointer;font-size:0.72rem;">Borrar</button>
       </div>
     </div>`;
   }).join('');
@@ -910,30 +934,48 @@ window.searchMap=function(){
 };
 
 /* ── CHAT IA ── */
-const chatResponses=[
-  'El Museo del Prado cierra los lunes. Te recomiendo ir en la tarde — hay menos gente después de las 16h.',
-  'Para el AVE Madrid-Barcelona reserva con anticipación en renfe.com. El trayecto dura ~2.5h.',
-  'En Madrid, el barrio de Malasaña es excelente para tapas y ambiente local. Prueba el jamón ibérico con pan con tomate.',
-  'El Park Güell tiene cupo limitado — asegúrate de reservar la zona monumental con semanas de anticipación.',
-  'Para llamar desde España usa +1 antes del número de PR. Con una SIM local española será más económico.',
-  'El metro de Madrid y Barcelona es muy eficiente. Una tarjeta recargable (T-Casual en BCN) te ahorra tiempo.',
-  'La Sagrada Família por la mañana temprano tiene mejor luz para fotos. Reserva también la Torre Evangelistas.',
-  'Collioure en Francia es un pueblo precioso. Lleva euros — son la misma moneda que en España.',
-  'Para el seguro médico, verifica que cubra Europa completa. La EHIC (tarjeta europea) aplica si tienes residencia en país UE.',
-  'En Girona visita las murallas medievales y la catedral — reconocerás escenas de Game of Thrones.'
-];
-let chatIdx=0;
+var aiDB={
+  'restaurante|comer|tapas|cenar|cena|almuerzo|comida':{madrid:'En Madrid: Mercado de San Miguel (tapas), Sobrino de Botín (cochinillo, el más antiguo del mundo), Casa Lucio (huevos rotos), La Barraca (paella). En La Latina hay excelentes bares los domingos.',barcelona:'En Barcelona: Cal Pep (mariscos), El Xampanyet (tapas+cava en Born), La Boquería (mercado), Can Culleretes (2do más antiguo de España), 7 Portes (arroces).',def:'Los "menú del día" son almuerzos de 3 platos por €10-15. La cena es tarde: 21-23h. Desayuno típico: tostada con tomate y aceite de oliva. Las tapas son porciones para compartir.'},
+  'museo|prado|reina|sofia|guernica|arte|cultura':{def:'🎨 El Prado (gratis 18-20h L-S): Velázquez, Goya. Reina Sofía (gratis 19-21h): Guernica de Picasso. Sagrada Família: reserva semanas antes, mejor luz por la mañana. Casa Batlló y Milà en Barcelona. Compra entradas online.'},
+  'transporte|metro|taxi|tren|ave|renfe|bus|uber':{def:'🚇 Metro Madrid: ~€1.50/viaje. Barcelona: T-Casual 10 viajes ~€11.35. AVE Madrid→BCN: 2.5h, reserva en renfe.com. Uber/Cabify funcionan. El Escorial: Cercanías C3 desde Atocha.'},
+  'clima|tiempo|ropa|temperatura|lluvia':{def:'🌤 Sep-Oct: 18-25°C. Madrid más seco, Barcelona más húmedo. Lleva capas, suéter ligero, zapatos cómodos, paraguas pequeño. Para Montserrat: calzado de senderismo.'},
+  'dinero|euro|tarjeta|cajero|cambio|propina':{def:'💶 1 USD ≈ 0.92 EUR. Tarjetas aceptadas casi todo. Lleva efectivo para mercados. Propinas: 5-10% en restaurantes (no obligatorio). ¡Avisa a tu banco!'},
+  'seguro|salud|medico|farmacia|emergencia':{def:'🏥 Seguro viaje: mín €30,000 cobertura. Farmacias: cruz verde, 9:30-21:30. Emergencias: 112. Con pasaporte PR/USA necesitas seguro privado.'},
+  'vuelo|aeropuerto|iberia|avion|equipaje':{def:'✈️ IB0380, Loc: LB8T8. Sale SJU 20:25 (28 Sep), llega MAD T4S 10:25 (29 Sep). Regreso BCN→SJU 09 Oct 07:00. Ref Layra: 17127309. Equipaje: 1 cabina + 1 personal.'},
+  'montserrat|monasterio':{def:'⛰ FGC desde Plaza España. Moreneta. Escolanía canta 13:00 L-V. Funicular Sant Joan para vistas. Lleva agua y calzado cómodo.'},
+  'girona|juego de tronos':{def:'🏰 38 min AVE desde BCN Sants. Catedral = Gran Septo de Baelor. Barri Vell, casas río Onyar, muralla medieval. Rocambolesc (heladería hermanos Roca).'},
+  'collioure|francia':{def:'🇫🇷 1h tren desde BCN. Inspiró a Matisse. Château Royal (€4), puerto de colores, mariscos frente al mar. Misma moneda (€), libre circulación Schengen.'},
+  'bernabeu|futbol|estadio':{def:'⚽ Tour en realmadrid.com. ~1.5h, €25-35. Panorámica, vestuarios, trofeos. Techo retráctil nuevo.'},
+  'sagrada|familia|torres':{def:'⛩ RESERVA en sagradafamilia.org. ~€26 con torres. Mañana = menos gente. Torres Natividad: mejores vistas. Audio guía incluida. Metro L2/L5.'},
+  'park|guell|güell':{def:'🦎 Reserva zona monumental en parkguell.barcelona (~€10). Entrada por horario. Terraza dragón + bancos ondulados. Metro L3 Lesseps + 15 min subida.'},
+  'etias|visa|pasaporte|documento':{def:'📋 ETIAS: ~€7, dura 3 años. Trámite en travel-europe.europa.eu. Pasaporte: validez mín 3 meses post-salida de Europa.'},
+  'escorial':{def:'⛪ 1h tren Cercanías C3 desde Atocha (~€5). Entrada ~€12. Basílica, biblioteca, panteón. Ma-Do 10-18h. Medio día. Lleva abrigo (sierra).'},
+  'bodega|vino|cepa|cata':{def:'🍷 Cepa 21: Castrillo de Duero (~2h Madrid). Reserva cepa21.com. Cata 3-4 vinos, ~€15-25. Ribera del Duero. Recomiendo transporte privado.'},
+  'itinerario|agenda|plan|dia':{def:'📅 28 Sep: vuelo SJU→MAD. 29 Sep-2 Oct: Madrid. 3 Oct: AVE→BCN. 4-8 Oct: Barcelona+excursiones. 9 Oct: vuelo BCN→SJU. 12 días total.'}
+};
 window.sendChat=function(){
-  const inp=document.getElementById('chat-inp');
-  const view=document.getElementById('chat-view');
+  var inp=document.getElementById('chat-inp');
+  var view=document.getElementById('chat-view');
   if(!inp.value.trim())return;
-  view.innerHTML+=`<div class="msg msg-user">${inp.value}</div>`;
-  const q=inp.value;inp.value='';
-  setTimeout(()=>{
-    const resp=chatResponses[chatIdx%chatResponses.length];chatIdx++;
-    view.innerHTML+=`<div class="msg msg-ai">🤖 ${resp}</div>`;
+  var question=inp.value.trim();
+  view.innerHTML+='<div class="msg msg-user">'+question+'</div>';
+  inp.value='';
+  setTimeout(function(){
+    var qL=question.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    var best=null;var bestScore=0;
+    Object.keys(aiDB).forEach(function(kstr){
+      var kws=kstr.split('|');var score=0;
+      kws.forEach(function(kw){if(qL.indexOf(kw)>=0)score+=2;});
+      if(score>bestScore){bestScore=score;var entry=aiDB[kstr];
+        if(qL.indexOf('madrid')>=0&&entry.madrid)best=entry.madrid;
+        else if(qL.indexOf('barcelona')>=0&&entry.barcelona)best=entry.barcelona;
+        else best=entry.def||entry.madrid||entry.barcelona;
+      }
+    });
+    if(!best)best='¡Buena pregunta! 🤔 Puedo ayudarte con: restaurantes, museos, transporte, clima, dinero, seguros, vuelos Iberia, Sagrada Família, Park Güell, Montserrat, Girona, Collioure, El Escorial, Bernabéu, Bodega Cepa 21, ETIAS/documentos, y tu itinerario. ¿Sobre qué tema?';
+    view.innerHTML+='<div class="msg msg-ai">🤖 '+best+'</div>';
     view.scrollTop=view.scrollHeight;
-  },600);
+  },400);
 };
 
 /* ── INIT ── */
@@ -946,6 +988,113 @@ window.onload=function(){
   renderTareas();renderViajeros();fillTvOpts();
   renderDashboard();
 };
+
+
+/* ── FIX: Edit agenda events ── */
+window.editAct=function(did,idx){
+  var day=S.agenda.find(function(d){return d.id===did;});
+  var act=day.acts[idx];
+  var modal=document.getElementById('edit-modal');
+  modal.style.display='flex';
+  modal.innerHTML='<div class="modal-box"><button class="modal-close" onclick="closeModal()">×</button><div class="modal-title">✏️ Editar Evento</div><div class="fg"><label>Hora</label><input type="time" id="edit-time" value="'+act.t+'"></div><div class="fg"><label>Evento</label><input type="text" id="edit-event" value="'+act.n+'"></div><div class="fg"><label>Ubicación</label><input type="text" id="edit-place" value="'+(act.m||'')+'"></div><button class="btn btn-red" onclick="saveEditAct('+did+','+idx+')">Guardar</button></div>';
+};
+window.saveEditAct=function(did,idx){
+  var day=S.agenda.find(function(d){return d.id===did;});
+  day.acts[idx].t=document.getElementById('edit-time').value;
+  day.acts[idx].n=document.getElementById('edit-event').value;
+  day.acts[idx].m=document.getElementById('edit-place').value;
+  save();renderAgenda();closeModal();toast('✓ Evento actualizado');
+};
+window.closeModal=function(){document.getElementById('edit-modal').style.display='none';};
+
+/* ── FIX: Export agenda ── */
+window.exportAgendaPDF=function(){
+  var w=window.open('','_blank');
+  var h='<html><head><title>Agenda España 2026</title><style>body{font-family:Arial;padding:2rem;}h1{color:#C60B1E;}h2{border-bottom:2px solid #F1BF00;padding-bottom:4px;margin-top:1.5rem;}td{padding:6px 10px;border-bottom:1px solid #eee;}td:first-child{font-weight:bold;width:70px;color:#C49A00;}</style></head><body><h1>🇪🇸 España 2026</h1>';
+  S.agenda.forEach(function(day){h+='<h2>'+day.date+' — '+day.title+'</h2><table>';day.acts.forEach(function(a){h+='<tr><td>'+a.t+'</td><td>'+a.n+(a.m?' — '+a.m:'')+'</td></tr>';});h+='</table>';});
+  h+='</body></html>';w.document.write(h);w.document.close();w.print();
+};
+window.exportAgendaText=function(){
+  var txt='ESPAÑA 2026 — CRONOGRAMA\n========================\n\n';
+  S.agenda.forEach(function(day){txt+=day.date+' — '+day.title+'\n------------------------------\n';day.acts.forEach(function(a){txt+='  '+a.t+'  '+a.n+(a.m?' ('+a.m+')':'')+'\n';});txt+='\n';});
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));a.download='Agenda_España2026.txt';a.click();
+};
+
+/* ── FIX: Split checks for gastos ── */
+function renderSplitChecks(){
+  var el=document.getElementById('split-checks');
+  if(!el)return;
+  el.innerHTML=S.viajeros.map(function(v){return '<label class="split-check"><input type="checkbox" checked value="'+v.n+'"> '+v.n.split(' ')[0]+'</label>';}).join('');
+}
+
+/* ── FIX: Edit viajeros ── */
+window.editViajero=function(i){
+  var v=S.viajeros[i];
+  var modal=document.getElementById('edit-modal');
+  modal.style.display='flex';
+  modal.innerHTML='<div class="modal-box"><button class="modal-close" onclick="closeModal()">×</button><div class="modal-title">✏️ Editar Viajero</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div class="fg"><label>Nombre</label><input type="text" id="ev-nombre" value="'+v.n+'"></div><div class="fg"><label>Rol</label><input type="text" id="ev-rol" value="'+(v.rol||'')+'"></div><div class="fg"><label>Pasaporte</label><input type="text" id="ev-pasaporte" value="'+(v.pasaporte||'')+'"></div><div class="fg"><label>Vence</label><input type="text" id="ev-vence" value="'+(v.vence||'')+'"></div><div class="fg"><label>Nacimiento</label><input type="text" id="ev-nac" value="'+(v.nac||'')+'"></div><div class="fg"><label>Teléfono</label><input type="text" id="ev-tel" value="'+(v.tel||'')+'"></div><div class="fg" style="grid-column:1/-1"><label>Email</label><input type="email" id="ev-email" value="'+(v.email||'')+'"></div><div class="fg" style="grid-column:1/-1"><label>Vuelo</label><input type="text" id="ev-vuelo" value="'+(v.vuelo||'')+'"></div><div class="fg" style="grid-column:1/-1"><label>Notas</label><textarea id="ev-notas" rows="2">'+(v.notas||v.d||'')+'</textarea></div></div><button class="btn btn-red" onclick="saveEditViajero('+i+')">Guardar</button></div>';
+};
+window.saveEditViajero=function(i){
+  S.viajeros[i].n=document.getElementById('ev-nombre').value.trim();
+  S.viajeros[i].rol=document.getElementById('ev-rol').value.trim();
+  S.viajeros[i].pasaporte=document.getElementById('ev-pasaporte').value.trim();
+  S.viajeros[i].vence=document.getElementById('ev-vence').value.trim();
+  S.viajeros[i].nac=document.getElementById('ev-nac').value.trim();
+  S.viajeros[i].tel=document.getElementById('ev-tel').value.trim();
+  S.viajeros[i].email=document.getElementById('ev-email').value.trim();
+  S.viajeros[i].vuelo=document.getElementById('ev-vuelo').value.trim();
+  S.viajeros[i].notas=document.getElementById('ev-notas').value.trim();
+  save();renderViajeros();closeModal();toast('✓ Viajero actualizado');
+};
+
+/* ── FIX: Add map places ── */
+window.addPlace=function(){
+  var name=document.getElementById('new-place-name').value.trim();
+  var q=document.getElementById('new-place-query').value.trim();
+  if(!name||!q)return toast('⚠ Nombre y búsqueda requeridos');
+  var grid=document.querySelector('.places-grid');
+  var chip=document.createElement('a');
+  chip.className='place-chip';
+  chip.href='https://maps.google.com/?q='+encodeURIComponent(q);
+  chip.target='_blank';
+  chip.textContent='📍 '+name;
+  grid.appendChild(chip);
+  document.getElementById('new-place-name').value='';
+  document.getElementById('new-place-query').value='';
+  toast('✓ Lugar añadido');
+};
+
+/* ── FIX #5: renderDashboard WAS MISSING ── */
+function renderDashboard(){
+  var names=S.viajeros.map(function(v){return v.n;});
+  var total=S.gastos.reduce(function(ac,x){return ac+x.a;},0);
+  var totalAbonos=S.abonos.reduce(function(ac,x){return ac+x.a;},0);
+  var paid={};var owes={};
+  names.forEach(function(n){paid[n]=0;owes[n]=0;});
+  S.gastos.forEach(function(g){
+    if(paid[g.p]!==undefined)paid[g.p]+=g.a;
+    var splitAmong=g.split||names;
+    var share=g.a/splitAmong.length;
+    splitAmong.forEach(function(name){if(owes[name]!==undefined)owes[name]+=share;});
+  });
+  S.abonos.forEach(function(a){if(paid[a.f]!==undefined)paid[a.f]+=a.a;if(paid[a.t]!==undefined)paid[a.t]-=a.a;});
+  document.getElementById('dash-totales').innerHTML='<div class="stat-card"><div class="stat-num">€'+total.toFixed(2)+'</div><div class="stat-lbl">Gasto Total</div></div><div class="stat-card"><div class="stat-num">'+S.gastos.length+'</div><div class="stat-lbl">Transacciones</div></div><div class="stat-card"><div class="stat-num">€'+totalAbonos.toFixed(2)+'</div><div class="stat-lbl">Abonos</div></div><div class="stat-card"><div class="stat-num">'+names.length+'</div><div class="stat-lbl">Viajeros</div></div>';
+  var maxPaid=Math.max.apply(null,names.map(function(n){return paid[n]||1;}))||1;
+  document.getElementById('dash-balances').innerHTML=names.map(function(n){
+    var p=paid[n]||0;var o=owes[n]||0;var net=p-o;
+    var color=net>=0?'#16a34a':'#dc2626';var barW=Math.round((p/maxPaid)*100);
+    return '<div class="balance-row"><div style="flex:1;"><div class="balance-name">'+n+'</div><div class="balance-paid">Pagó: €'+p.toFixed(2)+' · Debe: €'+o.toFixed(2)+'</div><div class="balance-bar-wrap"><div class="balance-bar-fill" style="width:'+barW+'%;background:'+color+';"></div></div></div><div class="balance-net" style="color:'+color+';">'+(net>=0?'+':'')+'€'+net.toFixed(2)+'</div></div>';
+  }).join('');
+  var netos=names.map(function(n){return{n:n,val:paid[n]-owes[n]};});
+  var deb=netos.filter(function(x){return x.val<-0.01;}).sort(function(a,b){return a.val-b.val;}).map(function(d){return{n:d.n,val:d.val};});
+  var cre=netos.filter(function(x){return x.val>0.01;}).sort(function(a,b){return b.val-a.val;}).map(function(c){return{n:c.n,val:c.val};});
+  var debtCards=[];
+  deb.forEach(function(d){while(Math.abs(d.val)>0.01&&cre.length>0){var c=cre[0];var tr=Math.min(Math.abs(d.val),c.val);debtCards.push('<div class="debt-card"><span style="font-weight:700;">'+d.n+'</span><span class="debt-arrow">➔</span><span style="font-weight:700;">'+c.n+'</span><span class="debt-amount">€'+tr.toFixed(2)+'</span></div>');d.val+=tr;c.val-=tr;if(c.val<=0.01)cre.shift();}});
+  document.getElementById('dash-deudas').innerHTML=debtCards.length?debtCards.join(''):'<div style="text-align:center;color:#16a34a;padding:1rem;">✅ No hay deudas pendientes</div>';
+  document.getElementById('dash-historial').innerHTML=S.gastos.length===0?'<div style="text-align:center;padding:1rem;color:#aaa;">Sin gastos registrados</div>':S.gastos.map(function(e){return '<div class="hist-row"><div class="hist-left"><div class="hist-concept">'+e.d+'</div><div class="hist-meta">'+e.p+' · '+e.c+' · '+e.date+'</div></div><div class="hist-amt">€'+e.a.toFixed(2)+'</div></div>';}).join('');
+}
+
+
 })();
 </script>
 </body>
